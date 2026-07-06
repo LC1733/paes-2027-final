@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martín PAES 2027 · Ingeniería</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F5F7FC;--bg2:#FFFFFF;--bg3:#EEF2FB;--bg4:#E4EAF5;
+  --bd:#D9DFEE;--bd2:#C2CADE;
+  --tx:#0F1729;--tx2:#3A4560;--tx3:#6B7690;
+  --m1:#FF5C8A;--m1l:rgba(255,92,138,.12);--m1b:rgba(255,92,138,.06);
+  --m2:#8B5CF6;--m2l:rgba(139,92,246,.12);--m2b:rgba(139,92,246,.06);
+  --cl:#06B6D4;--cll:rgba(6,182,212,.12);--clb:rgba(6,182,212,.06);
+  --hi:#F59E0B;--hil:rgba(245,158,11,.12);
+  --ci:#10B981;--cil:rgba(16,185,129,.12);--cib:rgba(16,185,129,.06);
+  --ing:#EF4444;--ingl:rgba(239,68,68,.12);--ingb:rgba(239,68,68,.06);
+}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Outfit',sans-serif;line-height:1.5}
+body{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none;z-index:0}
+
+#top{flex-shrink:0;height:56px;background:rgba(9,11,22,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:0 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10}
+.top-brand{display:flex;align-items:center;gap:14px}
+.top-logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--m1),var(--m2));display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;font-family:'JetBrains Mono',monospace;box-shadow:0 0 20px rgba(139,92,246,.4)}
+.top-title{font-size:17px;font-weight:800;letter-spacing:-.5px}
+.top-title em{font-style:normal;background:linear-gradient(90deg,var(--m1),var(--m2),var(--cl));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.top-right{display:flex;align-items:center;gap:10px}
+.badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 11px;border-radius:20px;border:1px solid}
+.badge-ing{background:var(--ingb);border-color:rgba(239,68,68,.3);color:var(--ing)}
+.badge-year{background:var(--m2l);border-color:rgba(139,92,246,.3);color:var(--m2)}
+
+#layout{display:flex;flex:1;overflow:hidden;position:relative;z-index:1}
+#sb{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--bd);overflow-y:auto;padding:12px 8px}
+.sb-sec{font-size:9px;font-weight:700;letter-spacing:2.5px;color:var(--tx3);padding:14px 10px 5px;font-family:'JetBrains Mono',monospace}
+.sbb{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:none;text-align:left;width:100%;transition:all .18s;position:relative;margin-bottom:1px}
+.sbb::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;background:currentColor;opacity:0;transition:opacity .18s}
+.sbb:hover{background:var(--bg3)}
+.sbb.active{background:var(--bg4);border-color:var(--bd2)}
+.sbb.active::before{opacity:1}
+.sbi{font-size:13px;width:20px;text-align:center;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-weight:700}
+.sbl{font-size:12px;font-weight:600;color:var(--tx2);flex:1}
+.sbb.active .sbl,.sbb:hover .sbl{color:var(--tx)}
+.sb-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+.sb-prog{height:2px;background:var(--bd);border-radius:2px;margin:0 10px 8px;overflow:hidden}
+.sb-pf{height:100%;border-radius:2px;transition:width .5s}
+
+#content{flex:1;overflow-y:auto;padding:24px 24px 60px}
+#content::-webkit-scrollbar{width:4px}
+#content::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:4px}
+#sb::-webkit-scrollbar{width:3px}
+#sb::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.tp{display:none;animation:fadeUp .3s cubic-bezier(.4,0,.2,1)}
+.tp.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO */
+.hero{border-radius:20px;border:1px solid var(--bd);padding:28px;margin-bottom:24px;position:relative;overflow:hidden;background:var(--bg2)}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(50px);pointer-events:none;opacity:.08}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:3px;color:var(--tx3);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.hero-eyebrow::before{content:'';width:20px;height:1px;background:var(--tx3)}
+.hero-h{font-size:30px;font-weight:900;letter-spacing:-1.5px;line-height:1.1;margin-bottom:10px}
+.hero-sub{font-size:13px;color:var(--tx2);line-height:1.7;max-width:580px}
+
+.sh{display:flex;align-items:center;gap:12px;margin:24px 0 14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px}
+.sh::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+.sh-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;white-space:nowrap;border:1px solid;text-transform:uppercase}
+
+/* CARDS */
+.pruebas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
+.pcard{border-radius:16px;padding:20px;border:1px solid var(--bd);background:var(--bg2);cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.pcard:hover{transform:translateY(-3px);border-color:var(--bd2)}
+.pcard-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,currentColor,transparent)}
+.pcard-corner{position:absolute;top:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:3px 9px;border-radius:20px;border:1px solid}
+.pcard-label{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;color:var(--tx3);margin-bottom:6px}
+.pcard-name{font-size:18px;font-weight:800;margin-bottom:4px}
+.pcard-type{font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+.pcard-stats{display:flex;gap:16px}
+.psv{font-size:22px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}
+.psl{font-size:8px;color:var(--tx3);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-top:2px}
+
+.priority-table{background:var(--bg2);border:1px solid var(--bd);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.priority-row{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:16px;padding:13px 18px;border-bottom:1px solid var(--bd);transition:background .15s}
+.priority-row:last-child{border-bottom:none}
+.priority-row:hover{background:var(--bg3)}
+.pr-rank{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid}
+.pr-badge{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:20px;border:1px solid;white-space:nowrap}
+
+.eje-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.eje{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:16px;border-left:3px solid;transition:background .18s}
+.eje:hover{background:var(--bg3)}
+.eje-icon{font-size:20px;margin-bottom:8px}
+.eje-title{font-size:13px;font-weight:700;margin-bottom:2px}
+.eje-topics{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.eje-topic{font-size:11px;color:var(--tx2);padding:5px 10px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;gap:7px;line-height:1.4}
+.eje-topic::before{content:'▸';color:var(--tx3);font-size:9px;flex-shrink:0}
+
+.hab-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.hab{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:14px;position:relative;overflow:hidden;transition:background .18s}
+.hab:hover{background:var(--bg3)}
+.hab-num{position:absolute;top:12px;right:14px;font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:900;color:var(--bd2);line-height:1}
+.hab-icon{font-size:20px;margin-bottom:8px}
+.hab-name{font-size:13px;font-weight:700;margin-bottom:4px}
+.hab-desc{font-size:11px;color:var(--tx2);line-height:1.6}
+
+.ibox{border-radius:12px;padding:14px 16px;margin:10px 0;display:flex;gap:12px;align-items:flex-start;border:1px solid}
+.ibox-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.ibox-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.ibox-text{font-size:12px;color:var(--tx2);line-height:1.7}
+
+.tbl-wrap{background:var(--bg2);border:1px solid var(--bd);border-radius:16px;overflow:hidden;margin:10px 0}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{background:var(--bg3);padding:10px 16px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-align:left;color:var(--tx3);font-family:'JetBrains Mono',monospace}
+.tbl td{padding:11px 16px;border-bottom:1px solid var(--bd);color:var(--tx2);line-height:1.5;vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr{transition:background .15s}
+.tbl tbody tr:hover td{background:var(--bg3)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;margin-bottom:16px}
+.step{display:flex;gap:16px;padding:16px;border:1px solid var(--bd);background:var(--bg2);margin-bottom:-1px;transition:background .18s}
+.step:first-child{border-radius:16px 16px 0 0}
+.step:last-child{border-radius:0 0 16px 16px;margin-bottom:0}
+.step:hover{background:var(--bg3)}
+.step-num{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.step-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.step-desc{font-size:12px;color:var(--tx2);line-height:1.6}
+
+/* SIMULATOR */
+.sim{background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:24px;margin-bottom:16px}
+.sim-title{font-size:14px;font-weight:700;margin-bottom:20px}
+.sim-inputs{display:flex;flex-direction:column;gap:12px}
+.sim-row{display:flex;align-items:center;gap:12px}
+.sim-label{font-size:12px;font-weight:600;width:130px;flex-shrink:0;color:var(--tx2)}
+.sim-bw{flex:1;display:flex;align-items:center;gap:10px}
+.sim-input{width:90px;padding:8px 12px;background:var(--bg3);border:1px solid var(--bd2);border-radius:8px;color:var(--tx);font-size:14px;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .15s;text-align:center;flex-shrink:0}
+.sim-input:focus{border-color:var(--m2)}
+.sim-minibar{flex:1;height:4px;background:var(--bd);border-radius:4px;overflow:hidden}
+.sim-minifill{height:100%;border-radius:4px;transition:width .4s}
+.sim-pct{font-size:10px;color:var(--tx3);font-family:'JetBrains Mono',monospace;width:30px;text-align:right;flex-shrink:0}
+.sim-result{margin-top:20px;border-radius:12px;padding:24px;text-align:center;background:var(--bg3);border:1px solid var(--bd2);position:relative;overflow:hidden}
+.sim-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:200px;height:200px;border-radius:50%;filter:blur(60px);opacity:.12;pointer-events:none;transition:background .4s}
+.sim-score{font-size:52px;font-weight:900;font-family:'JetBrains Mono',monospace;letter-spacing:-2px;transition:color .4s;position:relative}
+.sim-score-label{font-size:10px;color:var(--tx3);font-family:'JetBrains Mono',monospace;letter-spacing:2px;margin-bottom:8px}
+.sim-msg{font-size:12px;color:var(--tx2);margin-top:8px;position:relative}
+.sim-bdown{display:flex;gap:12px;margin-top:16px;justify-content:center;flex-wrap:wrap}
+.sim-bk{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:8px 14px;text-align:center}
+.sim-bkv{font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.sim-bkl{font-size:9px;color:var(--tx3);font-family:'JetBrains Mono',monospace;margin-top:2px}
+.corte-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.corte{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:16px;text-align:center;transition:background .18s}
+.corte:hover{background:var(--bg3)}
+.corte-score{font-size:26px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}
+.corte-name{font-size:11px;font-weight:700;margin-top:6px}
+.corte-univ{font-size:10px;color:var(--tx3);margin-top:2px}
+
+/* SUBTABS */
+.stabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:4px}
+.stab{flex:1;padding:9px 8px;border-radius:9px;cursor:pointer;font-size:11px;font-weight:700;text-align:center;border:none;background:none;color:var(--tx3);transition:all .18s;font-family:'Outfit',sans-serif}
+.stab:hover{color:var(--tx2)}
+.stab.active{background:var(--bg4);color:var(--tx);border:1px solid var(--bd2)}
+.subtab{display:none}
+.subtab.active{display:block;animation:fadeUp .25s cubic-bezier(.4,0,.2,1)}
+
+/* ══════════════════════════════════════════════
+   MODO QUIZ UNIFICADO: A-D + Flashcard + Score
+══════════════════════════════════════════════ */
+.quiz-shell{background:var(--bg2);border:1px solid var(--bd);border-radius:20px;overflow:hidden}
+
+/* --- Pantalla de entrada --- */
+.q-entry{padding:32px;text-align:center}
+.q-entry-title{font-size:22px;font-weight:800;margin-bottom:8px}
+.q-entry-sub{font-size:13px;color:var(--tx2);margin-bottom:24px;line-height:1.6}
+.q-entry-modes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:24px}
+.q-mode-card{background:var(--bg3);border:2px solid var(--bd);border-radius:14px;padding:18px;cursor:pointer;transition:all .2s;text-align:left}
+.q-mode-card:hover{border-color:var(--bd2);background:var(--bg4)}
+.q-mode-card.selected{border-color:var(--m2);background:var(--m2b)}
+.q-mode-icon{font-size:28px;margin-bottom:10px}
+.q-mode-name{font-size:14px;font-weight:800;margin-bottom:4px}
+.q-mode-desc{font-size:11px;color:var(--tx2);line-height:1.5}
+.q-entry-meta{display:flex;justify-content:center;gap:24px;margin-bottom:24px}
+.qem{text-align:center}
+.qem-val{font-size:24px;font-weight:800;font-family:'JetBrains Mono',monospace}
+.qem-lbl{font-size:9px;color:var(--tx3);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-top:2px}
+
+/* --- Botones --- */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:700;font-family:'Outfit',sans-serif;transition:all .18s}
+.btn-primary{background:linear-gradient(135deg,var(--m2),var(--m1));color:#fff;box-shadow:0 4px 20px rgba(139,92,246,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(139,92,246,.4)}
+.btn-ghost{background:var(--bg3);color:var(--tx2);border:1px solid var(--bd2)}
+.btn-ghost:hover{background:var(--bg4);color:var(--tx)}
+.btn-sm{padding:8px 18px;font-size:12px}
+.btn-danger{background:var(--ingb);color:var(--ing);border:1px solid rgba(239,68,68,.3)}
+.btn-danger:hover{background:var(--ingl)}
+
+/* --- Header quiz activo --- */
+.q-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--bd);background:var(--bg3);gap:12px}
+.q-header-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.q-mode-badge{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:20px;border:1px solid}
+.q-track{flex:1;height:4px;background:var(--bd);border-radius:4px;overflow:hidden}
+.q-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--m2),var(--m1));transition:width .4s cubic-bezier(.4,0,.2,1)}
+.q-score-live{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;flex-shrink:0}
+.q-header-info{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2)}
+
+/* --- Panel de progreso global --- */
+.q-progress-bar-wrap{padding:10px 20px 0;background:var(--bg3)}
+.q-dots{display:flex;gap:4px;flex-wrap:wrap}
+.q-dot{width:10px;height:10px;border-radius:50%;background:var(--bd2);transition:background .3s;flex-shrink:0}
+.q-dot.correct{background:var(--ci)}
+.q-dot.wrong{background:var(--ing)}
+.q-dot.current{background:var(--m2);box-shadow:0 0 6px rgba(139,92,246,.6)}
+
+/* --- Cuerpo pregunta --- */
+.q-body{padding:24px}
+
+/* MODO A-D */
+.q-card-num{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--tx3);letter-spacing:2px;margin-bottom:12px}
+.q-card-q{font-size:15px;font-weight:700;line-height:1.65;margin-bottom:20px;white-space:pre-line}
+.q-opts{display:flex;flex-direction:column;gap:8px}
+.q-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;cursor:pointer;transition:all .18s;text-align:left;width:100%;font-family:'Outfit',sans-serif}
+.q-opt:hover:not(:disabled){background:var(--bg4);border-color:var(--bd2);transform:translateX(3px)}
+.q-opt:disabled{cursor:default}
+.q-opt-letter{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:24px;height:24px;border-radius:6px;background:var(--bd2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
+.q-opt-text{font-size:13px;color:var(--tx2);line-height:1.5;flex:1;margin-top:2px}
+.q-opt.correct{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4)}
+.q-opt.correct .q-opt-letter{background:var(--ci);color:#000}
+.q-opt.correct .q-opt-text{color:var(--tx)}
+.q-opt.wrong{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4)}
+.q-opt.wrong .q-opt-letter{background:var(--ing);color:#fff}
+.q-opt.wrong .q-opt-text{color:var(--tx)}
+.q-opt.reveal{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.2)}
+.q-opt.reveal .q-opt-letter{background:rgba(16,185,129,.3);color:var(--ci)}
+.q-opt.reveal .q-opt-text{color:var(--ci)}
+.q-feedback{margin-top:14px;border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.7;display:none;border:1px solid}
+.q-feedback.show{display:block}
+.q-feedback.ok{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.25);color:var(--tx2)}
+.q-feedback.err{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.25);color:var(--tx2)}
+.q-feedback strong{color:var(--tx)}
+.q-next{margin-top:16px;display:none;justify-content:space-between;align-items:center;gap:8px}
+.q-next.show{display:flex}
+.q-next-hint{font-size:11px;color:var(--tx3)}
+
+/* MODO FLASHCARD */
+.flashcard-wrap{perspective:1000px;cursor:pointer;user-select:none}
+.flashcard{width:100%;min-height:220px;border-radius:16px;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:28px;text-align:center;border:1px solid var(--bd)}
+.fc-front{background:var(--bg3)}
+.fc-back{background:var(--bg4);transform:rotateY(180deg)}
+.fc-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--tx3);margin-bottom:14px}
+.fc-q{font-size:16px;font-weight:700;line-height:1.6;white-space:pre-line}
+.fc-hint{font-size:11px;color:var(--tx3);margin-top:16px;display:flex;align-items:center;gap:6px}
+.fc-answer{font-size:15px;font-weight:700;line-height:1.6;margin-bottom:10px}
+.fc-exp{font-size:12px;color:var(--tx2);line-height:1.6}
+.fc-actions{display:flex;gap:10px;margin-top:18px;width:100%;justify-content:center}
+.fc-btn{flex:1;max-width:160px;padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:700;font-family:'Outfit',sans-serif;transition:all .18s}
+.fc-btn-ok{background:rgba(16,185,129,.15);color:var(--ci);border:1px solid rgba(16,185,129,.3)}
+.fc-btn-ok:hover{background:rgba(16,185,129,.25)}
+.fc-btn-err{background:rgba(239,68,68,.12);color:var(--ing);border:1px solid rgba(239,68,68,.25)}
+.fc-btn-err:hover{background:rgba(239,68,68,.22)}
+.fc-static{position:relative;min-height:220px;display:flex;flex-direction:column;justify-content:center}
+
+/* --- Resultados --- */
+.q-results{padding:28px}
+.result-hero{background:var(--bg3);border:1px solid var(--bd);border-radius:16px;padding:28px;text-align:center;position:relative;overflow:hidden;margin-bottom:20px}
+.result-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:280px;height:280px;border-radius:50%;filter:blur(80px);opacity:.08;pointer-events:none}
+.result-score{font-size:60px;font-weight:900;font-family:'JetBrains Mono',monospace;letter-spacing:-3px;position:relative;line-height:1}
+.result-label{font-size:10px;color:var(--tx3);font-family:'JetBrains Mono',monospace;letter-spacing:2px;margin-bottom:8px}
+.result-msg{font-size:14px;color:var(--tx2);margin-top:12px;position:relative}
+.result-stats{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;position:relative}
+.rst{background:var(--bg2);border:1px solid var(--bd);border-radius:10px;padding:12px 18px;text-align:center}
+.rst-val{font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace}
+.rst-lbl{font-size:9px;color:var(--tx3);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-top:3px}
+.result-actions{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+
+/* Revisión */
+.review-item{border-radius:14px;padding:18px;margin-bottom:10px;border-left:3px solid;border:1px solid var(--bd);background:var(--bg2)}
+.review-item.ok-item{border-left:3px solid var(--ci)}
+.review-item.err-item{border-left:3px solid var(--ing)}
+.ri-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ri-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.ri-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);margin-left:auto}
+.ri-q{font-size:13px;font-weight:600;margin-bottom:10px;line-height:1.5;white-space:pre-line}
+.ri-opts{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.ri-opt{font-size:11px;padding:6px 10px;border-radius:6px;display:flex;align-items:center;gap:8px;color:var(--tx3);background:var(--bg3)}
+.ri-opt.ok{background:rgba(16,185,129,.15);color:var(--ci)}
+.ri-opt.err{background:rgba(239,68,68,.15);color:var(--ing)}
+.ri-opt.ans{background:rgba(16,185,129,.08);color:var(--ci)}
+.ri-opt-l{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:10px;width:18px;flex-shrink:0}
+.ri-exp{font-size:11px;color:var(--tx2);line-height:1.7;padding:10px 12px;background:var(--bg3);border-radius:8px;border:1px solid var(--bd)}
+.ri-exp strong{color:var(--tx)}
+
+/* BOTTOM NAV */
+#bnav{display:none;background:rgba(9,11,22,.96);backdrop-filter:blur(20px);border-top:1px solid var(--bd);flex-shrink:0}
+.bni{display:flex}
+.bn{flex:1;padding:10px 4px 14px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;background:none;border:none;position:relative}
+.bn::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:24px;height:2px;border-radius:2px;background:currentColor;opacity:0;transition:opacity .2s}
+.bn.active::after{opacity:1}
+.bnico{font-size:17px;font-family:'JetBrains Mono',monospace;font-weight:700}
+.bnlbl{font-size:8px;font-weight:700;letter-spacing:1px;color:var(--tx3);font-family:'JetBrains Mono',monospace}
+.bn.active .bnlbl{color:var(--tx)}
+
+@media(max-width:768px){
+  #sb{display:none}#bnav{display:block}
+  #content{padding:14px 14px 30px}
+  .pruebas-grid,.eje-grid,.hab-grid,.corte-grid,.q-entry-modes{grid-template-columns:1fr}
+  .hero-h{font-size:24px}
+  .priority-row{grid-template-columns:auto 1fr auto;gap:10px}
+  .pr-badge{display:none}
+  .fc-actions{flex-direction:column;align-items:center}
+}
+@media(min-width:769px) and (max-width:1024px){
+  #sb{width:180px}
+  .corte-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ═══ Estilos detallados M1 (integrados de paes-m1) ═══ */
+.m1-detalle { --c1:#E85A20;--c2:#D9A800;--c3:#00A876;--c4:#0E6A94;--c5:#D63A61; --bg:#F5F7FC;--bg2:#FFFFFF;--bg3:#EEF2FB;--bd:#D9DFEE;--tx:#0F1729;--tx2:#3A4560;--tx3:#6B7690; font-family:"Outfit",sans-serif; }
+.m1-detalle /* HEADER */
+#hdr {flex-shrink:0;background:linear-gradient(135deg,#F5F7FC 0%,#EEF2FB 100%);border-bottom:2px solid var(--bd);padding:0 16px}
+.m1-detalle .hdr-inner {display:flex;align-items:center;justify-content:space-between;height:56px;max-width:1200px;margin:0 auto}
+.m1-detalle .logo {display:flex;align-items:center;gap:10px}
+.m1-detalle .logo-badge {background:var(--c1);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;letter-spacing:1px}
+.m1-detalle .logo-title {font-size:17px;font-weight:800;letter-spacing:-0.5px}
+.m1-detalle .logo-title span {color:var(--c1)}
+.m1-detalle .hdr-score {display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:6px 14px}
+.m1-detalle .hdr-score-label {font-size:10px;color:var(--tx3);font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+.m1-detalle .hdr-score-val {font-size:18px;font-weight:800;color:var(--c3)}
+.m1-detalle /* MAIN LAYOUT */
+#main {display:flex;flex:1;overflow:hidden;max-width:1200px;margin:0 auto;width:100%}
+.m1-detalle /* SIDEBAR */
+#sidebar {width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--bd);overflow-y:auto;padding:12px 8px}
+.m1-detalle .sb-section {font-size:9px;font-weight:700;letter-spacing:2px;color:var(--tx3);padding:8px 10px 4px;font-family:'JetBrains Mono',monospace}
+.m1-detalle .sb-item {display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r);cursor:pointer;margin-bottom:2px;transition:all .2s;border:1px solid transparent}
+.m1-detalle .sb-item:hover {background:var(--bg3)}
+.m1-detalle .sb-item.active {background:var(--bg3);border-color:var(--bd)}
+.m1-detalle .sb-icon {font-size:18px;width:24px;text-align:center}
+.m1-detalle .sb-text {font-size:13px;font-weight:600;color:var(--tx2)}
+.m1-detalle .sb-item.active .sb-text {color:var(--tx)}
+.m1-detalle .sb-dot {width:6px;height:6px;border-radius:50%;margin-left:auto;flex-shrink:0}
+.m1-detalle .progress-mini {height:3px;background:var(--bd);border-radius:2px;margin:2px 10px 8px;overflow:hidden}
+.m1-detalle .progress-fill {height:100%;border-radius:2px;transition:width .5s}
+.m1-detalle /* CONTENT */
+#content {flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px}
+.m1-detalle /* TABS */
+.tab-panel {display:none}
+.m1-detalle .tab-panel.active {display:block}
+.m1-detalle /* TOPIC HEADER */
+.topic-hdr {display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:12px}
+.m1-detalle .topic-title {font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1.1}
+.m1-detalle .topic-sub {font-size:13px;color:var(--tx2);margin-top:4px;font-weight:400}
+.m1-detalle .topic-badge {padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;white-space:nowrap;flex-shrink:0}
+.m1-detalle /* CARDS */
+.grid-2 {display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.m1-detalle .grid-3 {display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.m1-detalle .grid-4 {display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.m1-detalle .card {background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:18px;position:relative;overflow:hidden}
+.m1-detalle .card-accent {position:absolute;top:0;left:0;right:0;height:3px}
+.m1-detalle .card-label {font-size:9px;font-weight:700;letter-spacing:3px;color:var(--tx3);margin-bottom:10px;font-family:'JetBrains Mono',monospace}
+.m1-detalle .card-title {font-size:16px;font-weight:700;margin-bottom:8px}
+.m1-detalle .card-body {font-size:13px;color:var(--tx2);line-height:1.7}
+.m1-detalle /* KPI CARDS */
+.kpi {background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px;text-align:center}
+.m1-detalle .kpi-val {font-size:28px;font-weight:900;line-height:1}
+.m1-detalle .kpi-label {font-size:10px;color:var(--tx3);margin-top:4px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+.m1-detalle /* FORMULA BOX */
+.formula {background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);padding:14px 18px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--c2);border-left:4px solid var(--c2)}
+.m1-detalle .formula-title {font-size:9px;letter-spacing:2px;color:var(--tx3);margin-bottom:6px;font-family:'JetBrains Mono',monospace}
+.m1-detalle /* EXAMPLE BOX */
+.example {background:linear-gradient(135deg,rgba(6,214,160,0.08),rgba(6,214,160,0.03));border:1px solid rgba(6,214,160,0.2);border-radius:var(--r);padding:14px 18px;margin:10px 0}
+.m1-detalle .example-label {font-size:9px;font-weight:700;letter-spacing:2px;color:var(--c3);margin-bottom:8px;font-family:'JetBrains Mono',monospace}
+.m1-detalle .example-step {display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;font-size:13px}
+.m1-detalle .step-num {background:var(--c3);color:#000;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.m1-detalle .step-text {color:var(--tx2);line-height:1.5}
+.m1-detalle .step-math {font-family:'JetBrains Mono',monospace;color:var(--tx);font-size:13px}
+.m1-detalle /* WARNING / TIP */
+.tip {background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.25);border-radius:var(--r);padding:12px 16px;margin:10px 0;display:flex;gap:10px;align-items:flex-start}
+.m1-detalle .tip-icon {font-size:18px;flex-shrink:0}
+.m1-detalle .tip-text {font-size:12px;color:var(--tx2);line-height:1.6}
+.m1-detalle .tip-text strong {color:var(--c1)}
+.m1-detalle .info {background:rgba(17,138,178,0.08);border:1px solid rgba(17,138,178,0.25);border-radius:var(--r);padding:12px 16px;margin:10px 0;display:flex;gap:10px;align-items:flex-start}
+.m1-detalle .info-text {font-size:12px;color:var(--tx2);line-height:1.6}
+.m1-detalle .info-text strong {color:var(--c4)}
+.m1-detalle /* PROPERTY TABLE */
+.prop-table {width:100%;border-collapse:collapse;margin:10px 0}
+.m1-detalle .prop-table th {background:var(--bg3);padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-align:left;color:var(--tx3);font-family:'JetBrains Mono',monospace}
+.m1-detalle .prop-table td {padding:10px 14px;font-size:13px;border-bottom:1px solid var(--bd);color:var(--tx2)}
+.m1-detalle .prop-table td:first-child {font-family:'JetBrains Mono',monospace;color:var(--c2);font-weight:600}
+.m1-detalle .prop-table tr:last-child td {border-bottom:none}
+.m1-detalle .prop-table tr:hover td {background:var(--bg3)}
+.m1-detalle /* RECTA NUMERICA */
+.recta {background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);padding:20px;margin:10px 0;text-align:center;overflow-x:auto}
+.m1-detalle .recta svg {max-width:100%;overflow:visible}
+.m1-detalle /* EJERCICIO */
+.quiz-wrap {background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:20px;margin-bottom:14px}
+.m1-detalle .quiz-meta {display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.m1-detalle .quiz-num {background:var(--c1);color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace}
+.m1-detalle .quiz-diff {font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:1px}
+.m1-detalle .diff-easy {background:rgba(6,214,160,0.15);color:var(--c3)}
+.m1-detalle .diff-med {background:rgba(255,210,63,0.15);color:var(--c2)}
+.m1-detalle .diff-hard {background:rgba(239,71,111,0.15);color:var(--c5)}
+.m1-detalle .quiz-q {font-size:15px;font-weight:600;line-height:1.6;margin-bottom:16px;color:var(--tx)}
+.m1-detalle .quiz-q .math {font-family:'JetBrains Mono',monospace;background:var(--bg3);padding:2px 7px;border-radius:5px;color:var(--c2)}
+.m1-detalle .options {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.m1-detalle .opt {padding:11px 16px;border-radius:var(--r);border:1.5px solid var(--bd);background:var(--bg3);cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;text-align:left;color:var(--tx2);display:flex;align-items:center;gap:8px}
+.m1-detalle .opt:hover:not(:disabled) {border-color:var(--c1);color:var(--tx);background:rgba(255,107,53,0.08)}
+.m1-detalle .opt.correct {border-color:var(--c3)!important;background:rgba(6,214,160,0.12)!important;color:var(--c3)!important}
+.m1-detalle .opt.wrong {border-color:var(--c5)!important;background:rgba(239,71,111,0.12)!important;color:var(--c5)!important}
+.m1-detalle .opt:disabled {cursor:default}
+.m1-detalle .opt-letter {width:24px;height:24px;border-radius:50%;background:var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.m1-detalle .feedback {display:none;padding:12px 16px;border-radius:var(--r);margin-top:4px;font-size:13px;line-height:1.6}
+.m1-detalle .feedback.show {display:block}
+.m1-detalle .feedback.ok {background:rgba(6,214,160,0.1);border:1px solid rgba(6,214,160,0.3);color:var(--c3)}
+.m1-detalle .feedback.nk {background:rgba(239,71,111,0.1);border:1px solid rgba(239,71,111,0.3);color:var(--tx2)}
+.m1-detalle .next-btn {margin-top:10px;padding:10px 24px;border-radius:var(--r);border:none;background:var(--c1);color:#fff;font-size:13px;font-weight:700;cursor:pointer;display:none;font-family:'Outfit',sans-serif;transition:opacity .2s}
+.m1-detalle .next-btn:hover {opacity:.85}
+.m1-detalle .next-btn.show {display:block}
+.m1-detalle /* SECTION HEADING */
+.sec-h {font-size:18px;font-weight:800;margin:24px 0 12px;display:flex;align-items:center;gap:10px}
+.m1-detalle .sec-h::after {content:'';flex:1;height:1px;background:var(--bd)}
+.m1-detalle .sec-tag {font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:1px}
+.m1-detalle /* SCORE PANEL */
+.score-panel {background:linear-gradient(135deg,rgba(6,214,160,0.1),rgba(6,214,160,0.03));border:1px solid rgba(6,214,160,0.2);border-radius:var(--r2);padding:20px;text-align:center;margin-top:20px}
+.m1-detalle .score-big {font-size:52px;font-weight:900;color:var(--c3);line-height:1}
+.m1-detalle .score-label {font-size:13px;color:var(--tx2);margin-top:8px}
+.m1-detalle .retry-btn {margin-top:16px;padding:11px 28px;border-radius:var(--r);border:none;background:var(--c3);color:#000;font-size:13px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif}
+.m1-detalle /* RECTA NUMERICA INTERACTIVA */
+.recta-container {margin:10px 0}
+.m1-detalle /* BOTTOM NAV (mobile) */
+#bnav {display:none;background:var(--bg2);border-top:2px solid var(--bd);flex-shrink:0}
+.m1-detalle .bn-inner {display:flex;max-width:1200px;margin:0 auto}
+.m1-detalle .bn-item {flex:1;padding:10px 4px 13px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border-top:3px solid transparent;margin-top:-2px;border:none;background:none}
+.m1-detalle .bn-item.active {border-top:3px solid var(--c1);margin-top:-2px}
+.m1-detalle .bn-icon {font-size:20px}
+.m1-detalle .bn-label {font-size:8px;font-weight:700;letter-spacing:1px;color:var(--tx3);font-family:'JetBrains Mono',monospace}
+.m1-detalle .bn-item.active .bn-label {color:var(--tx)}
+@media(max-width:768px) {
+.m1-detalle #sidebar {display:none}
+.m1-detalle #bnav {display:block}
+.m1-detalle #main {flex-direction:column}
+.m1-detalle .grid-2, .m1-detalle .grid-3, .m1-detalle .grid-4 {grid-template-columns:1fr}
+.m1-detalle .options {grid-template-columns:1fr}
+.m1-detalle .topic-hdr {flex-direction:column}
+.m1-detalle #content {padding:14px}
+
+}
+@media(min-width:769px) and (max-width:1024px) {
+.m1-detalle #sidebar {width:180px}
+.m1-detalle .grid-4 {grid-template-columns:repeat(2,1fr)}
+
+}
+
+/* Overrides de legibilidad (tema claro) */
+.card-label, .kpi-label, .kpi-lbl, .qem-lbl, .formula-title, .example-label, 
+.rst-lbl, .sh-tag, .sec-tag, .step-label, .hero-eyebrow, .sb-section,
+.q-header-info, .hdr-score-label { color: #5B6785 !important; font-weight:700; }
+.card-body, .topic-sub, .hero-sub, .eje-topic, .rst-txt { color: #3A4560 !important; }
+.tip-text { color: #1F2A44 !important; }
+.prop-table td, .prop-table th { color: #1F2A44 !important; }
+
+</style>
+</head>
+<body>
+
+<div id="top">
+  <div class="top-brand">
+    <div class="top-logo">P</div>
+    <div class="top-title" style="font-size:14px;line-height:1.1"><span style="font-weight:800;letter-spacing:.5px">MARTÍN</span><br><span style="font-size:11px;font-weight:600;letter-spacing:1.5px;opacity:.85">PAES <em>2027</em></span></div>
+  </div>
+  <div class="top-right">
+    <span class="badge badge-ing">⚙ ING + M2</span>
+    <span class="badge badge-year">DEMRE</span>
+  </div>
+</div>
+
+<div id="layout">
+<div id="sb">
+  <div class="sb-sec">INICIO</div>
+  <button class="sbb active" id="sb-inicio" style="color:var(--m1)" onclick="go('inicio',this)">
+    <span class="sbi">⌂</span><span class="sbl">Resumen</span>
+  </button>
+  <div class="sb-sec">OBLIGATORIAS</div>
+  <button class="sbb" id="sb-m1" style="color:var(--m1)" onclick="go('m1',this)">
+    <span class="sbi">M1</span><span class="sbl">Matemática 1</span><span class="sb-dot" style="background:var(--m1)"></span>
+  </button>
+  <div class="sb-prog"><div class="sb-pf" id="pr-m1" style="width:0%;background:var(--m1)"></div></div>
+  <button class="sbb" id="sb-lectora" style="color:var(--cl)" onclick="go('lectora',this)">
+    <span class="sbi">CL</span><span class="sbl">Comp. Lectora</span><span class="sb-dot" style="background:var(--cl)"></span>
+  </button>
+  <div class="sb-sec">ELECTIVAS</div>
+  <button class="sbb" id="sb-m2" style="color:var(--m2)" onclick="go('m2',this)">
+    <span class="sbi">M2</span><span class="sbl">Matemática 2</span><span class="sb-dot" style="background:var(--m2)"></span>
+  </button>
+  <div class="sb-prog"><div class="sb-pf" id="pr-m2" style="width:0%;background:var(--m2)"></div></div>
+  <button class="sbb" id="sb-ciencias" style="color:var(--ci)" onclick="go('ciencias',this)">
+    <span class="sbi">Ci</span><span class="sbl">Ciencias</span><span class="sb-dot" style="background:var(--ci)"></span>
+  </button>
+  <button class="sbb" id="sb-historia" style="color:var(--hi)" onclick="go('historia',this)">
+    <span class="sbi">Hi</span><span class="sbl">Historia</span><span class="sb-dot" style="background:var(--hi)"></span>
+  </button>
+  <div class="sb-sec">ESTRATEGIA</div>
+  <button class="sbb" id="sb-puntaje" style="color:var(--ci)" onclick="go('puntaje',this)">
+    <span class="sbi">⊙</span><span class="sbl">Simulador</span>
+  </button>
+  <button class="sbb" id="sb-carreras" style="color:var(--m2)" onclick="go('carreras',this)">
+    <span class="sbi">🏛</span><span class="sbl">Carreras M2</span>
+  </button>
+</div>
+
+<div id="content">
+
+<!-- ═══ INICIO ═══ -->
+<div class="tp active" id="tab-inicio">
+  <div class="hero">
+    <div class="hero-orb" style="background:var(--m2);width:220px;height:220px;top:-60px;right:-60px"></div>
+    <div class="hero-orb" style="background:var(--m1);width:150px;height:150px;bottom:-40px;left:30%"></div>
+    <div class="hero-eyebrow">PROCESO ADMISIÓN 2027 · DEMRE</div>
+    <div class="hero-h">Tu ruta hacia<br><span style="background:linear-gradient(90deg,var(--m1),var(--m2),var(--cl));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Ingeniería</span></div>
+    <div class="hero-sub">Temarios oficiales + 3 modos de práctica: Quiz A-D con corrección inmediata, Ensayo con puntaje acumulado, y Flashcards para repasar. 20+ preguntas por prueba.</div>
+  </div>
+  <div class="sh">Las pruebas PAES <span class="sh-tag" style="background:var(--m1l);border-color:rgba(255,92,138,.25);color:var(--m1)">2027</span></div>
+  <div class="pruebas-grid">
+    <div class="pcard" style="color:var(--m1)" onclick="go('m1',document.getElementById('sb-m1'))">
+      <div class="pcard-accent"></div>
+      <div class="pcard-label">OBLIGATORIA</div>
+      <div class="pcard-name" style="color:var(--m1)">Matemática 1</div>
+      <div class="pcard-type" style="background:var(--ingb);border:1px solid rgba(239,68,68,.25);color:var(--ing)">OBLIGATORIA · TODAS</div>
+      <div class="pcard-stats">
+        <div><div class="psv" style="color:var(--m1)">65</div><div class="psl">PREG.</div></div>
+        <div><div class="psv" style="color:var(--m1)">2h20</div><div class="psl">DURAC.</div></div>
+        <div><div class="psv" style="color:var(--ci)">20✏</div><div class="psl">BANCO</div></div>
+      </div>
+    </div>
+    <div class="pcard" style="color:var(--m2)" onclick="go('m2',document.getElementById('sb-m2'))">
+      <div class="pcard-accent"></div>
+      <div class="pcard-corner" style="background:var(--ingb);border-color:rgba(239,68,68,.25);color:var(--ing)">⚙ ING</div>
+      <div class="pcard-label">ELECTIVA</div>
+      <div class="pcard-name" style="color:var(--m2)">Matemática 2</div>
+      <div class="pcard-type" style="background:var(--m2l);border:1px solid rgba(139,92,246,.25);color:var(--m2)">REQUERIDA · INGENIERÍA</div>
+      <div class="pcard-stats">
+        <div><div class="psv" style="color:var(--m2)">65</div><div class="psl">PREG.</div></div>
+        <div><div class="psv" style="color:var(--m2)">2h20</div><div class="psl">DURAC.</div></div>
+        <div><div class="psv" style="color:var(--ci)">20✏</div><div class="psl">BANCO</div></div>
+      </div>
+    </div>
+    <div class="pcard" style="color:var(--cl)" onclick="go('lectora',document.getElementById('sb-lectora'))">
+      <div class="pcard-accent"></div>
+      <div class="pcard-label">OBLIGATORIA</div>
+      <div class="pcard-name" style="color:var(--cl)">Comp. Lectora</div>
+      <div class="pcard-type" style="background:var(--ingb);border:1px solid rgba(239,68,68,.25);color:var(--ing)">OBLIGATORIA · TODAS</div>
+      <div class="pcard-stats">
+        <div><div class="psv" style="color:var(--cl)">65</div><div class="psl">PREG.</div></div>
+        <div><div class="psv" style="color:var(--cl)">2h30</div><div class="psl">DURAC.</div></div>
+        <div><div class="psv" style="color:var(--ci)">20✏</div><div class="psl">BANCO</div></div>
+      </div>
+    </div>
+    <div class="pcard" style="color:var(--ci)" onclick="go('ciencias',document.getElementById('sb-ciencias'))">
+      <div class="pcard-accent"></div>
+      <div class="pcard-label">ELECTIVA</div>
+      <div class="pcard-name" style="color:var(--ci)">Ciencias</div>
+      <div class="pcard-type" style="background:var(--cil);border:1px solid rgba(16,185,129,.25);color:var(--ci)">MUY RECOMENDADA · ING.</div>
+      <div class="pcard-stats">
+        <div><div class="psv" style="color:var(--ci)">80</div><div class="psl">PREG.</div></div>
+        <div><div class="psv" style="color:var(--ci)">2h40</div><div class="psl">DURAC.</div></div>
+        <div><div class="psv" style="color:var(--ci)">20✏</div><div class="psl">BANCO</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="sh">3 modos de práctica <span class="sh-tag" style="background:var(--m2l);border-color:rgba(139,92,246,.25);color:var(--m2)">INTEGRADOS</span></div>
+  <div class="eje-grid">
+    <div class="eje" style="border-left-color:var(--m2)">
+      <div class="eje-icon">✏️</div>
+      <div class="eje-title" style="color:var(--m2)">Quiz A-D</div>
+      <div style="font-size:11px;color:var(--tx2);margin-top:6px;line-height:1.6">4 alternativas por pregunta. Elige, ve si acertaste y lee la explicación inmediata. Avanza a tu ritmo.</div>
+    </div>
+    <div class="eje" style="border-left-color:var(--ci)">
+      <div class="eje-icon">🏆</div>
+      <div class="eje-title" style="color:var(--ci)">Ensayo cronometrado</div>
+      <div style="font-size:11px;color:var(--tx2);margin-top:6px;line-height:1.6">Responde sin ver feedback hasta el final. Puntaje total + revisión completa pregunta por pregunta.</div>
+    </div>
+    <div class="eje" style="border-left-color:var(--m1)">
+      <div class="eje-icon">🃏</div>
+      <div class="eje-title" style="color:var(--m1)">Flashcards</div>
+      <div style="font-size:11px;color:var(--tx2);margin-top:6px;line-height:1.6">Ve la pregunta, piensa la respuesta, gira la tarjeta. Marca si lo sabías o no. Ideal para repasar rápido.</div>
+    </div>
+    <div class="eje" style="border-left-color:var(--hi)">
+      <div class="eje-icon">📊</div>
+      <div class="eje-title" style="color:var(--hi)">Puntaje acumulado</div>
+      <div style="font-size:11px;color:var(--tx2);margin-top:6px;line-height:1.6">Barra de progreso en tiempo real, puntos por pregunta correcta y revisión final con todas las explicaciones.</div>
+    </div>
+  </div>
+  <div class="sh">Prioridad para Ingeniería <span class="sh-tag" style="background:var(--ingb);border-color:rgba(239,68,68,.25);color:var(--ing)">ESTRATEGIA</span></div>
+  <div class="priority-table">
+    <div class="priority-row">
+      <div class="pr-rank" style="background:var(--m1l);border-color:rgba(255,92,138,.25);color:var(--m1)">#1</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--m1)">PAES M1</div><div style="font-size:11px;color:var(--tx2);margin-top:2px">Obligatoria. Números, Álgebra, Geometría, Probabilidad.</div></div>
+      <div style="font-size:12px;letter-spacing:-2px">⭐⭐⭐⭐⭐</div>
+      <div class="pr-badge" style="background:var(--ingb);border-color:rgba(239,68,68,.3);color:var(--ing)">CRÍTICA</div>
+    </div>
+    <div class="priority-row">
+      <div class="pr-rank" style="background:var(--m2l);border-color:rgba(139,92,246,.25);color:var(--m2)">#2</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--m2)">PAES M2</div><div style="font-size:11px;color:var(--tx2);margin-top:2px">Requerida por todas las universidades. Sin ella no puedes postular.</div></div>
+      <div style="font-size:12px;letter-spacing:-2px">⭐⭐⭐⭐⭐</div>
+      <div class="pr-badge" style="background:var(--ingb);border-color:rgba(239,68,68,.3);color:var(--ing)">CRÍTICA</div>
+    </div>
+    <div class="priority-row">
+      <div class="pr-rank" style="background:var(--cil);border-color:rgba(16,185,129,.25);color:var(--ci)">#3</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--ci)">Ciencias</div><div style="font-size:11px;color:var(--tx2);margin-top:2px">Física y Química ponderan fuerte en Ing. Civil, Eléctrica, Química.</div></div>
+      <div style="font-size:12px;letter-spacing:-2px">⭐⭐⭐⭐</div>
+      <div class="pr-badge" style="background:var(--cil);border-color:rgba(16,185,129,.25);color:var(--ci)">ALTA</div>
+    </div>
+    <div class="priority-row">
+      <div class="pr-rank" style="background:var(--cll);border-color:rgba(6,182,212,.25);color:var(--cl)">#4</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--cl)">Comp. Lectora</div><div style="font-size:11px;color:var(--tx2);margin-top:2px">Obligatoria. Con buen nivel es suficiente — no es el diferenciador.</div></div>
+      <div style="font-size:12px;letter-spacing:-2px">⭐⭐⭐</div>
+      <div class="pr-badge" style="background:var(--cll);border-color:rgba(6,182,212,.25);color:var(--cl)">MEDIA</div>
+    </div>
+    <div class="priority-row">
+      <div class="pr-rank" style="background:var(--hil);border-color:rgba(245,158,11,.25);color:var(--hi)">#5</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--hi)">Historia</div><div style="font-size:11px;color:var(--tx2);margin-top:2px">Pocas carreras de ingeniería la ponderan. Solo si tienes tiempo extra.</div></div>
+      <div style="font-size:12px;letter-spacing:-2px">⭐⭐</div>
+      <div class="pr-badge" style="background:var(--hil);border-color:rgba(245,158,11,.25);color:var(--hi)">BAJA</div>
+    </div>
+  </div>
+  <div class="ibox" style="background:var(--ingb);border-color:rgba(239,68,68,.25)">
+    <span class="ibox-icon">⚙</span>
+    <div><div class="ibox-title" style="color:var(--ing)">Para Ingeniería Civil (UChile, PUC, USM, etc.)</div>
+    <div class="ibox-text">Ponderación típica: <strong>M1: 20-30%</strong>, <strong>M2: 10-20%</strong>, NEM: 20%, Ranking: 30%. Sin M2 no puedes postular a ninguna ingeniería acreditada.</div></div>
+  </div>
+</div>
+
+<!-- ═══ M1 ═══ -->
+<div class="tp" id="tab-m1">
+  <div class="hero">
+    <div class="hero-orb" style="background:var(--m1);width:220px;height:220px;top:-60px;right:-60px"></div>
+    <div class="hero-eyebrow">PAES OBLIGATORIA · ADMISIÓN 2027</div>
+    <div class="hero-h" style="color:var(--m1)">Matemática 1</div>
+    <div class="hero-sub">65 preguntas · 60 válidas · 2h 20min · 4 habilidades: Resolver, Modelar, Representar, Argumentar</div>
+  </div>
+  <div class="stabs">
+    <button class="stab active" onclick="showSub('m1','temario',this)">📋 Temario</button>
+    <button class="stab" onclick="showSub('m1','enteros',this)">ℤ Enteros</button>
+    <button class="stab" onclick="showSub('m1','racionales',this)">ℚ Racionales</button>
+    <button class="stab" onclick="showSub('m1','potencias',this)">xⁿ Potencias</button>
+    <button class="stab" onclick="showSub('m1','jerarquia',this)">≡ Jerarquía</button>
+    <button class="stab" onclick="showSub('m1','practica',this)">✏️ Practicar (20 preguntas)</button>
+  </div>
+  <div class="subtab active" id="st-m1-temario">
+    <div class="sh">4 Habilidades Evaluadas</div>
+    <div class="hab-grid">
+      <div class="hab"><div class="hab-num">01</div><div class="hab-icon">🧩</div><div class="hab-name" style="color:var(--m1)">Resolver Problemas</div><div class="hab-desc">Solucionar situaciones con cálculos, estrategias e interpretación. Rutinario o no rutinario.</div></div>
+      <div class="hab"><div class="hab-num">02</div><div class="hab-icon">📐</div><div class="hab-name" style="color:var(--m1)">Modelar</div><div class="hab-desc">Usar expresiones matemáticas para describir situaciones reales. Interpretar parámetros.</div></div>
+      <div class="hab"><div class="hab-num">03</div><div class="hab-icon">📊</div><div class="hab-name" style="color:var(--m1)">Representar</div><div class="hab-desc">Transferir información usando tablas, gráficos, recta numérica o plano cartesiano.</div></div>
+      <div class="hab"><div class="hab-num">04</div><div class="hab-icon">💡</div><div class="hab-name" style="color:var(--m1)">Argumentar</div><div class="hab-desc">Evaluar validez de procedimientos, detectar errores en demostraciones matemáticas.</div></div>
+    </div>
+    <div class="sh">Eje 1 — Números <span class="sh-tag" style="background:var(--m1l);border-color:rgba(255,92,138,.25);color:var(--m1)">OFICIAL</span></div>
+    <div class="eje-grid">
+      <div class="eje" style="border-left-color:var(--m1)"><div class="eje-icon">ℤ</div><div class="eje-title">Enteros y Racionales</div><div class="eje-topics"><div class="eje-topic">Operaciones y orden en ℤ</div><div class="eje-topic">Operaciones y comparación en ℚ</div><div class="eje-topic">Problemas contextualizados</div></div></div>
+      <div class="eje" style="border-left-color:var(--m1)"><div class="eje-icon">%</div><div class="eje-title">Porcentaje</div><div class="eje-topics"><div class="eje-topic">Concepto y cálculo</div><div class="eje-topic">Variación porcentual</div><div class="eje-topic">Problemas contextualizados</div></div></div>
+      <div class="eje" style="border-left-color:var(--m1)"><div class="eje-icon">xⁿ</div><div class="eje-title">Potencias y Raíces</div><div class="eje-topics"><div class="eje-topic">Propiedades de potencias</div><div class="eje-topic">Descomposición de raíces en ℝ</div></div></div>
+    </div>
+    <div class="sh">Eje 2 — Álgebra y Funciones</div>
+    <div class="eje-grid">
+      <div class="eje" style="border-left-color:rgba(255,92,138,.5)"><div class="eje-icon">🔣</div><div class="eje-title">Expresiones Algebraicas</div><div class="eje-topics"><div class="eje-topic">Productos notables</div><div class="eje-topic">Factorizaciones</div><div class="eje-topic">Operatoria algebraica</div></div></div>
+      <div class="eje" style="border-left-color:rgba(255,92,138,.5)"><div class="eje-icon">⚖️</div><div class="eje-title">Proporcionalidad</div><div class="eje-topics"><div class="eje-topic">Proporción directa e inversa</div><div class="eje-topic">Problemas contextualizados</div></div></div>
+      <div class="eje" style="border-left-color:rgba(255,92,138,.5)"><div class="eje-icon">📏</div><div class="eje-title">Ecuaciones e Inecuaciones</div><div class="eje-topics"><div class="eje-topic">Lineales: ecuaciones e inecuaciones</div><div class="eje-topic">Sistemas 2×2</div></div></div>
+      <div class="eje" style="border-left-color:rgba(255,92,138,.5)"><div class="eje-icon">📈</div><div class="eje-title">Funciones Lineal y Cuadrática</div><div class="eje-topics"><div class="eje-topic">Función lineal, afín y cuadrática</div><div class="eje-topic">Vértice, ceros, intersecciones</div></div></div>
+    </div>
+    <div class="sh">Eje 3 — Geometría</div>
+    <div class="eje-grid">
+      <div class="eje" style="border-left-color:rgba(255,92,138,.3)"><div class="eje-icon">📐</div><div class="eje-title">Figuras Geométricas</div><div class="eje-topics"><div class="eje-topic">Teorema de Pitágoras</div><div class="eje-topic">Perímetro y áreas planas</div></div></div>
+      <div class="eje" style="border-left-color:rgba(255,92,138,.3)"><div class="eje-icon">📦</div><div class="eje-title">Cuerpos Geométricos</div><div class="eje-topics"><div class="eje-topic">Área y volumen de sólidos</div></div></div>
+      <div class="eje" style="border-left-color:rgba(255,92,138,.3)"><div class="eje-icon">🔄</div><div class="eje-title">Transformaciones Isométricas</div><div class="eje-topics"><div class="eje-topic">Rotación, traslación, reflexión</div></div></div>
+      <div class="eje" style="border-left-color:rgba(255,92,138,.3)"><div class="eje-icon">🔍</div><div class="eje-title">Semejanza</div><div class="eje-topics"><div class="eje-topic">Propiedades de semejanza y escala</div></div></div>
+    </div>
+    <div class="sh">Eje 4 — Probabilidad y Estadística</div>
+    <div class="eje-grid">
+      <div class="eje" style="border-left-color:rgba(255,92,138,.15)"><div class="eje-icon">📊</div><div class="eje-title">Tablas y Gráficos</div><div class="eje-topics"><div class="eje-topic">Frecuencia absoluta y relativa</div><div class="eje-topic">Promedio de datos</div></div></div>
+      <div class="eje" style="border-left-color:rgba(255,92,138,.15)"><div class="eje-icon">📦</div><div class="eje-title">Medidas de Posición</div><div class="eje-topics"><div class="eje-topic">Cuartiles y percentiles</div><div class="eje-topic">Diagrama de cajón</div></div></div>
+      <div class="eje" style="border-left-color:rgba(255,92,138,.15)"><div class="eje-icon">🎲</div><div class="eje-title">Reglas de Probabilidad</div><div class="eje-topics"><div class="eje-topic">Probabilidad de un evento</div><div class="eje-topic">Regla aditiva y multiplicativa</div></div></div>
+    </div>
+  </div>
+  <div class="subtab" id="st-m1-enteros">
+    <div class="m1-detalle">
+<div class="topic-hdr">
+    <div>
+      <div class="topic-title" style="color:var(--c1)">Números Enteros</div>
+      <div class="topic-sub">Conjunto ℤ = {..., −3, −2, −1, 0, 1, 2, 3, ...} · Operaciones · Valor Absoluto</div>
+    </div>
+    <span class="topic-badge" style="background:rgba(255,107,53,0.15);color:var(--c1)">ℤ ENTEROS</span>
+  </div>
+
+  <div class="grid-4">
+    <div class="kpi"><div class="kpi-val" style="color:var(--c1)">∞</div><div class="kpi-label">CONJUNTO INFINITO</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c2)">0</div><div class="kpi-label">NEUTRO ADITIVO</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c3)">1</div><div class="kpi-label">NEUTRO MULT.</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c4)">|a|</div><div class="kpi-label">VALOR ABSOLUTO</div></div>
+  </div>
+
+  <div class="sec-h">Recta Numérica <span class="sec-tag" style="background:rgba(255,107,53,0.15);color:var(--c1)">VISUALIZACIÓN</span></div>
+  <div class="recta">
+    <svg viewBox="0 0 500 80" width="500" height="80">
+      <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#94A3B8"/></marker></defs>
+      <line x1="20" y1="40" x2="480" y2="40" stroke="#94A3B8" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="20" y1="40" x2="20" y2="40" stroke="#94A3B8" stroke-width="2"/>
+      <g font-family="JetBrains Mono,monospace" font-size="12">
+        <line x1="20" y1="35" x2="20" y2="45" stroke="#E74C3C" stroke-width="2"/>
+        <text x="20" y="62" text-anchor="middle" fill="#94A3B8">...</text>
+        <line x1="80" y1="35" x2="80" y2="45" stroke="#E74C3C" stroke-width="2"/>
+        <text x="80" y="62" text-anchor="middle" fill="#EF476F">−3</text>
+        <line x1="140" y1="35" x2="140" y2="45" stroke="#E74C3C" stroke-width="2"/>
+        <text x="140" y="62" text-anchor="middle" fill="#EF476F">−2</text>
+        <line x1="200" y1="35" x2="200" y2="45" stroke="#E74C3C" stroke-width="2"/>
+        <text x="200" y="62" text-anchor="middle" fill="#EF476F">−1</text>
+        <line x1="260" y1="30" x2="260" y2="50" stroke="#06D6A0" stroke-width="3"/>
+        <text x="260" y="66" text-anchor="middle" fill="#06D6A0" font-weight="bold">0</text>
+        <line x1="320" y1="35" x2="320" y2="45" stroke="#118AB2" stroke-width="2"/>
+        <text x="320" y="62" text-anchor="middle" fill="#118AB2">1</text>
+        <line x1="380" y1="35" x2="380" y2="45" stroke="#118AB2" stroke-width="2"/>
+        <text x="380" y="62" text-anchor="middle" fill="#118AB2">2</text>
+        <line x1="440" y1="35" x2="440" y2="45" stroke="#118AB2" stroke-width="2"/>
+        <text x="440" y="62" text-anchor="middle" fill="#118AB2">3</text>
+        <text x="465" y="62" text-anchor="middle" fill="#94A3B8">...</text>
+        <text x="200" y="20" text-anchor="middle" fill="#EF476F" font-size="10">NEGATIVOS</text>
+        <text x="380" y="20" text-anchor="middle" fill="#118AB2" font-size="10">POSITIVOS</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="sec-h">Valor Absoluto <span class="sec-tag" style="background:rgba(255,210,63,0.15);color:var(--c2)">CONCEPTO CLAVE</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-accent" style="background:var(--c2)"></div>
+      <div class="card-label">DEFINICIÓN</div>
+      <div class="formula-title">VALOR ABSOLUTO</div>
+      <div class="formula">|a| = a, si a ≥ 0<br>|a| = −a, si a &lt; 0</div>
+      <div class="card-body">Es la <strong style="color:var(--tx)">distancia</strong> de un número al cero en la recta numérica. Siempre es <strong style="color:var(--c2)">positivo o cero</strong>.</div>
+    </div>
+    <div class="card">
+      <div class="card-accent" style="background:var(--c3)"></div>
+      <div class="card-label">EJEMPLOS</div>
+      <div class="example">
+        <div class="example-label">CÁLCULO</div>
+        <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">|−7| = 7</span> (distancia de −7 al 0)</span></div>
+        <div class="example-step"><span class="step-num">2</span><span class="step-text"><span class="step-math">|5| = 5</span> (ya es positivo)</span></div>
+        <div class="example-step"><span class="step-num">3</span><span class="step-text"><span class="step-math">|0| = 0</span> (el cero está en el cero)</span></div>
+        <div class="example-step"><span class="step-num">4</span><span class="step-text"><span class="step-math">|−3| + |4| = 3 + 4 = 7</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-h">Operaciones con Enteros <span class="sec-tag" style="background:rgba(17,138,178,0.15);color:var(--c4)">OPERATORIA</span></div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-accent" style="background:var(--c1)"></div>
+    <div class="card-label">SUMA Y RESTA</div>
+    <table class="prop-table">
+      <thead><tr><th>CASO</th><th>REGLA</th><th>EJEMPLO</th></tr></thead>
+      <tbody>
+        <tr><td>(+) + (+)</td><td>Se suman, resultado positivo</td><td style="color:var(--c3)">3 + 5 = 8</td></tr>
+        <tr><td>(−) + (−)</td><td>Se suman, resultado negativo</td><td style="color:var(--c5)">−3 + (−5) = −8</td></tr>
+        <tr><td>(+) + (−)</td><td>Se restan, signo del mayor valor absoluto</td><td style="color:var(--c3)">7 + (−3) = 4</td></tr>
+        <tr><td>a − (−b)</td><td>Menos por menos = más: a + b</td><td style="color:var(--c2)">5 − (−2) = 7</td></tr>
+      </tbody>
+    </table>
+    <div class="tip" style="margin-top:10px">
+      <span class="tip-icon">⚡</span>
+      <div class="tip-text"><strong>Regla de signos en resta:</strong> dos signos iguales juntos → positivo. Dos signos distintos → negativo. Ej: 5 − (−3) = 5 + 3 = 8</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-accent" style="background:var(--c2)"></div>
+    <div class="card-label">MULTIPLICACIÓN Y DIVISIÓN</div>
+    <div class="grid-2" style="margin-top:8px">
+      <div>
+        <div class="formula-title">LEY DE SIGNOS</div>
+        <div class="formula">(+)(+) = (+)<br>(−)(−) = (+)<br>(+)(−) = (−)<br>(−)(+) = (−)</div>
+      </div>
+      <div>
+        <div class="example">
+          <div class="example-label">EJEMPLOS</div>
+          <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">(−3) × (−4) = +12</span></span></div>
+          <div class="example-step"><span class="step-num">2</span><span class="step-text"><span class="step-math">(−6) × (2) = −12</span></span></div>
+          <div class="example-step"><span class="step-num">3</span><span class="step-text"><span class="step-math">(−15) ÷ (−3) = 5</span></span></div>
+          <div class="example-step"><span class="step-num">4</span><span class="step-text"><span class="step-math">(−20) ÷ (4) = −5</span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">🎯</span>
+      <div class="tip-text"><strong>Truco PAES:</strong> cuenta cuántos signos negativos hay en la multiplicación. Si son <strong>pares → resultado positivo</strong>. Si son <strong>impares → resultado negativo</strong>.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-accent" style="background:var(--c3)"></div>
+    <div class="card-label">PROPIEDADES (PAES las usa mucho)</div>
+    <table class="prop-table">
+      <thead><tr><th>PROPIEDAD</th><th>FÓRMULA</th></tr></thead>
+      <tbody>
+        <tr><td>Conmutativa</td><td>a + b = b + a &nbsp;&nbsp; | &nbsp;&nbsp; a·b = b·a</td></tr>
+        <tr><td>Asociativa</td><td>(a+b)+c = a+(b+c) &nbsp;&nbsp; | &nbsp;&nbsp; (a·b)·c = a·(b·c)</td></tr>
+        <tr><td>Distributiva</td><td>a·(b+c) = a·b + a·c</td></tr>
+        <tr><td>Elemento neutro</td><td>a + 0 = a &nbsp;&nbsp; | &nbsp;&nbsp; a · 1 = a</td></tr>
+        <tr><td>Elemento opuesto</td><td>a + (−a) = 0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-h">Ejercicio Guiado <span class="sec-tag" style="background:rgba(6,214,160,0.15);color:var(--c3)">PASO A PASO</span></div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--c5)"></div>
+    <div class="card-label">PROBLEMA TIPO PAES</div>
+    <div class="card-title">¿Cuánto es (−3) × (−2) + (−4) × 3 − |−5|?</div>
+    <div class="example" style="margin-top:12px">
+      <div class="example-label">SOLUCIÓN PASO A PASO</div>
+      <div class="example-step"><span class="step-num">1</span><span class="step-text">Multiplicaciones primero: <span class="step-math">(−3)×(−2) = 6</span> y <span class="step-math">(−4)×3 = −12</span></span></div>
+      <div class="example-step"><span class="step-num">2</span><span class="step-text">Valor absoluto: <span class="step-math">|−5| = 5</span></span></div>
+      <div class="example-step"><span class="step-num">3</span><span class="step-text">Suma y resta: <span class="step-math">6 + (−12) − 5 = 6 − 12 − 5 = −11</span></span></div>
+      <div style="margin-top:8px;padding:8px 12px;background:rgba(6,214,160,0.1);border-radius:8px;font-family:'JetBrains Mono',monospace;color:var(--c3);font-size:14px;font-weight:700">Respuesta: −11</div>
+    </div>
+  </div>
+    </div>
+  </div>
+  <div class="subtab" id="st-m1-racionales">
+    <div class="m1-detalle">
+<div class="topic-hdr">
+    <div>
+      <div class="topic-title" style="color:var(--c2)">Números Racionales</div>
+      <div class="topic-sub">Conjunto ℚ = {p/q | p,q ∈ ℤ, q ≠ 0} · Fracciones · Decimales · Operaciones</div>
+    </div>
+    <span class="topic-badge" style="background:rgba(255,210,63,0.15);color:var(--c2)">ℚ RACIONALES</span>
+  </div>
+
+  <div class="grid-4">
+    <div class="kpi"><div class="kpi-val" style="color:var(--c2)">p/q</div><div class="kpi-label">FORMA FRACCIÓN</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c1)">q≠0</div><div class="kpi-label">COND. DENOMINADOR</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c3)">0.̄3</div><div class="kpi-label">DECIMAL PERIÓDICO</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c4)">MCM</div><div class="kpi-label">SUMA FRACCIONES</div></div>
+  </div>
+
+  <div class="sec-h">Fracciones Equivalentes y Simplificación</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-accent" style="background:var(--c2)"></div>
+      <div class="card-label">SIMPLIFICACIÓN</div>
+      <div class="card-body" style="margin-bottom:10px">Dividir numerador y denominador por su <strong style="color:var(--c2)">MCD</strong> (Máximo Común Divisor).</div>
+      <div class="example">
+        <div class="example-label">EJEMPLO</div>
+        <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">12/18</span> → MCD(12,18) = 6</span></div>
+        <div class="example-step"><span class="step-num">2</span><span class="step-text"><span class="step-math">12÷6 / 18÷6 = 2/3</span></span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-accent" style="background:var(--c1)"></div>
+      <div class="card-label">FRACCIONES EQUIVALENTES</div>
+      <div class="card-body" style="margin-bottom:10px">Multiplicar o dividir numerador y denominador por el mismo número ≠ 0.</div>
+      <div class="formula">1/2 = 2/4 = 3/6 = 50/100</div>
+      <div class="tip" style="margin-top:8px">
+        <span class="tip-icon">💡</span>
+        <div class="tip-text"><strong>Para comparar fracciones:</strong> reduce a denominador común o compara cruzado.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-h">Operaciones con Fracciones</div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-accent" style="background:var(--c3)"></div>
+    <div class="card-label">SUMA Y RESTA</div>
+    <div class="formula-title">REGLA GENERAL</div>
+    <div class="formula">a/b ± c/d = (a·d ± c·b) / (b·d)</div>
+    <div class="grid-2" style="margin-top:12px">
+      <div class="example">
+        <div class="example-label">MISMO DENOMINADOR</div>
+        <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">2/7 + 3/7 = 5/7</span></span></div>
+        <div class="example-step"><span class="step-num">2</span><span class="step-text">Se suman solo los numeradores</span></div>
+      </div>
+      <div class="example">
+        <div class="example-label">DISTINTO DENOMINADOR</div>
+        <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">1/3 + 1/4</span> → MCM(3,4)=12</span></div>
+        <div class="example-step"><span class="step-num">2</span><span class="step-text"><span class="step-math">4/12 + 3/12 = 7/12</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-accent" style="background:var(--c4)"></div>
+    <div class="card-label">MULTIPLICACIÓN Y DIVISIÓN</div>
+    <div class="grid-2">
+      <div>
+        <div class="formula-title">MULTIPLICACIÓN</div>
+        <div class="formula">a/b × c/d = (a·c)/(b·d)</div>
+        <div class="example" style="margin-top:8px">
+          <div class="example-label">EJEMPLO</div>
+          <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">2/3 × 3/4 = 6/12 = 1/2</span></span></div>
+        </div>
+      </div>
+      <div>
+        <div class="formula-title">DIVISIÓN (multiplica por inverso)</div>
+        <div class="formula">a/b ÷ c/d = a/b × d/c</div>
+        <div class="example" style="margin-top:8px">
+          <div class="example-label">EJEMPLO</div>
+          <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">2/3 ÷ 4/5 = 2/3 × 5/4 = 10/12 = 5/6</span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">🎯</span>
+      <div class="tip-text"><strong>Truco PAES división de fracciones:</strong> "voltea y multiplica" — invierte la segunda fracción y cambia ÷ por ×.</div>
+    </div>
+  </div>
+
+  <div class="sec-h">Decimales y Conversión</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-accent" style="background:var(--c5)"></div>
+      <div class="card-label">FRACCIÓN → DECIMAL</div>
+      <div class="example">
+        <div class="example-label">DIVIDE NUMERADOR ÷ DENOMINADOR</div>
+        <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">3/4 = 3 ÷ 4 = 0.75</span> (exacto)</span></div>
+        <div class="example-step"><span class="step-num">2</span><span class="step-text"><span class="step-math">1/3 = 0.333...</span> (periódico)</span></div>
+        <div class="example-step"><span class="step-num">3</span><span class="step-text"><span class="step-math">5/6 = 0.8333...</span> (semiperiódico)</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-accent" style="background:var(--c1)"></div>
+      <div class="card-label">DECIMAL → FRACCIÓN</div>
+      <div class="example">
+        <div class="example-label">PASOS</div>
+        <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">0.75</span> = 75/100 = <span class="step-math">3/4</span></span></div>
+        <div class="example-step"><span class="step-num">2</span><span class="step-text"><span class="step-math">0.125</span> = 125/1000 = <span class="step-math">1/8</span></span></div>
+        <div class="example-step"><span class="step-num">3</span><span class="step-text">Simplifica dividiendo por MCD</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-h">Comparación de Racionales</div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--c2)"></div>
+    <div class="card-label">ORDENAR FRACCIONES</div>
+    <table class="prop-table">
+      <thead><tr><th>MÉTODO</th><th>CÓMO SE USA</th><th>EJEMPLO</th></tr></thead>
+      <tbody>
+        <tr><td>Denominador común</td><td>Buscar MCM y comparar numeradores</td><td style="color:var(--c3)">1/2 vs 2/3 → 3/6 vs 4/6 → 1/2 &lt; 2/3</td></tr>
+        <tr><td>Producto cruzado</td><td>a/b vs c/d: comparar a·d con b·c</td><td style="color:var(--c2)">3/5 vs 4/7: 21 vs 20 → 3/5 &gt; 4/7</td></tr>
+        <tr><td>Decimal</td><td>Convertir ambas y comparar</td><td style="color:var(--c4)">5/8=0.625 vs 3/4=0.75</td></tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+  </div>
+  <div class="subtab" id="st-m1-potencias">
+    <div class="m1-detalle">
+<div class="topic-hdr">
+    <div>
+      <div class="topic-title" style="color:var(--c3)">Potencias y Raíces</div>
+      <div class="topic-sub">aⁿ = a × a × ... × a (n veces) · Propiedades · Notación Científica · Raíces</div>
+    </div>
+    <span class="topic-badge" style="background:rgba(6,214,160,0.15);color:var(--c3)">xⁿ POTENCIAS</span>
+  </div>
+
+  <div class="grid-4">
+    <div class="kpi"><div class="kpi-val" style="color:var(--c3)">aⁿ</div><div class="kpi-label">BASE^EXPONENTE</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c2)">a⁰=1</div><div class="kpi-label">EXPONENTE CERO</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c1)">a⁻ⁿ</div><div class="kpi-label">EXP. NEGATIVO</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--c4)">√a</div><div class="kpi-label">RAÍZ CUADRADA</div></div>
+  </div>
+
+  <div class="sec-h">Propiedades de las Potencias <span class="sec-tag" style="background:rgba(255,107,53,0.15);color:var(--c1)">MÁS PREGUNTADO EN PAES</span></div>
+  <table class="prop-table" style="margin-bottom:14px">
+    <thead><tr><th>PROPIEDAD</th><th>FÓRMULA</th><th>EJEMPLO</th></tr></thead>
+    <tbody>
+      <tr><td>Producto misma base</td><td style="color:var(--c2)">aᵐ · aⁿ = aᵐ⁺ⁿ</td><td style="color:var(--c3)">2³ · 2⁴ = 2⁷ = 128</td></tr>
+      <tr><td>División misma base</td><td style="color:var(--c2)">aᵐ ÷ aⁿ = aᵐ⁻ⁿ</td><td style="color:var(--c3)">3⁵ ÷ 3² = 3³ = 27</td></tr>
+      <tr><td>Potencia de potencia</td><td style="color:var(--c2)">(aᵐ)ⁿ = aᵐ·ⁿ</td><td style="color:var(--c3)">(2³)² = 2⁶ = 64</td></tr>
+      <tr><td>Potencia de producto</td><td style="color:var(--c2)">(a·b)ⁿ = aⁿ·bⁿ</td><td style="color:var(--c3)">(2·3)² = 4·9 = 36</td></tr>
+      <tr><td>Potencia de cociente</td><td style="color:var(--c2)">(a/b)ⁿ = aⁿ/bⁿ</td><td style="color:var(--c3)">(2/3)² = 4/9</td></tr>
+      <tr><td>Exponente cero</td><td style="color:var(--c2)">a⁰ = 1 (a ≠ 0)</td><td style="color:var(--c3)">5⁰ = 1 &nbsp;|&nbsp; (−3)⁰ = 1</td></tr>
+      <tr><td>Exponente negativo</td><td style="color:var(--c2)">a⁻ⁿ = 1/aⁿ</td><td style="color:var(--c3)">2⁻³ = 1/8 &nbsp;|&nbsp; 3⁻¹ = 1/3</td></tr>
+      <tr><td>Exponente fraccionario</td><td style="color:var(--c2)">a^(1/n) = ⁿ√a</td><td style="color:var(--c3)">8^(1/3) = ∛8 = 2</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec-h">Signos con Potencias</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-accent" style="background:var(--c5)"></div>
+      <div class="card-label">BASE NEGATIVA</div>
+      <div class="formula">(−a)ⁿ:
+  · n par → resultado (+)
+  · n impar → resultado (−)</div>
+      <div class="example" style="margin-top:10px">
+        <div class="example-label">EJEMPLOS</div>
+        <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">(−2)⁴ = 16</span> (par → +)</span></div>
+        <div class="example-step"><span class="step-num">2</span><span class="step-text"><span class="step-math">(−2)³ = −8</span> (impar → −)</span></div>
+        <div class="example-step"><span class="step-num">3</span><span class="step-text"><span class="step-math">−2⁴ = −16</span> (≠ que (−2)⁴)</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-accent" style="background:var(--c1)"></div>
+      <div class="card-label">¡OJO! TRAMPA PAES FRECUENTE</div>
+      <div class="tip" style="margin-top:8px">
+        <span class="tip-icon">⚠️</span>
+        <div class="tip-text"><strong>−2⁴ ≠ (−2)⁴</strong><br><br>
+        <strong>−2⁴ = −(2⁴) = −16</strong> → el signo no está dentro<br><br>
+        <strong>(−2)⁴ = (−2)(−2)(−2)(−2) = +16</strong> → el signo sí está dentro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-h">Raíces</div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-accent" style="background:var(--c4)"></div>
+    <div class="card-label">PROPIEDADES DE RAÍCES</div>
+    <div class="grid-2">
+      <div>
+        <div class="formula-title">OPERACIONES</div>
+        <div class="formula">√(a·b) = √a · √b
+√(a/b) = √a / √b
+(√a)² = a (a ≥ 0)
+√(a²) = |a|</div>
+      </div>
+      <div class="example">
+        <div class="example-label">SIMPLIFICAR RAÍCES</div>
+        <div class="example-step"><span class="step-num">1</span><span class="step-text"><span class="step-math">√72 = √(36·2) = 6√2</span></span></div>
+        <div class="example-step"><span class="step-num">2</span><span class="step-text"><span class="step-math">√48 = √(16·3) = 4√3</span></span></div>
+        <div class="example-step"><span class="step-num">3</span><span class="step-text"><span class="step-math">√(−4)</span> no existe en ℝ</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-h">Notación Científica <span class="sec-tag" style="background:rgba(255,210,63,0.15);color:var(--c2)">PAES</span></div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--c2)"></div>
+    <div class="card-label">FORMA: a × 10ⁿ donde 1 ≤ a &lt; 10</div>
+    <table class="prop-table">
+      <thead><tr><th>NÚMERO</th><th>NOTACIÓN CIENTÍFICA</th></tr></thead>
+      <tbody>
+        <tr><td>3.400.000</td><td style="color:var(--c2)">3,4 × 10⁶</td></tr>
+        <tr><td>0.000052</td><td style="color:var(--c2)">5,2 × 10⁻⁵</td></tr>
+        <tr><td>−750.000</td><td style="color:var(--c2)">−7,5 × 10⁵</td></tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+  </div>
+  <div class="subtab" id="st-m1-jerarquia">
+    <div class="m1-detalle">
+<div class="topic-hdr">
+    <div>
+      <div class="topic-title" style="color:var(--c4)">Jerarquía de Operaciones</div>
+      <div class="topic-sub">El orden correcto para resolver expresiones matemáticas · PAES lo evalúa constantemente</div>
+    </div>
+    <span class="topic-badge" style="background:rgba(17,138,178,0.15);color:var(--c4)">ORDEN OPERACIONES</span>
+  </div>
+
+  <div class="sec-h">Orden de Precedencia</div>
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+    <div class="card" style="border-color:var(--c5);background:linear-gradient(90deg,rgba(239,71,111,0.08),transparent)">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="background:var(--c5);color:#fff;font-size:22px;font-weight:900;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0">1°</div>
+        <div><div style="font-size:15px;font-weight:700;color:var(--tx)">Paréntesis y agrupaciones</div><div style="font-size:12px;color:var(--tx2);margin-top:2px">( ), [ ], { } — se resuelven de adentro hacia afuera</div></div>
+      </div>
+    </div>
+    <div class="card" style="border-color:var(--c1);background:linear-gradient(90deg,rgba(255,107,53,0.08),transparent)">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="background:var(--c1);color:#fff;font-size:22px;font-weight:900;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0">2°</div>
+        <div><div style="font-size:15px;font-weight:700;color:var(--tx)">Potencias y raíces</div><div style="font-size:12px;color:var(--tx2);margin-top:2px">aⁿ, √a — se evalúan antes que multiplicar y dividir</div></div>
+      </div>
+    </div>
+    <div class="card" style="border-color:var(--c2);background:linear-gradient(90deg,rgba(255,210,63,0.08),transparent)">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="background:var(--c2);color:#000;font-size:22px;font-weight:900;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0">3°</div>
+        <div><div style="font-size:15px;font-weight:700;color:var(--tx)">Multiplicación y División</div><div style="font-size:12px;color:var(--tx2);margin-top:2px">× ÷ — de izquierda a derecha, igual prioridad entre ellos</div></div>
+      </div>
+    </div>
+    <div class="card" style="border-color:var(--c3);background:linear-gradient(90deg,rgba(6,214,160,0.08),transparent)">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="background:var(--c3);color:#000;font-size:22px;font-weight:900;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0">4°</div>
+        <div><div style="font-size:15px;font-weight:700;color:var(--tx)">Suma y Resta</div><div style="font-size:12px;color:var(--tx2);margin-top:2px">+ − — de izquierda a derecha, última en resolverse</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-h">Ejemplos Resueltos</div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-accent" style="background:var(--c1)"></div>
+    <div class="card-label">EJEMPLO 1 — NIVEL MEDIO</div>
+    <div class="card-title" style="font-family:'JetBrains Mono',monospace;color:var(--c2)">2 + 3 × 4 − 2²</div>
+    <div class="example" style="margin-top:12px">
+      <div class="example-label">DESARROLLO</div>
+      <div class="example-step"><span class="step-num">1</span><span class="step-text">Potencia: <span class="step-math">2² = 4</span> → <span class="step-math">2 + 3 × 4 − 4</span></span></div>
+      <div class="example-step"><span class="step-num">2</span><span class="step-text">Multiplicación: <span class="step-math">3 × 4 = 12</span> → <span class="step-math">2 + 12 − 4</span></span></div>
+      <div class="example-step"><span class="step-num">3</span><span class="step-text">Suma y resta: <span class="step-math">2 + 12 − 4 = 10</span></span></div>
+      <div style="margin-top:8px;padding:8px 12px;background:rgba(6,214,160,0.1);border-radius:8px;font-family:'JetBrains Mono',monospace;color:var(--c3);font-size:14px;font-weight:700">Resultado = 10</div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-accent" style="background:var(--c5)"></div>
+    <div class="card-label">EJEMPLO 2 — NIVEL PAES</div>
+    <div class="card-title" style="font-family:'JetBrains Mono',monospace;color:var(--c2)">[3 + (2² − 1)] × 2 − 8 ÷ 4</div>
+    <div class="example" style="margin-top:12px">
+      <div class="example-label">DESARROLLO</div>
+      <div class="example-step"><span class="step-num">1</span><span class="step-text">Paréntesis interior — potencia: <span class="step-math">2²=4</span> → <span class="step-math">[3+(4−1)]×2−8÷4</span></span></div>
+      <div class="example-step"><span class="step-num">2</span><span class="step-text">Paréntesis interior — resta: <span class="step-math">4−1=3</span> → <span class="step-math">[3+3]×2−8÷4</span></span></div>
+      <div class="example-step"><span class="step-num">3</span><span class="step-text">Corchete: <span class="step-math">3+3=6</span> → <span class="step-math">6×2−8÷4</span></span></div>
+      <div class="example-step"><span class="step-num">4</span><span class="step-text">Mult y div: <span class="step-math">6×2=12</span>, <span class="step-math">8÷4=2</span> → <span class="step-math">12−2</span></span></div>
+      <div class="example-step"><span class="step-num">5</span><span class="step-text">Resta: <span class="step-math">12−2=10</span></span></div>
+      <div style="margin-top:8px;padding:8px 12px;background:rgba(6,214,160,0.1);border-radius:8px;font-family:'JetBrains Mono',monospace;color:var(--c3);font-size:14px;font-weight:700">Resultado = 10</div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <span class="tip-icon">🚀</span>
+    <div class="tip-text"><strong>Nemotecnia PAES-CL:</strong> <strong style="color:var(--c2)">P</strong>aréntesis → <strong style="color:var(--c2)">P</strong>otencias → <strong style="color:var(--c2)">M</strong>ultiplicación/<strong style="color:var(--c2)">D</strong>ivisión → <strong style="color:var(--c2)">S</strong>uma/<strong style="color:var(--c2)">R</strong>esta. <strong>PPMDS</strong> o en inglés <strong>PEMDAS</strong>.</div>
+  </div>
+    </div>
+  </div>
+  <div class="subtab" id="st-m1-practica">
+    <div id="qshell-m1"></div>
+  </div>
+</div>
+
+<!-- ═══ M2 ═══ -->
+<div class="tp" id="tab-m2">
+  <div class="hero">
+    <div class="hero-orb" style="background:var(--m2);width:220px;height:220px;top:-60px;right:-60px"></div>
+    <div class="hero-orb" style="background:var(--m1);width:150px;height:150px;bottom:-40px;left:30%"></div>
+    <div class="hero-eyebrow">PAES ELECTIVA · REQUERIDA INGENIERÍA</div>
+    <div class="hero-h" style="color:var(--m2)">Matemática 2</div>
+    <div class="hero-sub">La prueba diferenciadora. Todas las universidades la exigen. Sin M2, la postulación no es válida.</div>
+  </div>
+  <div class="stabs">
+    <button class="stab active" onclick="showSub('m2','temario',this)">📋 Temario</button>
+    <button class="stab" onclick="showSub('m2','practica',this)">✏️ Practicar (20 preguntas)</button>
+  </div>
+  <div class="subtab active" id="st-m2-temario">
+    <div class="ibox" style="background:var(--m2l);border-color:rgba(139,92,246,.3)">
+      <span class="ibox-icon">⚠️</span>
+      <div><div class="ibox-title" style="color:var(--m2)">¿Sin M2 no puedo postular a Ingeniería?</div>
+      <div class="ibox-text">Correcto. UChile, PUC, UTFSM, U. Concepción, U. Santiago, PUCV y todas las demás la exigen. Sin rendirla, la postulación no es válida.</div></div>
+    </div>
+    <div class="sh">Contenidos M2 <span class="sh-tag" style="background:var(--m2l);border-color:rgba(139,92,246,.3);color:var(--m2)">DIFERENCIADOR</span></div>
+    <div class="eje-grid">
+      <div class="eje" style="border-left-color:var(--m2)"><div class="eje-icon">📐</div><div class="eje-title" style="color:var(--m2)">Geometría Analítica</div><div class="eje-topics"><div class="eje-topic">Recta en el plano cartesiano</div><div class="eje-topic">Circunferencia y parábola</div><div class="eje-topic">Cónicas y sus propiedades</div></div></div>
+      <div class="eje" style="border-left-color:var(--m2)"><div class="eje-icon">📊</div><div class="eje-title" style="color:var(--m2)">Funciones Avanzadas</div><div class="eje-topics"><div class="eje-topic">Función exponencial y logarítmica</div><div class="eje-topic">Función trigonométrica</div><div class="eje-topic">Composición e inversa</div></div></div>
+      <div class="eje" style="border-left-color:var(--m2)"><div class="eje-icon">〜</div><div class="eje-title" style="color:var(--m2)">Trigonometría</div><div class="eje-topics"><div class="eje-topic">Razones trigonométricas</div><div class="eje-topic">Identidades y ecuaciones</div><div class="eje-topic">Ley de senos y cosenos</div></div></div>
+      <div class="eje" style="border-left-color:var(--m2)"><div class="eje-icon">🎲</div><div class="eje-title" style="color:var(--m2)">Combinatoria y Probabilidad</div><div class="eje-topics"><div class="eje-topic">Permutaciones y combinaciones</div><div class="eje-topic">Probabilidad condicional</div></div></div>
+      <div class="eje" style="border-left-color:rgba(139,92,246,.5)"><div class="eje-icon">∑</div><div class="eje-title" style="color:var(--m2)">Sucesiones y Series</div><div class="eje-topics"><div class="eje-topic">Sucesiones aritméticas y geométricas</div><div class="eje-topic">Sumas finitas</div></div></div>
+      <div class="eje" style="border-left-color:rgba(139,92,246,.5)"><div class="eje-icon">∞</div><div class="eje-title" style="color:var(--m2)">Números Complejos</div><div class="eje-topics"><div class="eje-topic">Forma binómica y polar</div><div class="eje-topic">Operaciones con complejos</div></div></div>
+    </div>
+  </div>
+  <div class="subtab" id="st-m2-practica">
+    <div id="qshell-m2"></div>
+  </div>
+</div>
+
+<!-- ═══ LECTORA ═══ -->
+<div class="tp" id="tab-lectora">
+  <div class="hero">
+    <div class="hero-orb" style="background:var(--cl);width:220px;height:220px;top:-60px;right:-60px"></div>
+    <div class="hero-eyebrow">PAES OBLIGATORIA · 2027</div>
+    <div class="hero-h" style="color:var(--cl)">Competencia Lectora</div>
+    <div class="hero-sub">65 preguntas · 7 textos · 2h 30min · Localizar, Interpretar, Evaluar</div>
+  </div>
+  <div class="stabs">
+    <button class="stab active" onclick="showSub('cl','temario',this)">📋 Temario</button>
+    <button class="stab" onclick="showSub('cl','practica',this)">✏️ Practicar (20 preguntas)</button>
+  </div>
+  <div class="subtab active" id="st-cl-temario">
+    <div class="sh">3 Habilidades</div>
+    <div class="steps">
+      <div class="step"><div class="step-num" style="background:var(--cll);color:var(--cl)">L</div><div><div class="step-title" style="color:var(--cl)">Localizar</div><div class="step-desc">Identificar y extraer información textual explícita mediante búsqueda literal o uso de sinónimos y paráfrasis.</div></div></div>
+      <div class="step"><div class="step-num" style="background:rgba(6,182,212,.08);color:var(--cl)">I</div><div><div class="step-title" style="color:var(--cl)">Interpretar</div><div class="step-desc">Establecer significados a partir de relaciones entre partes del texto. Inferencias, idea principal, síntesis.</div></div></div>
+      <div class="step"><div class="step-num" style="background:rgba(6,182,212,.05);color:var(--cl)">E</div><div><div class="step-title" style="color:var(--cl)">Evaluar</div><div class="step-desc">Reflexionar y juzgar el texto. Intención comunicativa, calidad de argumentos, posición del emisor.</div></div></div>
+    </div>
+    <div class="sh">Tipos de Texto</div>
+    <div class="eje-grid">
+      <div class="eje" style="border-left-color:var(--cl)"><div class="eje-icon">📰</div><div class="eje-title">No Literarios</div><div class="eje-topics"><div class="eje-topic">Artículos científicos, crónicas, reportajes</div><div class="eje-topic">Ensayos, instructivos, textos argumentativos</div><div class="eje-topic">Hechos vs opiniones, tesis, argumentos</div></div></div>
+      <div class="eje" style="border-left-color:rgba(6,182,212,.4)"><div class="eje-icon">📖</div><div class="eje-title">Literarios</div><div class="eje-topics"><div class="eje-topic">Narraciones: cuentos, novelas</div><div class="eje-topic">Personajes, tiempo, espacio, conflicto</div><div class="eje-topic">Recursos literarios y narrador</div></div></div>
+    </div>
+  </div>
+  <div class="subtab" id="st-cl-practica">
+    <div id="qshell-cl"></div>
+  </div>
+</div>
+
+<!-- ═══ CIENCIAS ═══ -->
+<div class="tp" id="tab-ciencias">
+  <div class="hero">
+    <div class="hero-orb" style="background:var(--ci);width:220px;height:220px;top:-60px;right:-60px"></div>
+    <div class="hero-eyebrow">PAES ELECTIVA · MUY RECOMENDADA INGENIERÍA</div>
+    <div class="hero-h" style="color:var(--ci)">Ciencias</div>
+    <div class="hero-sub">80 preguntas · 54 Módulo Común + 26 Electivo Física · 2h 40min</div>
+  </div>
+  <div class="stabs">
+    <button class="stab active" onclick="showSub('ci','temario',this)">📋 Temario</button>
+    <button class="stab" onclick="showSub('ci','practica',this)">✏️ Ensayo Física (20 preguntas)</button>
+  </div>
+  <div class="subtab active" id="st-ci-temario">
+    <div class="ibox" style="background:var(--cib);border-color:rgba(16,185,129,.2)">
+      <span class="ibox-icon">⚙</span>
+      <div><div class="ibox-title" style="color:var(--ci)">Para Ingeniería</div>
+      <div class="ibox-text">El módulo electivo más relevante es <strong>Física</strong> (Mecánica, Electricidad, Ondas). El módulo común incluye Biología, Física y Química mezcladas.</div></div>
+    </div>
+    <div class="sh">Módulo Común — 54 preguntas</div>
+    <div class="eje-grid">
+      <div class="eje" style="border-left-color:var(--ci)"><div class="eje-icon">🧬</div><div class="eje-title" style="color:var(--ci)">Biología</div><div class="eje-topics"><div class="eje-topic">Organización y estructura celular</div><div class="eje-topic">Sistema nervioso y reproducción</div><div class="eje-topic">Herencia, evolución, fotosíntesis</div></div></div>
+      <div class="eje" style="border-left-color:var(--ci)"><div class="eje-icon">⚡</div><div class="eje-title" style="color:var(--ci)">Física (MC)</div><div class="eje-topics"><div class="eje-topic">Ondas electromagnéticas</div><div class="eje-topic">MRU, MRUA, 3 Leyes Newton</div><div class="eje-topic">Ley de Ohm, circuitos</div></div></div>
+      <div class="eje" style="border-left-color:var(--ci)"><div class="eje-icon">⚗️</div><div class="eje-title" style="color:var(--ci)">Química</div><div class="eje-topics"><div class="eje-topic">Estructura atómica y modelos</div><div class="eje-topic">Química orgánica</div><div class="eje-topic">Reacciones y estequiometría</div></div></div>
+      <div class="eje" style="border-left-color:rgba(16,185,129,.4)"><div class="eje-icon">🔬</div><div class="eje-title" style="color:var(--ci)">Habilidades Científicas</div><div class="eje-topics"><div class="eje-topic">Observar, plantear, conducir investigación</div><div class="eje-topic">Procesar evidencia · Evaluar · Comunicar</div></div></div>
+    </div>
+    <div class="sh">Módulo Electivo Física — 26 preguntas <span class="sh-tag" style="background:var(--ingb);border-color:rgba(239,68,68,.25);color:var(--ing)">REC. ING.</span></div>
+    <div class="eje-grid">
+      <div class="eje" style="border-left-color:rgba(16,185,129,.7)"><div class="eje-icon">🌊</div><div class="eje-title">Ondas</div><div class="eje-topics"><div class="eje-topic">Espectro electromagnético</div><div class="eje-topic">Reflexión, refracción, difracción</div><div class="eje-topic">Espejos y lentes, Efecto Doppler</div></div></div>
+      <div class="eje" style="border-left-color:rgba(16,185,129,.7)"><div class="eje-icon">🚀</div><div class="eje-title">Mecánica</div><div class="eje-topics"><div class="eje-topic">MRU y MRUA: ecuaciones e itinerario</div><div class="eje-topic">3 Leyes de Newton</div><div class="eje-topic">Fuerzas: peso, tensión, roce, Hooke</div></div></div>
+      <div class="eje" style="border-left-color:rgba(16,185,129,.4)"><div class="eje-icon">🌍</div><div class="eje-title">Energía – Tierra</div><div class="eje-topics"><div class="eje-topic">Tectónica de placas</div><div class="eje-topic">Deriva continental y evidencias</div></div></div>
+      <div class="eje" style="border-left-color:rgba(16,185,129,.4)"><div class="eje-icon">⚡</div><div class="eje-title">Electricidad</div><div class="eje-topics"><div class="eje-topic">Ley de Ohm · circuitos serie/paralelo</div><div class="eje-topic">Potencia y energía eléctrica</div></div></div>
+    </div>
+  </div>
+  <div class="subtab" id="st-ci-practica">
+    <div id="qshell-ci"></div>
+  </div>
+</div>
+
+<!-- ═══ HISTORIA ═══ -->
+<div class="tp" id="tab-historia">
+  <div class="hero">
+    <div class="hero-orb" style="background:var(--hi);width:220px;height:220px;top:-60px;right:-60px"></div>
+    <div class="hero-eyebrow">PAES ELECTIVA · 2027</div>
+    <div class="hero-h" style="color:var(--hi)">Historia y Ciencias Sociales</div>
+    <div class="hero-sub">65 preguntas · 2h · Pensamiento temporal/espacial, Análisis de fuentes, Pensamiento crítico</div>
+  </div>
+  <div class="sh">3 Ejes Temáticos</div>
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+    <div class="eje" style="border-left-color:var(--hi)"><div class="eje-title" style="color:var(--hi)">1 · Historia: Mundo, América y Chile</div><div class="eje-topics"><div class="eje-topic">Estado-nación en el siglo XIX · Ideas liberales y republicanas</div><div class="eje-topic">Chile en el siglo XIX: República, economía, sociedad</div><div class="eje-topic">Primera mitad s.XX: totalitarismos, populismo, Estado bienestar</div><div class="eje-topic">Segunda mitad s.XX: Guerra Fría, descolonización, ONU</div><div class="eje-topic">Dictadura Militar 1973-1990 y retorno a la democracia</div></div></div>
+    <div class="eje" style="border-left-color:rgba(245,158,11,.5)"><div class="eje-title" style="color:var(--hi)">2 · Formación Ciudadana</div><div class="eje-topics"><div class="eje-topic">Estado, democracia y ciudadanía</div><div class="eje-topic">Institucionalidad democrática en Chile</div><div class="eje-topic">Sistema judicial chileno · Acceso a la justicia</div></div></div>
+    <div class="eje" style="border-left-color:rgba(245,158,11,.3)"><div class="eje-title" style="color:var(--hi)">3 · Sistema Económico</div><div class="eje-topics"><div class="eje-topic">Funcionamiento del mercado y factores que lo afectan</div><div class="eje-topic">Relación Estado-mercado · Modelos de desarrollo</div><div class="eje-topic">Derechos laborales y movimientos sociales</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ SIMULADOR ═══ -->
+<div class="tp" id="tab-puntaje">
+  <div class="hero">
+    <div class="hero-orb" style="background:var(--ci);width:200px;height:200px;top:-50px;right:-50px"></div>
+    <div class="hero-orb" style="background:var(--m2);width:140px;height:140px;bottom:-30px;left:30%"></div>
+    <div class="hero-eyebrow">ESTRATEGIA · PONDERACIÓN</div>
+    <div class="hero-h">Simula tu puntaje</div>
+    <div class="hero-sub">Ingresa tus puntajes PAES para estimar tu puntaje ponderado. Ponderación referencial Ingeniería Civil.</div>
+  </div>
+  <div class="sim">
+    <div class="sim-title">⊙ Simulador de Ponderación — Ing. Civil</div>
+    <div class="sim-inputs">
+      <div class="sim-row"><span class="sim-label">NEM</span><div class="sim-bw"><input class="sim-input" id="s-nem" type="number" min="100" max="1000" value="700" oninput="calcPond()"><div class="sim-minibar"><div class="sim-minifill" id="bar-nem" style="background:var(--tx2)"></div></div></div><span class="sim-pct">20%</span></div>
+      <div class="sim-row"><span class="sim-label">Ranking</span><div class="sim-bw"><input class="sim-input" id="s-rank" type="number" min="100" max="1000" value="700" oninput="calcPond()"><div class="sim-minibar"><div class="sim-minifill" id="bar-rank" style="background:var(--tx2)"></div></div></div><span class="sim-pct">30%</span></div>
+      <div class="sim-row"><span class="sim-label" style="color:var(--m1)">PAES M1</span><div class="sim-bw"><input class="sim-input" id="s-m1" type="number" min="100" max="1000" value="600" oninput="calcPond()"><div class="sim-minibar"><div class="sim-minifill" id="bar-m1" style="background:var(--m1)"></div></div></div><span class="sim-pct">25%</span></div>
+      <div class="sim-row"><span class="sim-label" style="color:var(--m2)">PAES M2</span><div class="sim-bw"><input class="sim-input" id="s-m2" type="number" min="100" max="1000" value="600" oninput="calcPond()"><div class="sim-minibar"><div class="sim-minifill" id="bar-m2" style="background:var(--m2)"></div></div></div><span class="sim-pct">15%</span></div>
+      <div class="sim-row"><span class="sim-label" style="color:var(--ci)">Ciencias</span><div class="sim-bw"><input class="sim-input" id="s-ci" type="number" min="100" max="1000" value="600" oninput="calcPond()"><div class="sim-minibar"><div class="sim-minifill" id="bar-ci" style="background:var(--ci)"></div></div></div><span class="sim-pct">10%</span></div>
+    </div>
+    <div class="sim-result">
+      <div class="sim-orb" id="sim-orb"></div>
+      <div class="sim-score-label">PUNTAJE PONDERADO ESTIMADO</div>
+      <div class="sim-score" id="sim-total">630</div>
+      <div class="sim-msg" id="sim-msg"></div>
+      <div class="sim-bdown">
+        <div class="sim-bk"><div class="sim-bkv" id="bk-nem" style="color:var(--tx2)">140</div><div class="sim-bkl">NEM 20%</div></div>
+        <div class="sim-bk"><div class="sim-bkv" id="bk-rank" style="color:var(--tx2)">210</div><div class="sim-bkl">RANK 30%</div></div>
+        <div class="sim-bk"><div class="sim-bkv" id="bk-m1" style="color:var(--m1)">150</div><div class="sim-bkl">M1 25%</div></div>
+        <div class="sim-bk"><div class="sim-bkv" id="bk-m2" style="color:var(--m2)">90</div><div class="sim-bkl">M2 15%</div></div>
+        <div class="sim-bk"><div class="sim-bkv" id="bk-ci" style="color:var(--ci)">60</div><div class="sim-bkl">CI 10%</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ibox" style="background:var(--m2l);border-color:rgba(139,92,246,.25)">
+    <span class="ibox-icon">📌</span>
+    <div><div class="ibox-title" style="color:var(--m2)">Nota importante</div>
+    <div class="ibox-text">Las ponderaciones varían por universidad y carrera. Consulta la oferta definitiva en <strong>demre.cl</strong> y <strong>acceso.mineduc.cl</strong> en septiembre 2026.</div></div>
+  </div>
+  <div class="sh">Puntajes de corte referencial 2026</div>
+  <div class="corte-grid">
+    <div class="corte"><div class="corte-score" style="color:var(--m2)">~760</div><div class="corte-name">Ing. Civil</div><div class="corte-univ">PUC</div></div>
+    <div class="corte"><div class="corte-score" style="color:var(--m2)">~750</div><div class="corte-name">Ing. Civil Plan Común</div><div class="corte-univ">U. de Chile</div></div>
+    <div class="corte"><div class="corte-score" style="color:var(--hi)">~680</div><div class="corte-name">Ing. Civil Plan Común</div><div class="corte-univ">UTFSM</div></div>
+    <div class="corte"><div class="corte-score" style="color:var(--hi)">~650</div><div class="corte-name">Ing. Civil Industrial</div><div class="corte-univ">U. de Concepción</div></div>
+    <div class="corte"><div class="corte-score" style="color:var(--hi)">~640</div><div class="corte-name">Ing. Civil Plan Común</div><div class="corte-univ">U. de Santiago</div></div>
+    <div class="corte"><div class="corte-score" style="color:var(--m1)">~600</div><div class="corte-name">Ing. Civil Industrial</div><div class="corte-univ">U. de Valparaíso</div></div>
+  </div>
+</div>
+
+<!-- ═══ CARRERAS M2 ═══ -->
+<div class="tp" id="tab-carreras">
+  <div class="hero">
+    <div class="hero-orb" style="background:var(--m2);width:220px;height:220px;top:-60px;right:-60px"></div>
+    <div class="hero-eyebrow">LISTA REFERENCIAL ENERO 2026 · DEMRE</div>
+    <div class="hero-h">Carreras que exigen M2</div>
+    <div class="hero-sub">Universidades del Sistema de Acceso que requieren PAES M2 como requisito obligatorio. Se actualiza al 24 de septiembre 2026.</div>
+  </div>
+  <div class="ibox" style="background:var(--ingb);border-color:rgba(239,68,68,.25)">
+    <span class="ibox-icon">📋</span>
+    <div><div class="ibox-title" style="color:var(--ing)">30+ universidades</div>
+    <div class="ibox-text">Con carreras que requieren M2. Todas las Ingenierías Civiles, Pedagogías en Matemática, Ciencias de Datos y carreras STEM con alta carga matemática.</div></div>
+  </div>
+  <div class="sh">Universidades principales</div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>UNIVERSIDAD</th><th>CARRERAS TIPO (M2 REQUERIDO)</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--m2);font-weight:700">U. de Chile</td><td>Ing. y Ciencias Plan Común, Arquitectura, Ing. Comercial, Ped. Mat/Fís</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">PUC</td><td>Ing. Civil, Ing. Comercial, Estadística, Lic. Ing. C. Datos, C. Computación</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">UTFSM</td><td>Todas las Ing. Civiles, Lic. Física, Astrofísica, Ing. Aviación Comercial</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">U. Concepción</td><td>Ing. Civil (todos los planes), Astronomía, Geofísica, Bioingeniería</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">U. de Santiago</td><td>Todas las Ing. Civiles, Ing. Matemática, Estadística, Astrofísica</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">PUCV</td><td>Ing. Civil Eléctrica, Electrónica, Industrial, Informática, Mecánica, Metalúrgica</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">U. de Talca</td><td>Ing. Civil Industrial, Civil Computación, Civil Mecánica, Civil Mecatrónica</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">U. Bío-Bío</td><td>Ing. Civil (todos), Ing. en Construcción, Ped. en Ed. Matemática</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">U. de Valparaíso</td><td>Ing. Civil Plan Común, Civil Industrial, Civil Matemática, Ing. Ambiental</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">U. de La Frontera</td><td>Ing. Civil (todos los planes), Pedagogía en Matemáticas</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">Andrés Bello</td><td>Ing. Civil, Civil Industrial, Ing. en Computación, Ing. Automatización y Robótica</td></tr>
+      <tr><td style="color:var(--m2);font-weight:700">U. del Desarrollo</td><td>Ing. Civil Plan Común, Civil Industrial, Civil en Informática e IA</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /layout -->
+
+<nav id="bnav">
+  <div class="bni">
+    <button class="bn active" id="bn-inicio" style="color:var(--m1)" onclick="go('inicio',this)"><span class="bnico">⌂</span><span class="bnlbl">INICIO</span></button>
+    <button class="bn" id="bn-m1" style="color:var(--m1)" onclick="go('m1',this)"><span class="bnico">M1</span><span class="bnlbl">MAT 1</span></button>
+    <button class="bn" id="bn-m2" style="color:var(--m2)" onclick="go('m2',this)"><span class="bnico">M2</span><span class="bnlbl">MAT 2</span></button>
+    <button class="bn" id="bn-ciencias" style="color:var(--ci)" onclick="go('ciencias',this)"><span class="bnico">Ci</span><span class="bnlbl">CIEN.</span></button>
+    <button class="bn" id="bn-puntaje" style="color:var(--ci)" onclick="go('puntaje',this)"><span class="bnico">⊙</span><span class="bnlbl">SIMUL.</span></button>
+  </div>
+</nav>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// BANCO DE PREGUNTAS (20 por prueba)
+// ═══════════════════════════════════════════════════════════════
+const BANKS = {
+m1:[
+  {q:"Si el 30% de un número es 90, ¿cuánto es el 50% de ese número?",opts:["150","130","120","160"],ans:0,exp:"El número es 90 ÷ 0,30 = 300. El 50% de 300 = 150."},
+  {q:"¿Cuál es el resultado de simplificar (x² − 9) / (x − 3) con x ≠ 3?",opts:["x + 3","x − 3","x² + 3","x + 9"],ans:0,exp:"x² − 9 = (x−3)(x+3). Al dividir por (x−3) queda (x+3)."},
+  {q:"Una función lineal pasa por (0, 2) y (3, 8). ¿Cuál es su pendiente?",opts:["2","3","6","4"],ans:0,exp:"m = (8−2)/(3−0) = 6/3 = 2. La función es f(x) = 2x + 2."},
+  {q:"En un triángulo rectángulo los catetos miden 6 y 8 cm. ¿Cuánto mide la hipotenusa?",opts:["10 cm","12 cm","14 cm","9 cm"],ans:0,exp:"Pitágoras: h² = 36 + 64 = 100 → h = 10 cm."},
+  {q:"La probabilidad de sacar una carta roja de una baraja de 52 cartas es:",opts:["1/2","1/4","13/52","1/13"],ans:0,exp:"Hay 26 cartas rojas (13 corazones + 13 diamantes). P = 26/52 = 1/2."},
+  {q:"¿Cuál es el valor de 2⁻³ · 2⁵?",opts:["4","8","16","2"],ans:0,exp:"2⁻³ · 2⁵ = 2^(5−3) = 2² = 4."},
+  {q:"Si y es directamente proporcional a x, e y = 12 cuando x = 4, ¿cuánto vale y cuando x = 7?",opts:["21","18","24","28"],ans:0,exp:"k = 12/4 = 3. Para x = 7: y = 3 · 7 = 21."},
+  {q:"¿Cuál es el vértice de la parábola f(x) = x² − 4x + 3?",opts:["(2, −1)","(2, 1)","(−2, −1)","(4, 3)"],ans:0,exp:"x_v = 4/2 = 2. y_v = 4 − 8 + 3 = −1. Vértice: (2, −1)."},
+  {q:"En el conjunto de datos 3, 5, 5, 7, 9, 11, 13. ¿Cuál es la mediana?",opts:["7","5","9","8"],ans:0,exp:"Con 7 datos ordenados, la mediana es el cuarto valor: 7."},
+  {q:"Un cilindro tiene radio 3 cm y altura 5 cm. Su volumen (cm³) es:",opts:["45π","30π","15π","90π"],ans:0,exp:"V = π · r² · h = π · 9 · 5 = 45π cm³."},
+  {q:"¿Cuántos enteros positivos (incluido el 0) satisfacen la inecuación 2x − 3 < 7?",opts:["5 valores: {0,1,2,3,4}","4 valores","6 valores","Infinitos"],ans:0,exp:"2x < 10 → x < 5. Enteros ≥ 0 con x < 5: {0,1,2,3,4} = 5 valores."},
+  {q:"La raíz cuadrada de 0,0625 es:",opts:["0,25","0,025","2,5","0,125"],ans:0,exp:"0,0625 = (0,25)² → √0,0625 = 0,25."},
+  {q:"¿Cuál es el factor común de 12x²y − 8xy²?",opts:["4xy","4x","8xy","2xy"],ans:0,exp:"MCD(12,8) = 4. Mínima potencia: x¹, y¹. Factor = 4xy. 12x²y − 8xy² = 4xy(3x − 2y)."},
+  {q:"Un cuadrado tiene perímetro 32 cm. ¿Cuánto mide su diagonal?",opts:["8√2 cm","8 cm","16 cm","4√2 cm"],ans:0,exp:"Lado = 32/4 = 8 cm. Diagonal = 8√2 cm (Pitágoras: d = l√2)."},
+  {q:"¿Cuál es el producto notable (a + b)(a − b)?",opts:["a² − b²","a² + b²","a² − 2ab + b²","a² + 2ab + b²"],ans:0,exp:"El producto de suma por diferencia es siempre a² − b². Es uno de los productos notables fundamentales."},
+  {q:"En un sistema 2×2: { x + y = 10 ; x − y = 4 }. ¿Cuánto vale x?",opts:["7","3","5","6"],ans:0,exp:"Sumando las ecuaciones: 2x = 14 → x = 7. Luego y = 3."},
+  {q:"Si f(x) = 3x − 1, ¿cuál es f(f(2))?",opts:["14","5","11","8"],ans:0,exp:"f(2) = 3·2 − 1 = 5. f(f(2)) = f(5) = 3·5 − 1 = 14."},
+  {q:"¿Cuál es la variación porcentual de un precio que sube de $800 a $1000?",opts:["25%","20%","30%","12,5%"],ans:0,exp:"Variación = (1000 − 800)/800 · 100 = 200/800 · 100 = 25%."},
+  {q:"Un cuartil Q1 divide el conjunto de datos al:",opts:["25° percentil","50° percentil","75° percentil","10° percentil"],ans:0,exp:"Q1 es el primer cuartil = percentil 25. Q2 = percentil 50 (mediana). Q3 = percentil 75."},
+  {q:"¿Cuál es la probabilidad de obtener suma 7 al lanzar 2 dados?",opts:["6/36 = 1/6","5/36","7/36","1/12"],ans:0,exp:"Pares que suman 7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) = 6 casos de 36 posibles. P = 6/36 = 1/6."},
+],
+m2:[
+  {q:"¿Cuál es el valor de sen(30°) + cos(60°)?",opts:["1","√2","1/2","√3/2"],ans:0,exp:"sen(30°) = 1/2 y cos(60°) = 1/2. La suma es 1."},
+  {q:"La ecuación de la circunferencia con centro (2, −1) y radio 3 es:",opts:["(x−2)² + (y+1)² = 9","(x+2)² + (y−1)² = 9","(x−2)² + (y−1)² = 9","(x−2)² + (y+1)² = 3"],ans:0,exp:"Forma canónica: (x−h)² + (y−k)² = r². Con h=2, k=−1, r=3."},
+  {q:"Si log₂(x) = 5, entonces x vale:",opts:["32","25","10","16"],ans:0,exp:"log₂(x) = 5 significa 2⁵ = x = 32."},
+  {q:"¿Cuántos comités de 3 personas pueden formarse de un grupo de 8?",opts:["56","336","24","64"],ans:0,exp:"C(8,3) = 8!/(3!·5!) = (8·7·6)/(3·2·1) = 56."},
+  {q:"En una sucesión aritmética con a₁ = 5 y d = 3, ¿cuál es el término a₁₀?",opts:["32","35","30","27"],ans:0,exp:"aₙ = a₁ + (n−1)d. a₁₀ = 5 + 9·3 = 32."},
+  {q:"¿Cuál es la amplitud de f(x) = 4·sen(2x)?",opts:["4","2","8","1"],ans:0,exp:"En f(x) = A·sen(Bx), la amplitud es |A| = 4."},
+  {q:"Si f(x) = 2x + 1 y g(x) = x², ¿cuánto es f(g(3))?",opts:["19","7","49","10"],ans:0,exp:"g(3) = 9. f(g(3)) = f(9) = 2·9 + 1 = 19."},
+  {q:"¿Cuál es el resultado de (2 + 3i)·(1 − i)?",opts:["5 + i","2 − 3i","5 − i","2 + 3i"],ans:0,exp:"(2+3i)(1−i) = 2−2i+3i−3i² = 2+i+3 = 5+i (ya que i²=−1)."},
+  {q:"Si P(A) = 0,4 y P(B) = 0,5 son independientes, ¿cuánto es P(A∩B)?",opts:["0,2","0,9","0,1","0,45"],ans:0,exp:"Independencia: P(A∩B) = P(A)·P(B) = 0,4·0,5 = 0,2."},
+  {q:"¿Para qué valor de x es f(x) = eˣ − 1 = 0?",opts:["x = 0","x = 1","x = e","x = −1"],ans:0,exp:"eˣ = 1 → x = 0. La exponencial vale 1 cuando el exponente es 0."},
+  {q:"La pendiente de la recta que pasa por (1, 3) y (4, 9) es:",opts:["2","3","6","1/2"],ans:0,exp:"m = (9−3)/(4−1) = 6/3 = 2."},
+  {q:"¿Cuántas permutaciones de 4 elementos tomados de 6 existen?",opts:["360","24","720","120"],ans:0,exp:"P(6,4) = 6!/(6−4)! = 6!/2! = 720/2 = 360."},
+  {q:"La identidad trigonométrica sen²(θ) + cos²(θ) es igual a:",opts:["1","0","2","sen(2θ)"],ans:0,exp:"Es la identidad pitagórica fundamental de la trigonometría: sen²θ + cos²θ = 1 siempre."},
+  {q:"¿Cuál es el módulo del número complejo z = 3 + 4i?",opts:["5","7","√7","1"],ans:0,exp:"|z| = √(3² + 4²) = √(9+16) = √25 = 5."},
+  {q:"Suma de los 10 primeros términos de la sucesión geométrica 1, 2, 4, 8, ...",opts:["1023","511","2047","1024"],ans:0,exp:"r=2, a₁=1. S₁₀ = 1·(2¹⁰−1)/(2−1) = 1023."},
+  {q:"¿Cuál es el período de la función f(x) = sen(3x)?",opts:["2π/3","π/3","2π","3π"],ans:0,exp:"El período de sen(Bx) es 2π/B. Con B=3: período = 2π/3."},
+  {q:"Una recta tiene ecuación 3x + 4y = 12. ¿Cuál es su intercepto en y?",opts:["3","4","12","−3"],ans:0,exp:"Para x=0: 4y = 12 → y = 3. El intercepto en y es 3."},
+  {q:"¿Cuánto es log₁₀(1000)?",opts:["3","10","100","2"],ans:0,exp:"log₁₀(1000) = log₁₀(10³) = 3."},
+  {q:"En un triángulo rectángulo, sen(α) = 3/5. ¿Cuánto es cos(α)?",opts:["4/5","3/4","5/3","1/5"],ans:0,exp:"sen²α + cos²α = 1. cos²α = 1 − 9/25 = 16/25. cos α = 4/5."},
+  {q:"La función inversa de f(x) = 2x + 6 es:",opts:["f⁻¹(x) = (x−6)/2","f⁻¹(x) = 2x − 6","f⁻¹(x) = x/2 + 6","f⁻¹(x) = (x+6)/2"],ans:0,exp:"Despejar x: y=2x+6 → x=(y−6)/2. La inversa es f⁻¹(x)=(x−6)/2."},
+],
+cl:[
+  {q:'Texto: "La tecnología ha transformado radicalmente la comunicación. Sin embargo, paradójicamente, muchas personas se sienten más solas que nunca."\n\n¿Cuál es la idea principal?',opts:["La tecnología conecta pero también genera soledad","La tecnología es dañina","Las personas no saben usarla","La comunicación ha mejorado"],ans:0,exp:"La paradoja central es: más conectividad tecnológica pero más soledad. Esa contradicción es la idea principal."},
+  {q:'Texto: "El volcán entró en erupción al amanecer. Los habitantes fueron evacuados preventivamente por las autoridades."\n\n¿Por qué fueron evacuados los habitantes?',opts:["Como medida de precaución antes de que ocurriera algo peor","Porque sus casas ya habían sido destruidas","Porque lo pidieron voluntariamente","Porque la lava ya llegaba al pueblo"],ans:0,exp:"'Preventivamente' indica acción anticipada. Es una medida de precaución, no una respuesta a daño ya ocurrido."},
+  {q:'La oración "Las estrellas son soles lejanos que brillan con su propia luz" es un ejemplo de:',opts:["Hecho verificable científicamente","Opinión del autor","Metáfora literaria","Argumento de autoridad"],ans:0,exp:"La afirmación es verificable astronómicamente y no expresa una opinión personal. Es un hecho."},
+  {q:"¿Cuál es la diferencia entre un hecho y una opinión en un texto?",opts:["El hecho es verificable; la opinión expresa un juicio personal","El hecho es subjetivo; la opinión es objetiva","Ambos son igualmente verificables","No hay diferencia en textos periodísticos"],ans:0,exp:"Un hecho puede verificarse con evidencia objetiva. Una opinión refleja la perspectiva del emisor y no es comprobable universalmente."},
+  {q:'Texto: "Llegó a la ciudad con las manos vacías y el corazón lleno de esperanza."\n\n¿Qué recurso literario predomina?',opts:["Antítesis","Hipérbole","Anáfora","Onomatopeya"],ans:0,exp:"Se contraponen dos ideas opuestas: 'manos vacías' (carencia material) vs 'corazón lleno' (riqueza espiritual). Eso es antítesis."},
+  {q:"El narrador omnisciente se caracteriza por:",opts:["Conocer los pensamientos de todos los personajes","Solo narrar lo que ve externamente","Ser uno de los personajes","Desconocer el final"],ans:0,exp:"El narrador omnisciente tiene acceso total al interior de todos los personajes, al pasado, presente y futuro de la historia."},
+  {q:'¿Qué tipo de texto es una ley publicada en el Diario Oficial?',opts:["Texto no literario de tipo normativo/jurídico","Texto literario argumentativo","Texto lírico","Crónica periodística"],ans:0,exp:"Una ley es un texto no literario de carácter normativo. Su función es regular conductas, no expresar sentimientos."},
+  {q:'Texto: "La reforma fue implementada sin consultar a los afectados, lo que generó descontento y resistencia generalizada."\n\n¿Qué juicio evaluativo es más coherente con el texto?',opts:["Fue una decisión poco participativa que ignoró a los involucrados","La reforma fue necesaria y bien planificada","El descontento era inevitable en todo caso","Los afectados no tenían derecho a opinar"],ans:0,exp:"El texto señala explícitamente que no hubo consulta y eso generó rechazo. La evaluación coherente es que fue no participativa."},
+  {q:"¿Qué habilidad lectora se aplica al identificar la idea principal de un texto?",opts:["Interpretar","Localizar","Evaluar","Sintetizar"],ans:0,exp:"Identificar la idea principal implica establecer relaciones entre partes del texto para extraer su significado central. Eso corresponde a Interpretar."},
+  {q:"¿Cuál es el propósito de un texto argumentativo?",opts:["Persuadir al lector de adoptar una posición o punto de vista","Entretener mediante una historia ficticia","Describir hechos de forma neutral","Explicar procedimientos paso a paso"],ans:0,exp:"El texto argumentativo busca convencer al lector de una tesis mediante argumentos, ejemplos y evidencias."},
+  {q:'Texto: "Aunque la reforma tiene defensores entusiastas, sus críticos señalan que los cambios son apresurados y carecen de evidencia empírica."\n\nEsta oración presenta:',opts:["Dos posiciones contrapuestas sobre un tema","Solo la posición favorable","Una conclusión definitiva","Un análisis histórico"],ans:0,exp:"El texto presenta simultáneamente posición a favor ('defensores') y en contra ('críticos señalan'). Expone el debate, no concluye."},
+  {q:"El conflicto en una narración literaria es:",opts:["La tensión o problema que enfrenta el protagonista","El lugar donde ocurre la historia","El momento en que termina la historia","La descripción física del personaje"],ans:0,exp:"El conflicto es el núcleo dramático: la tensión, problema u obstáculo que el protagonista debe enfrentar o resolver."},
+  {q:"¿Qué significa 'inferir' en el contexto de la comprensión lectora?",opts:["Deducir información que no está dicha explícitamente en el texto","Copiar la información tal como aparece en el texto","Dar la propia opinión sobre el tema","Resumir el texto con otras palabras"],ans:0,exp:"Inferir es una habilidad interpretativa: se deducen ideas o datos implícitos a partir de lo que sí está dicho en el texto."},
+  {q:"Un texto expositivo se caracteriza por:",opts:["Presentar información de forma objetiva y ordenada sobre un tema","Defender una posición personal ante un tema","Narrar eventos en orden cronológico","Expresar emociones del autor"],ans:0,exp:"El texto expositivo informa y explica de manera objetiva. No busca persuadir ni narrar hechos dramáticos."},
+  {q:'¿Qué habilidad lectora usa el lector al reflexionar sobre si el argumento de un texto es válido?',opts:["Evaluar","Localizar","Interpretar","Memorizar"],ans:0,exp:"Evaluar implica juzgar la calidad, validez o pertinencia de los argumentos, la intención del autor y la forma del texto."},
+  {q:"El concepto de 'focalización interna' en narrativa se refiere a:",opts:["El relato desde la perspectiva interior de un personaje","Un narrador externo y omnisciente","La descripción detallada del escenario","El uso de diálogos directos"],ans:0,exp:"Focalización interna: el lector accede al mundo a través de los pensamientos y percepciones de un personaje específico."},
+  {q:'Texto: "Según el estudio de Harvard, el 80% de los líderes exitosos practican la escucha activa."\n\n¿Qué tipo de argumento se usa?',opts:["Argumento de autoridad (cita de fuente reconocida)","Argumento de ejemplo","Argumento causal","Argumento por analogía"],ans:0,exp:"Al citar un estudio de una institución reconocida como Harvard, el autor recurre a un argumento de autoridad para sustentar su punto."},
+  {q:"¿Cuál es la función del narrador en tercera persona?",opts:["Relatar los hechos desde fuera de la historia, sin participar en ella","Ser el protagonista de la historia","Solo describir objetos y lugares","Interrumpir la narración con comentarios propios"],ans:0,exp:"El narrador en 3ª persona es extradiegético: narra desde fuera de la historia. Puede ser omnisciente o de observador."},
+  {q:"¿Qué es una tesis en un texto argumentativo?",opts:["La posición o idea central que el autor defiende","El resumen del texto","La conclusión final del texto","Un ejemplo para ilustrar una idea"],ans:0,exp:"La tesis es el punto de vista o afirmación principal que el autor sostiene y que los argumentos buscan demostrar o defender."},
+  {q:"Al leer un texto poético con el verso 'el tiempo es un río que no vuelve atrás', ¿qué figura literaria se usa?",opts:["Metáfora","Comparación (símil)","Hipérbole","Personificación"],ans:0,exp:"Se identifica el tiempo con un río sin usar 'como' o 'parece'. La sustitución directa de una cosa por otra es una metáfora."},
+],
+ci:[
+  {q:"Un automóvil parte del reposo y alcanza 20 m/s en 4 s con aceleración constante. ¿Cuál es su aceleración?",opts:["5 m/s²","80 m/s²","0,2 m/s²","10 m/s²"],ans:0,exp:"MRUA: a = Δv/Δt = (20−0)/4 = 5 m/s²."},
+  {q:"Un objeto de 10 kg en superficie sin roce recibe una fuerza de 30 N. ¿Cuál es su aceleración? (2ª Ley de Newton)",opts:["3 m/s²","0,3 m/s²","300 m/s²","30 m/s²"],ans:0,exp:"F = m·a → a = F/m = 30/10 = 3 m/s²."},
+  {q:"Un objeto en reposo sobre una mesa: la fuerza normal que ejerce la mesa es:",opts:["Igual al peso, dirección opuesta (hacia arriba)","Mayor que el peso","Cero, ya que está en reposo","Igual al peso, misma dirección"],ans:0,exp:"Por equilibrio estático: N = W en magnitud. N apunta hacia arriba, W hacia abajo. Son iguales en magnitud, opuestas en dirección."},
+  {q:"En un circuito serie con R₁=10Ω y R₂=20Ω conectados a 15V, ¿cuál es la corriente total?",opts:["0,5 A","1,5 A","5 A","0,75 A"],ans:0,exp:"En serie: R_total = 30Ω. I = V/R = 15/30 = 0,5 A."},
+  {q:"La frecuencia de una onda es 200 Hz y su velocidad es 340 m/s. ¿Cuál es su longitud de onda?",opts:["1,7 m","0,59 m","68000 m","1,4 m"],ans:0,exp:"λ = v/f = 340/200 = 1,7 m."},
+  {q:"El Efecto Doppler describe:",opts:["El cambio aparente de frecuencia cuando fuente y observador se mueven entre sí","La reflexión de ondas en superficies","La difracción de la luz","La velocidad del sonido en distintos medios"],ans:0,exp:"El Efecto Doppler: cambio en la frecuencia percibida de una onda cuando hay movimiento relativo entre fuente y observador."},
+  {q:"¿Cuál es la potencia disipada en una resistencia de 50Ω por la que circulan 2A?",opts:["200 W","100 W","25 W","400 W"],ans:0,exp:"P = I²·R = 4·50 = 200 W."},
+  {q:"Un cuerpo cae libremente desde el reposo. Después de 3 s (g=10 m/s²), su velocidad es:",opts:["30 m/s","45 m/s","10 m/s","15 m/s"],ans:0,exp:"v = g·t = 10·3 = 30 m/s. La masa no influye en la caída libre."},
+  {q:"En el espectro electromagnético, ¿cuál tiene mayor energía?",opts:["Rayos gamma","Rayos X","Ultravioleta","Visible"],ans:0,exp:"La energía de una onda es proporcional a su frecuencia (E=hf). Los rayos gamma tienen la mayor frecuencia del espectro EM."},
+  {q:"¿Qué evidencia principal apoya la teoría de la deriva continental de Wegener?",opts:["Similitud de fósiles a ambos lados del Atlántico y encaje de los continentes","El calentamiento global","Las corrientes oceánicas","La actividad volcánica en Hawái"],ans:0,exp:"Wegener se apoyó en: encaje geográfico de continentes, fósiles idénticos en continentes hoy separados, y similitud geológica."},
+  {q:"La Ley de Ohm establece que V = I·R. ¿Qué ocurre con la corriente si se duplica la resistencia (mismo voltaje)?",opts:["Se reduce a la mitad","Se duplica","No cambia","Se cuadruplica"],ans:0,exp:"De I = V/R: si R se duplica (2R) con V constante, la corriente I se reduce a la mitad."},
+  {q:"¿Cuál es la distancia recorrida por un objeto en MRUA con v₀=0, a=4 m/s² en t=3 s?",opts:["18 m","12 m","36 m","6 m"],ans:0,exp:"d = v₀t + ½at² = 0 + ½·4·9 = 18 m."},
+  {q:"Una lente convergente forma imagen real e invertida cuando el objeto está:",opts:["A distancia mayor que el foco (d > f)","Entre el foco y la lente","En el foco mismo","En contacto con la lente"],ans:0,exp:"Con objeto a d > f de lente convergente: imagen real e invertida. Si d < f: imagen virtual y derecha."},
+  {q:"Según la 3ª Ley de Newton (acción-reacción): cuando empujas una pared, la pared:",opts:["Te empuja con la misma fuerza pero en sentido contrario","No ejerce ninguna fuerza","Te empuja con menos fuerza","Te empuja con más fuerza"],ans:0,exp:"La 3ª Ley: para cada acción hay una reacción igual y opuesta. La pared te empuja exactamente igual que tú a ella."},
+  {q:"¿Qué tipo de carga tienen los electrones?",opts:["Negativa","Positiva","Neutra","Depende del material"],ans:0,exp:"Los electrones tienen carga eléctrica negativa. Los protones tienen carga positiva. Los neutrones son neutros."},
+  {q:"En un circuito paralelo con R₁=6Ω y R₂=12Ω, la resistencia equivalente es:",opts:["4Ω","18Ω","9Ω","2Ω"],ans:0,exp:"1/R_eq = 1/6 + 1/12 = 2/12 + 1/12 = 3/12. R_eq = 12/3 = 4Ω."},
+  {q:"La reflexión de la luz cumple que el ángulo de incidencia:",opts:["Es igual al ángulo de reflexión","Es mayor que el ángulo de reflexión","Es menor que el ángulo de reflexión","No tiene relación con el ángulo de reflexión"],ans:0,exp:"Ley de reflexión: el ángulo de incidencia = ángulo de reflexión, ambos medidos desde la normal a la superficie."},
+  {q:"El trabajo realizado por una fuerza de 20 N que desplaza un objeto 5 m en su misma dirección es:",opts:["100 J","25 J","4 J","20 J"],ans:0,exp:"W = F·d·cos(θ) = 20·5·cos(0°) = 100 J. Cuando F y desplazamiento son paralelos, cos(0°) = 1."},
+  {q:"En tectónica de placas, las cadenas montañosas como los Andes se forman por:",opts:["Subducción: una placa oceánica se hunde bajo una continental","Divergencia: las placas se separan","Transformación: placas que se deslizan lateralmente","Erupción volcánica submarina"],ans:0,exp:"Los Andes son resultado de la subducción de la placa de Nazca bajo la placa Sudamericana. Eso levanta y deforma la corteza continental."},
+  {q:"¿Cuál es la energía potencial de un objeto de 5 kg a 10 m de altura? (g = 10 m/s²)",opts:["500 J","50 J","5000 J","100 J"],ans:0,exp:"Ep = m·g·h = 5·10·10 = 500 J."},
+]
+};
+
+// ═══════════════════════════════════════════════════════════════
+// MOTOR DEL QUIZ
+// ═══════════════════════════════════════════════════════════════
+const LETTERS = ['A','B','C','D'];
+const sessions = {};
+
+function getSession(id) {
+  if (!sessions[id]) sessions[id] = { mode: null, cur: 0, answers: [], correct: 0, revealed: false };
+  return sessions[id];
+}
+
+function renderEntry(id) {
+  const s = getSession(id);
+  const bank = BANKS[id];
+  const colors = {m1:'var(--m1)',m2:'var(--m2)',cl:'var(--cl)',ci:'var(--ci)'};
+  const c = colors[id] || 'var(--m2)';
+  const names = {m1:'Matemática 1',m2:'Matemática 2',cl:'Comprensión Lectora',ci:'Ciencias — Física'};
+  const shell = document.getElementById('qshell-'+id);
+  shell.innerHTML = `
+    <div class="quiz-shell">
+      <div class="q-entry">
+        <div class="q-entry-title" style="color:${c}">${names[id]}</div>
+        <div class="q-entry-sub">Elige el modo de práctica que prefieres. Las mismas ${bank.length} preguntas se pueden trabajar de 3 formas distintas.</div>
+        <div class="q-entry-modes">
+          <div class="q-mode-card" id="mode-ad-${id}" onclick="selectMode('${id}','ad')">
+            <div class="q-mode-icon">✏️</div>
+            <div class="q-mode-name">Quiz A-D</div>
+            <div class="q-mode-desc">Elige entre 4 alternativas. Feedback y explicación inmediata tras cada respuesta.</div>
+          </div>
+          <div class="q-mode-card" id="mode-ensayo-${id}" onclick="selectMode('${id}','ensayo')">
+            <div class="q-mode-icon">🏆</div>
+            <div class="q-mode-name">Ensayo</div>
+            <div class="q-mode-desc">Responde todo sin ver feedback. Puntaje acumulado y revisión completa al final.</div>
+          </div>
+          <div class="q-mode-card" id="mode-flash-${id}" onclick="selectMode('${id}','flash')">
+            <div class="q-mode-icon">🃏</div>
+            <div class="q-mode-name">Flashcards</div>
+            <div class="q-mode-desc">Gira la tarjeta para ver la respuesta. Marca si lo sabías o no.</div>
+          </div>
+          <div class="q-mode-card" id="mode-crono-${id}" onclick="selectMode('${id}','crono')">
+            <div class="q-mode-icon">⏱️</div>
+            <div class="q-mode-name">Cronometrado</div>
+            <div class="q-mode-desc">Quiz con temporizador visible. Pon a prueba tu velocidad y precisión.</div>
+          </div>
+        </div>
+        <div class="q-entry-meta">
+          <div class="qem"><div class="qem-val" style="color:${c}">${bank.length}</div><div class="qem-lbl">PREGUNTAS</div></div>
+          <div class="qem"><div class="qem-val" style="color:var(--m2)">4</div><div class="qem-lbl">MODOS</div></div>
+          <div class="qem"><div class="qem-val" style="color:var(--ci)">A–D</div><div class="qem-lbl">ALTERNATIVAS</div></div>
+        </div>
+        <button class="btn btn-primary" id="start-btn-${id}" onclick="startQuiz('${id}')" style="opacity:.4;pointer-events:none">Selecciona un modo para comenzar →</button>
+      </div>
+    </div>`;
+}
+
+function selectMode(id, mode) {
+  sessions[id] = { mode, cur: 0, answers: [], correct: 0, revealed: false, timer: null, elapsed: 0 };
+  document.querySelectorAll(`#qshell-${id} .q-mode-card`).forEach(c => c.classList.remove('selected'));
+  document.getElementById(`mode-${mode}-${id}`).classList.add('selected');
+  const btn = document.getElementById(`start-btn-${id}`);
+  btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+}
+
+function startQuiz(id) {
+  const s = sessions[id];
+  if (!s || !s.mode) return;
+  s.cur = 0; s.answers = []; s.correct = 0; s.revealed = false;
+  renderQuizScreen(id);
+}
+
+function renderQuizScreen(id) {
+  const s = sessions[id];
+  const bank = BANKS[id];
+  const q = bank[s.cur];
+  const total = bank.length;
+  const modeName = {ad:'Quiz A-D',ensayo:'Ensayo',flash:'Flashcards',crono:'Cronometrado'}[s.mode];
+  const modeColor = {ad:'var(--m2)',ensayo:'var(--ci)',flash:'var(--m1)',crono:'var(--hi)'}[s.mode];
+  const fill = (s.cur / total * 100).toFixed(1);
+  const colors = {m1:'var(--m1)',m2:'var(--m2)',cl:'var(--cl)',ci:'var(--ci)'};
+
+  // dots
+  let dotsHtml = bank.map((_, i) => {
+    let cls = 'q-dot';
+    if (i < s.cur) cls += (s.answers[i] === bank[i].ans ? ' correct' : ' wrong');
+    else if (i === s.cur) cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+
+  const shell = document.getElementById('qshell-'+id);
+
+  let timerHtml = '';
+  if (s.mode === 'crono') {
+    timerHtml = `<span class="q-header-info" id="timer-${id}" style="color:var(--hi)">⏱ 0s</span>`;
+  }
+
+  shell.innerHTML = `
+    <div class="quiz-shell">
+      <div class="q-header">
+        <div class="q-header-left">
+          <span class="q-mode-badge" style="background:${modeColor}22;border-color:${modeColor}44;color:${modeColor}">${modeName}</span>
+          <span class="q-header-info">${s.cur+1}/${total}</span>
+        </div>
+        <div class="q-track"><div class="q-fill" style="width:${fill}%"></div></div>
+        <span class="q-score-live" style="color:var(--ci)">${s.correct}✓</span>
+        ${timerHtml}
+      </div>
+      <div class="q-progress-bar-wrap"><div class="q-dots">${dotsHtml}</div></div>
+      <div class="q-body" id="qbody-${id}"></div>
+    </div>`;
+
+  renderQuestion(id);
+
+  if (s.mode === 'crono') startTimer(id);
+}
+
+function startTimer(id) {
+  const s = sessions[id];
+  if (s.timer) clearInterval(s.timer);
+  s.elapsed = 0;
+  s.timer = setInterval(() => {
+    s.elapsed++;
+    const el = document.getElementById(`timer-${id}`);
+    if (el) el.textContent = `⏱ ${s.elapsed}s`;
+  }, 1000);
+}
+
+function renderQuestion(id) {
+  const s = sessions[id];
+  const bank = BANKS[id];
+  const q = bank[s.cur];
+  const body = document.getElementById('qbody-'+id);
+  if (!body) return;
+
+  if (s.mode === 'flash') {
+    body.innerHTML = `
+      <div class="flashcard-wrap" onclick="flipCard('${id}')">
+        <div class="flashcard fc-static">
+          <div id="fc-front-${id}" style="text-align:center;padding:20px">
+            <div class="fc-tag">PREGUNTA ${s.cur+1} · Toca para ver respuesta</div>
+            <div class="fc-q">${q.q}</div>
+            <div class="fc-hint">👆 Toca la tarjeta para revelar</div>
+          </div>
+          <div id="fc-back-${id}" style="display:none;text-align:center;padding:20px">
+            <div class="fc-tag">RESPUESTA CORRECTA</div>
+            <div class="fc-answer" style="color:var(--ci)">${LETTERS[q.ans]}) ${q.opts[q.ans]}</div>
+            <div class="fc-exp">${q.exp}</div>
+            <div class="fc-actions" style="margin-top:18px">
+              <button class="fc-btn fc-btn-ok" onclick="event.stopPropagation();flashAnswer('${id}',true)">✓ Lo sabía</button>
+              <button class="fc-btn fc-btn-err" onclick="event.stopPropagation();flashAnswer('${id}',false)">✗ No lo sabía</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // Modos A-D, Ensayo, Crono
+  const isAnswered = s.answers[s.cur] !== undefined;
+  const chosen = s.answers[s.cur];
+  const isEnsayo = s.mode === 'ensayo';
+
+  let optsHtml = q.opts.map((opt, j) => {
+    let cls = 'q-opt';
+    if (isAnswered && !isEnsayo) {
+      if (j === q.ans) cls += ' reveal';
+      if (j === chosen && chosen === q.ans) cls = 'q-opt correct';
+      else if (j === chosen && chosen !== q.ans) cls = 'q-opt wrong';
+    }
+    if (isAnswered && isEnsayo) {
+      cls += ' q-opt';
+    }
+    return `<button class="${cls}" onclick="answerQ('${id}',${j})" ${isAnswered?'disabled':''}><span class="q-opt-letter">${LETTERS[j]}</span><span class="q-opt-text">${opt}</span></button>`;
+  }).join('');
+
+  let feedbackHtml = '';
+  if (isAnswered && !isEnsayo) {
+    const ok = chosen === q.ans;
+    feedbackHtml = `<div class="q-feedback ${ok?'ok':'err'} show">${ok?'✅ <strong>¡Correcto!</strong>':'❌ <strong>Incorrecto.</strong>'} ${q.exp}</div>`;
+  }
+
+  let nextHtml = '';
+  const isLast = s.cur === bank.length - 1;
+  if (isAnswered || isEnsayo) {
+    if (!isEnsayo) {
+      const nextLabel = isLast ? 'Ver resultados →' : 'Siguiente →';
+      const nextFn = isLast ? `showResults('${id}')` : `nextQ('${id}')`;
+      nextHtml = `<div class="q-next show"><span class="q-next-hint">${s.cur+1}/${bank.length}</span><button class="btn btn-primary btn-sm" onclick="${nextFn}">${nextLabel}</button></div>`;
+    } else if (isEnsayo) {
+      const nextLabel = isLast ? 'Ver resultados →' : 'Siguiente →';
+      const nextFn = isLast ? `showResults('${id}')` : `nextQ('${id}')`;
+      nextHtml = `<div class="q-next show"><span class="q-next-hint">${s.correct} correctas hasta ahora</span><button class="btn btn-primary btn-sm" onclick="${nextFn}">${nextLabel}</button></div>`;
+    }
+  }
+
+  body.innerHTML = `
+    <div class="q-card-num">PREGUNTA ${s.cur+1} de ${bank.length} · ${s.mode.toUpperCase()}</div>
+    <div class="q-card-q">${q.q}</div>
+    <div class="q-opts">${optsHtml}</div>
+    ${feedbackHtml}
+    ${nextHtml}`;
+}
+
+function flipCard(id) {
+  const front = document.getElementById(`fc-front-${id}`);
+  const back = document.getElementById(`fc-back-${id}`);
+  if (!front || !back) return;
+  const isFlipped = front.style.display === 'none';
+  front.style.display = isFlipped ? '' : 'none';
+  back.style.display = isFlipped ? 'none' : '';
+}
+
+function flashAnswer(id, knew) {
+  const s = sessions[id];
+  const bank = BANKS[id];
+  s.answers[s.cur] = knew ? bank[s.cur].ans : -1;
+  if (knew) s.correct++;
+  const isLast = s.cur === bank.length - 1;
+  if (isLast) {
+    showResults(id);
+  } else {
+    s.cur++;
+    renderQuizScreen(id);
+  }
+}
+
+function answerQ(id, optIdx) {
+  const s = sessions[id];
+  const bank = BANKS[id];
+  if (s.answers[s.cur] !== undefined) return;
+  s.answers[s.cur] = optIdx;
+  if (optIdx === bank[s.cur].ans) s.correct++;
+
+  const isEnsayo = s.mode === 'ensayo';
+  if (isEnsayo) {
+    // In ensayo: just re-render to show next button
+    renderQuestion(id);
+    return;
+  }
+  // Modes with immediate feedback: re-render
+  renderQuestion(id);
+
+  // Update dots
+  renderQuizScreen(id);
+}
+
+function nextQ(id) {
+  const s = sessions[id];
+  s.cur++;
+  renderQuizScreen(id);
+}
+
+function showResults(id) {
+  const s = sessions[id];
+  const bank = BANKS[id];
+  if (s.timer) { clearInterval(s.timer); s.timer = null; }
+  const total = bank.length;
+  const pct = Math.round(s.correct / total * 100);
+  let color, msg;
+  if (pct >= 80) { color='var(--ci)'; msg='🏆 Excelente — dominio sólido de estos contenidos'; }
+  else if (pct >= 60) { color='var(--hi)'; msg='✅ Buen resultado — refuerza los temas donde fallaste'; }
+  else if (pct >= 40) { color='var(--m1)'; msg='📚 Nivel básico — necesitas estudiar más estos contenidos'; }
+  else { color='var(--ing)'; msg='💪 Necesitas reforzar — repasa el temario y vuelve a intentarlo'; }
+
+  const timeStr = s.elapsed ? ` · ${s.elapsed}s` : '';
+
+  let reviewHtml = bank.map((q, i) => {
+    const chosen = s.answers[i];
+    const ok = chosen === q.ans;
+    const optsHtml = q.opts.map((opt, j) => {
+      let cls = 'ri-opt';
+      if (j === q.ans && chosen === j) cls += ' ok';
+      else if (j === chosen && chosen !== q.ans) cls += ' err';
+      else if (j === q.ans) cls += ' ans';
+      return `<div class="${cls}"><span class="ri-opt-l">${LETTERS[j]}</span>${opt}</div>`;
+    }).join('');
+    return `<div class="review-item ${ok?'ok-item':'err-item'}">
+      <div class="ri-header">
+        <div class="ri-icon" style="background:${ok?'rgba(16,185,129,.15)':'rgba(239,68,68,.15)'};color:${ok?'var(--ci)':'var(--ing)'}">${ok?'✓':'✗'}</div>
+        <span style="font-size:12px;font-weight:700;color:${ok?'var(--ci)':'var(--ing)'}">${ok?'Correcta':'Incorrecta'}</span>
+        <span class="ri-num">P${i+1}</span>
+      </div>
+      <div class="ri-q">${q.q}</div>
+      <div class="ri-opts">${optsHtml}</div>
+      <div class="ri-exp">${q.exp}</div>
+    </div>`;
+  }).join('');
+
+  const shell = document.getElementById('qshell-'+id);
+  shell.innerHTML = `
+    <div class="quiz-shell">
+      <div class="q-results">
+        <div class="result-hero">
+          <div class="result-orb" style="background:${color}"></div>
+          <div class="result-label">RESULTADO FINAL${timeStr}</div>
+          <div class="result-score" style="color:${color}">${s.correct}/${total}</div>
+          <div class="result-msg">${msg}</div>
+          <div class="result-stats">
+            <div class="rst"><div class="rst-val" style="color:${color}">${pct}%</div><div class="rst-lbl">ACIERTOS</div></div>
+            <div class="rst"><div class="rst-val" style="color:var(--ci)">${s.correct}</div><div class="rst-lbl">CORRECTAS</div></div>
+            <div class="rst"><div class="rst-val" style="color:var(--ing)">${total-s.correct}</div><div class="rst-lbl">INCORRECTAS</div></div>
+            ${s.elapsed?`<div class="rst"><div class="rst-val" style="color:var(--hi)">${s.elapsed}s</div><div class="rst-lbl">TIEMPO</div></div>`:''}
+          </div>
+          <div class="result-actions">
+            <button class="btn btn-primary" onclick="retryQuiz('${id}')">↺ Reintentar</button>
+            <button class="btn btn-ghost" onclick="renderEntry('${id}')">← Cambiar modo</button>
+          </div>
+        </div>
+        <div class="sh" style="margin-top:24px">Revisión pregunta por pregunta</div>
+        ${reviewHtml}
+      </div>
+    </div>`;
+  document.getElementById('content').scrollTop = 0;
+}
+
+function retryQuiz(id) {
+  const mode = sessions[id]?.mode;
+  sessions[id] = { mode, cur: 0, answers: [], correct: 0, revealed: false, timer: null, elapsed: 0 };
+  renderQuizScreen(id);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════════════════
+function go(id, el) {
+  document.querySelectorAll('.tp').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sbb,.bn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  const sb = document.getElementById('sb-'+id); if(sb) sb.classList.add('active');
+  const bn = document.getElementById('bn-'+id); if(bn) bn.classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('content').scrollTop = 0;
+}
+
+const SUBTAB_MAP = {m1:'m1',m2:'m2',cl:'lectora',ci:'ciencias'};
+function showSub(prefix, id, btn) {
+  const tab = document.getElementById('tab-'+SUBTAB_MAP[prefix]);
+  tab.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
+  tab.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  document.getElementById(`st-${prefix}-${id}`).classList.add('active');
+  btn.classList.add('active');
+  // Init quiz shell on first visit to practice tab
+  if (id === 'practica') {
+    const shell = document.getElementById('qshell-'+prefix);
+    if (shell && !shell.innerHTML.trim()) renderEntry(prefix);
+  }
+}
+
+// SIMULATOR
+function calcPond() {
+  const v = i => Math.min(1000,Math.max(100,parseFloat(document.getElementById(i).value)||100));
+  const nem=v('s-nem'),rank=v('s-rank'),m1=v('s-m1'),m2=v('s-m2'),ci=v('s-ci');
+  const bkN=Math.round(nem*.2),bkR=Math.round(rank*.3),bkM1=Math.round(m1*.25),bkM2=Math.round(m2*.15),bkC=Math.round(ci*.1);
+  const total=bkN+bkR+bkM1+bkM2+bkC;
+  document.getElementById('sim-total').textContent=total;
+  document.getElementById('bk-nem').textContent=bkN;
+  document.getElementById('bk-rank').textContent=bkR;
+  document.getElementById('bk-m1').textContent=bkM1;
+  document.getElementById('bk-m2').textContent=bkM2;
+  document.getElementById('bk-ci').textContent=bkC;
+  const pct=val=>Math.round(((val-100)/900)*100)+'%';
+  ['nem','rank','m1','m2','ci'].forEach(k=>document.getElementById('bar-'+k).style.width=pct(v('s-'+k)));
+  const sc=document.getElementById('sim-total'),msg=document.getElementById('sim-msg'),orb=document.getElementById('sim-orb');
+  if(total>=750){sc.style.color='var(--ci)';orb.style.background='var(--ci)';msg.textContent='🏆 Excelente — acceso a las mejores universidades';}
+  else if(total>=680){sc.style.color='var(--hi)';orb.style.background='var(--hi)';msg.textContent='✅ Buen puntaje — amplia oferta de universidades';}
+  else if(total>=600){sc.style.color='var(--m1)';orb.style.background='var(--m1)';msg.textContent='📚 Suficiente — varias opciones de ingeniería disponibles';}
+  else{sc.style.color='var(--ing)';orb.style.background='var(--ing)';msg.textContent='💪 Necesitas mejorar — enfócate en M1 y M2';}
+}
+
+// Init
+calcPond();
+go('inicio', document.getElementById('sb-inicio'));
+</script>
+
+<div style="text-align:center;padding:20px 16px;border-top:1px solid var(--bd);margin-top:32px;font-size:11px;color:var(--tx3);line-height:1.5">
+  © <span id="cr-year"></span> Luis Cartes Henríquez · Creación original protegida — Convenio de Berna / OMPI · Prohibida su reproducción, adaptación o uso en entrenamiento de IA sin autorización expresa.
+</div>
+<script>document.getElementById('cr-year').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>

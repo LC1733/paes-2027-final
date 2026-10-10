@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#090B16">
 <title>Martín PAES 2027 · Ingeniería</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -20,6 +21,7 @@
 }
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Outfit',sans-serif;line-height:1.5}
 body{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+@supports(height:100dvh){body{height:100dvh}}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none;z-index:0}
 
 #top{flex-shrink:0;height:56px;background:rgba(9,11,22,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:0 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10}
@@ -459,6 +461,30 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .card-body, .topic-sub, .hero-sub, .eje-topic, .rst-txt { color: #3A4560 !important; }
 .tip-text { color: #1F2A44 !important; }
 .prop-table td, .prop-table th { color: #1F2A44 !important; }
+
+/* ═══ Ajustes móviles v2 (2026-10) ═══ */
+#top{padding-top:env(safe-area-inset-top);padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));height:calc(56px + env(safe-area-inset-top))}
+.top-title{color:#fff}
+.site-foot{text-align:center;padding:20px 16px 8px;border-top:1px solid var(--bd);margin-top:32px;font-size:11px;color:var(--tx3);line-height:1.5}
+#bnav{position:relative;z-index:20;padding-bottom:env(safe-area-inset-bottom)}
+.bn{min-height:56px;-webkit-tap-highlight-color:transparent}
+.bnlbl{font-size:10px;color:#8F9AB5}
+.bn.active .bnlbl{color:#fff}
+#mas-sheet{display:none;position:absolute;bottom:100%;right:8px;min-width:210px;background:#0E1120;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:6px;box-shadow:0 -10px 40px rgba(0,0,0,.35);margin-bottom:8px}
+#mas-sheet.open{display:block}
+.mas-item{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:10px 12px;background:none;border:0;border-radius:10px;color:#E6EAF5;font:600 15px 'Outfit',sans-serif;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mas-item:active,.mas-item.on{background:rgba(255,255,255,.08)}
+.mas-item .mico{width:30px;font:700 14px 'JetBrains Mono',monospace;text-align:center}
+@media(max-width:768px){
+  .top-title span[style*="font-size:11px"]{font-size:12px!important}
+  .badge{font-size:10px;padding:4px 9px;letter-spacing:1px}
+  .sb-sec,.hero-eyebrow,.sh-tag,.pcard-corner,.pcard-label,.psl,.pr-badge,.tbl th,.sim-bkl,.qem-lbl,.q-mode-badge,.q-card-num,.fc-tag,.rst-lbl,
+  .m1-detalle .sb-section,.m1-detalle .card-label,.m1-detalle .formula-title,.m1-detalle .example-label,.m1-detalle .bn-label{font-size:10px!important}
+}
+@media(max-width:360px){
+  #top{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+  .badge-year{display:none}
+}
 
 </style>
 </head>
@@ -1323,6 +1349,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   </table></div>
 </div>
 
+<div class="site-foot">
+  © <span id="cr-year"></span> Luis Cartes Henríquez · Creación original protegida — Convenio de Berna / OMPI · Prohibida su reproducción, adaptación o uso en entrenamiento de IA sin autorización expresa.
+</div>
+
 </div><!-- /content -->
 </div><!-- /layout -->
 
@@ -1333,6 +1363,12 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <button class="bn" id="bn-m2" style="color:var(--m2)" onclick="go('m2',this)"><span class="bnico">M2</span><span class="bnlbl">MAT 2</span></button>
     <button class="bn" id="bn-ciencias" style="color:var(--ci)" onclick="go('ciencias',this)"><span class="bnico">Ci</span><span class="bnlbl">CIEN.</span></button>
     <button class="bn" id="bn-puntaje" style="color:var(--ci)" onclick="go('puntaje',this)"><span class="bnico">⊙</span><span class="bnlbl">SIMUL.</span></button>
+    <button class="bn" id="bn-mas" style="color:var(--hi)" onclick="toggleMas(event)" aria-haspopup="true" aria-expanded="false" aria-controls="mas-sheet"><span class="bnico">⋯</span><span class="bnlbl">MÁS</span></button>
+  </div>
+  <div id="mas-sheet" role="menu">
+    <button class="mas-item" role="menuitem" data-tab="lectora" onclick="goMas('lectora')"><span class="mico" style="color:var(--cl)">CL</span>Comprensión Lectora</button>
+    <button class="mas-item" role="menuitem" data-tab="historia" onclick="goMas('historia')"><span class="mico" style="color:var(--hi)">Hi</span>Historia</button>
+    <button class="mas-item" role="menuitem" data-tab="carreras" onclick="goMas('carreras')"><span class="mico" style="color:var(--m2)">⚙</span>Carreras con M2</button>
   </div>
 </nav>
 
@@ -1799,14 +1835,34 @@ function calcPond() {
   else{sc.style.color='var(--ing)';orb.style.background='var(--ing)';msg.textContent='💪 Necesitas mejorar — enfócate en M1 y M2';}
 }
 
+// Menú "Más" de la barra inferior (secciones sin botón propio en móvil)
+const MAS_TABS = ['lectora','historia','carreras'];
+function toggleMas(ev, force) {
+  if (ev) ev.stopPropagation();
+  const sh = document.getElementById('mas-sheet');
+  const open = typeof force === 'boolean' ? force : !sh.classList.contains('open');
+  sh.classList.toggle('open', open);
+  document.getElementById('bn-mas').setAttribute('aria-expanded', open);
+}
+function goMas(id) {
+  go(id, document.getElementById('sb-' + id));
+  toggleMas(null, false);
+}
+const _goBase = go;
+go = function(id, el) {
+  _goBase(id, el);
+  const enMas = MAS_TABS.includes(id);
+  document.getElementById('bn-mas').classList.toggle('active', enMas);
+  document.querySelectorAll('.mas-item').forEach(b => b.classList.toggle('on', b.dataset.tab === id));
+  toggleMas(null, false);
+};
+document.addEventListener('click', e => { if (!e.target.closest('#mas-sheet')) toggleMas(null, false); });
+
 // Init
 calcPond();
 go('inicio', document.getElementById('sb-inicio'));
 </script>
 
-<div style="text-align:center;padding:20px 16px;border-top:1px solid var(--bd);margin-top:32px;font-size:11px;color:var(--tx3);line-height:1.5">
-  © <span id="cr-year"></span> Luis Cartes Henríquez · Creación original protegida — Convenio de Berna / OMPI · Prohibida su reproducción, adaptación o uso en entrenamiento de IA sin autorización expresa.
-</div>
 <script>document.getElementById('cr-year').textContent = new Date().getFullYear();</script>
 
 </body>

@@ -218,6 +218,15 @@ footer.ft{position:relative;z-index:1;max-width:1420px;margin:0 auto;padding:0 2
   .block .clock{border-right:0;border-bottom:1px solid var(--line);padding:0 0 6px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ═══ Ajustes móviles (2026-10): sin desplazamiento lateral en pantallas de 320–360 px ═══ */
+@media (max-width:940px){
+  html,body{overflow-x:hidden}
+  .math{white-space:normal;overflow-wrap:anywhere}
+  .btn.sm{min-height:40px;padding-top:9px;padding-bottom:9px}
+  .rail{padding-bottom:max(6px,env(safe-area-inset-bottom))}
+  .tab{min-height:44px}
+  input,select,textarea{font-size:16px}
+}
 </style>
 </head>
 <body>

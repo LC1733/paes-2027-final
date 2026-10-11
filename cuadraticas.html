@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="es-CL" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBFBFE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E0D15" media="(prefers-color-scheme: dark)">
+<title>Cuadráticas · repaso PAES</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#FBFBFE; --surf:#FFFFFF; --surf2:#F4F4FA;
+  --ink:#15141C; --muted:#6C6A7B; --line:#E7E6F2; --grid:#EFEFF7;
+  --violeta:#6E28E8; --verm:#F2451F; --azul:#2563FF; --ok:#0E9C74;
+  --vsoft:rgba(110,40,232,.12); --osoft:rgba(242,69,31,.12); --oksoft:rgba(14,156,116,.12);
+  --sh:0 1px 2px rgba(20,18,40,.05), 0 8px 24px rgba(20,18,40,.05);
+  --shbig:0 -2px 10px rgba(20,18,40,.06), 0 -20px 60px rgba(20,18,40,.12);
+  --ui:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --mate:'Newsreader',Georgia,serif;
+  --r:14px; --safe:env(safe-area-inset-bottom,0px);
+}
+html[data-theme="dark"]{
+  --bg:#0E0D15; --surf:#171621; --surf2:#1F1D2C;
+  --ink:#F3F2F8; --muted:#9A97AC; --line:#2A2839; --grid:#1C1A28;
+  --violeta:#A581FF; --verm:#FF7A5E; --azul:#6E9BFF; --ok:#2BD3A0;
+  --vsoft:rgba(165,129,255,.16); --osoft:rgba(255,122,94,.15); --oksoft:rgba(43,211,160,.15);
+  --sh:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  --shbig:0 -2px 10px rgba(0,0,0,.4), 0 -20px 60px rgba(0,0,0,.55);
+}
+@media (prefers-color-scheme:dark){
+  html[data-theme="auto"]{
+    --bg:#0E0D15; --surf:#171621; --surf2:#1F1D2C;
+    --ink:#F3F2F8; --muted:#9A97AC; --line:#2A2839; --grid:#1C1A28;
+    --violeta:#A581FF; --verm:#FF7A5E; --azul:#6E9BFF; --ok:#2BD3A0;
+    --vsoft:rgba(165,129,255,.16); --osoft:rgba(255,122,94,.15); --oksoft:rgba(43,211,160,.15);
+    --sh:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    --shbig:0 -2px 10px rgba(0,0,0,.4), 0 -20px 60px rgba(0,0,0,.55);
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;font-family:var(--ui);color:var(--ink);background:var(--bg);
+  line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:36px 36px;
+  transition:background-color .25s,color .25s;
+  padding-bottom:calc(84px + var(--safe));
+}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--azul);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ============ TOPBAR ============ */
+.topbar{
+  position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line)
+}
+.tb1{display:flex;align-items:center;gap:10px;padding:10px 16px;max-width:900px;margin:0 auto}
+.brand{font-size:13px;font-weight:700;letter-spacing:-.01em;flex:1;display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--violeta);flex:none}
+.iconbtn{
+  width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surf);
+  color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none;font-size:16px
+}
+.iconbtn:active{transform:scale(.94)}
+.tabs{display:flex;gap:7px;overflow-x:auto;padding:0 16px 10px;max-width:900px;margin:0 auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:none;font-size:13.5px;font-weight:500;border:1px solid var(--line);background:var(--surf);
+  color:var(--muted);padding:9px 15px;border-radius:999px;cursor:pointer;white-space:nowrap;min-height:40px
+}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+
+/* ============ HERO ============ */
+.hero{padding:26px 0 8px}
+.kick{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--muted);margin:0 0 10px}
+h1{font-size:clamp(28px,8vw,46px);line-height:1.04;letter-spacing:-.035em;font-weight:700;margin:0 0 10px}
+h1 em{font-style:normal;color:var(--violeta)}
+.sub{color:var(--muted);font-size:14.5px;margin:0 0 18px;max-width:54ch}
+.cuenta{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--surf);border:1px solid var(--line);
+  border-left:3px solid var(--verm);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);margin-bottom:8px
+}
+.cuenta .big{font-size:30px;font-weight:700;letter-spacing:-.03em;color:var(--verm);font-variant-numeric:tabular-nums;line-height:1}
+.cuenta .lb{font-size:12.5px;color:var(--muted);flex:1;min-width:120px}
+.cuenta input{
+  font-family:var(--ui);font-size:13px;background:var(--surf2);color:var(--ink);
+  border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-height:40px
+}
+
+/* ============ TIPOGRAFÍA ============ */
+h2{font-size:clamp(20px,5.5vw,26px);font-weight:700;letter-spacing:-.025em;margin:30px 0 4px}
+h2:first-child{margin-top:0}
+h3{font-size:14px;font-weight:600;margin:26px 0 10px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
+.lead{color:var(--muted);font-size:14.5px;margin:0 0 16px;max-width:60ch}
+.panel{display:none}
+.panel.on{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;margin-bottom:12px;box-shadow:var(--sh)}
+.card.v{border-left:3px solid var(--violeta)}
+.card.o{border-left:3px solid var(--verm)}
+.card.a{border-left:3px solid var(--azul)}
+.card h4{margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mat{font-family:var(--mate);font-size:17px;line-height:1.95}
+ul.f{list-style:none;padding:0;margin:0}
+ul.f li{font-family:var(--mate);font-size:16.5px;padding:9px 0;border-bottom:1px dashed var(--line);line-height:1.5}
+ul.f li:last-child{border-bottom:0}
+ul.f li em{font-family:var(--ui);font-style:normal;font-size:12.5px;color:var(--muted);display:block;margin-top:3px;line-height:1.45}
+ul.f li b{font-weight:600}
+.mk{background:var(--vsoft);padding:1px 4px;border-radius:4px}
+.mko{background:var(--osoft);padding:1px 4px;border-radius:4px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.g2{grid-template-columns:1fr}}
+
+.err{display:grid;gap:10px}
+.err>div{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;box-shadow:var(--sh)}
+.err .no{font-family:var(--mate);font-size:16px;color:var(--verm);text-decoration:line-through;text-decoration-thickness:1px}
+.err .si{font-family:var(--mate);font-size:16px;color:var(--ok)}
+.err .ar{color:var(--muted);margin:0 6px}
+.err p{margin:7px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+
+/* ============ EXPLORADOR ============ */
+.expl{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:14px;box-shadow:var(--sh)}
+.explbox{display:grid;grid-template-columns:1fr 280px;gap:18px;align-items:start}
+@media(max-width:760px){.explbox{grid-template-columns:1fr}}
+#graf{width:100%;height:auto;display:block;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+.sl label{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--muted);margin:14px 0 6px;font-weight:500}
+.sl label span{font-family:var(--mate);font-size:17px;color:var(--ink);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--violeta);height:30px;margin:0}
+.lect{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.lect div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:5px 0;font-family:var(--mate);font-size:15px}
+.lect i{font-family:var(--ui);font-style:normal;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);flex:none}
+.lect .val{text-align:right}
+.chip{display:inline-block;font-family:var(--ui);font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px}
+
+/* ============ QUIZ ============ */
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.mark{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.mark b{color:var(--ink);font-weight:700}
+.btn{font-size:13px;font-weight:600;border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;cursor:pointer;min-height:42px}
+.btn.gh{background:transparent;color:var(--ink)}
+.btn:active{transform:scale(.97)}
+.q{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;margin-bottom:11px;box-shadow:var(--sh)}
+.qtop{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.qn{font-size:11.5px;font-weight:700;color:var(--violeta);font-variant-numeric:tabular-nums}
+.tag{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted);border:1px solid var(--line);padding:3px 8px;border-radius:999px}
+.qt{font-family:var(--mate);font-size:17px;line-height:1.6;margin:0 0 13px}
+.ops{display:grid;gap:8px}
+.op{
+  display:flex;gap:11px;align-items:flex-start;text-align:left;width:100%;min-height:46px;
+  font-family:var(--mate);font-size:16.5px;background:var(--surf);color:var(--ink);
+  border:1px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer;line-height:1.45
+}
+.op .let{font-family:var(--ui);font-size:12px;font-weight:700;color:var(--muted);padding-top:3px;min-width:13px}
+.op.bien{border-color:var(--ok);background:var(--oksoft)}
+.op.bien .let{color:var(--ok)}
+.op.mal{border-color:var(--verm);background:var(--osoft)}
+.op.mal .let{color:var(--verm)}
+.op.pick{border-color:var(--ink);background:var(--surf2)}
+.sol{margin-top:13px;border-top:1px dashed var(--line);padding-top:12px;font-size:13.5px;color:var(--muted);display:none;line-height:1.6}
+.sol.on{display:block}
+.sol .paso{font-family:var(--mate);font-size:16px;color:var(--ink);display:block;margin:6px 0}
+.vd{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px}
+.vd.bien{color:var(--ok)} .vd.mal{color:var(--verm)}
+.askbtn{
+  margin-top:11px;font-size:12.5px;font-weight:600;color:var(--violeta);background:var(--vsoft);
+  border:0;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:38px
+}
+
+/* ============ PLAN ============ */
+.plan{display:grid;gap:9px}
+.plan label{display:flex;gap:12px;align-items:flex-start;background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:14px;cursor:pointer;box-shadow:var(--sh)}
+.plan input{margin:3px 0 0;accent-color:var(--violeta);width:20px;height:20px;flex:none}
+.plan .t{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verm);display:block;margin-bottom:3px}
+.plan input:checked + .txt{opacity:.4;text-decoration:line-through}
+
+/* ============ BOT ============ */
+.fab{
+  position:fixed;right:16px;bottom:calc(16px + var(--safe));z-index:60;
+  display:flex;align-items:center;gap:9px;background:var(--violeta);color:#fff;border:0;
+  padding:14px 20px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;
+  box-shadow:0 6px 24px rgba(110,40,232,.4)
+}
+html[data-theme="dark"] .fab{color:#15121F;box-shadow:0 6px 24px rgba(165,129,255,.3)}
+.fab:active{transform:scale(.96)}
+.scrim{position:fixed;inset:0;background:rgba(10,8,20,.5);z-index:70;display:none;backdrop-filter:blur(2px)}
+.scrim.on{display:block}
+.bot{
+  position:fixed;z-index:80;background:var(--surf);display:none;flex-direction:column;
+  box-shadow:var(--shbig);border:1px solid var(--line)
+}
+.bot.on{display:flex}
+@media(max-width:760px){
+  .bot{left:0;right:0;bottom:0;height:88dvh;border-radius:20px 20px 0 0;border-bottom:0;animation:up .25s cubic-bezier(.2,.8,.3,1)}
+  @keyframes up{from{transform:translateY(100%)}to{transform:none}}
+}
+@media(min-width:761px){
+  .bot{right:18px;bottom:18px;width:420px;height:min(78vh,680px);border-radius:18px}
+}
+.bothead{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);flex:none}
+.bothead .nm{flex:1;font-size:14px;font-weight:700;letter-spacing:-.01em}
+.bothead .nm small{display:block;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0}
+.grip{width:38px;height:4px;border-radius:99px;background:var(--line);margin:8px auto 0;flex:none}
+@media(min-width:761px){.grip{display:none}}
+.botmsgs{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:11px;-webkit-overflow-scrolling:touch}
+.msg{max-width:92%;font-size:14px;line-height:1.6;border-radius:14px;padding:11px 13px;white-space:normal}
+.msg.bot{background:var(--surf2);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px}
+.msg.me{background:var(--violeta);color:#fff;align-self:flex-end;border-bottom-right-radius:5px;font-weight:500}
+html[data-theme="dark"] .msg.me{color:#15121F}
+.msg b{font-weight:700}
+.msg .paso{font-family:var(--mate);font-size:16px;display:block;margin:7px 0;color:var(--ink)}
+.msg .ttl{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--violeta);display:block;margin-bottom:5px}
+.msg hr{border:0;border-top:1px dashed var(--line);margin:10px 0}
+.chips{display:flex;gap:7px;flex-wrap:wrap;padding:0 16px 10px;flex:none}
+.chipb{font-size:12px;border:1px solid var(--line);background:var(--surf);color:var(--muted);padding:8px 12px;border-radius:999px;cursor:pointer;min-height:36px}
+.chipb:active{background:var(--surf2)}
+.botin{display:flex;gap:8px;padding:12px 16px calc(14px + var(--safe));border-top:1px solid var(--line);flex:none}
+.botin input{
+  flex:1;font-family:var(--ui);font-size:16px;background:var(--surf2);color:var(--ink);
+  border:1px solid var(--line);border-radius:999px;padding:12px 16px;min-height:46px
+}
+.botin button{width:46px;height:46px;border-radius:50%;border:0;background:var(--violeta);color:#fff;font-size:17px;cursor:pointer;flex:none}
+html[data-theme="dark"] .botin button{color:#15121F}
+
+footer{margin:40px 0 10px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb1">
+    <span class="brand"><span class="dot"></span>Cuadráticas · PAES</span>
+    <button class="iconbtn" id="tema" aria-label="Cambiar tema">◐</button>
+  </div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-p="p0">Plan</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p1">1 · Expresiones</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p2">2 · Ecuación</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p3">3 · Función</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p4">Banco DEMRE</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p5">Ensayo</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ===== PLAN ===== -->
+<section class="panel on" id="p0">
+  <header class="hero">
+    <p class="kick">Temario de la evaluación</p>
+    <h1>Expresiones, ecuaciones y <em>funciones cuadráticas</em></h1>
+    <p class="sub">Los tres ejes del temario, con las fórmulas que se usan, los errores que más cuestan y 65 preguntas tipo PAES.</p>
+    <div class="cuenta">
+      <span class="big" id="cnum">—</span>
+      <span class="lb" id="clab">Fija la fecha de la prueba</span>
+      <input type="date" id="cfecha" aria-label="Fecha de la prueba">
+    </div>
+  </header>
+
+  <h2>Ruta de estudio</h2>
+  <p class="lead">Marca cada bloque al terminarlo; queda guardado en este teléfono. Si el tiempo aprieta, los bloques 3 y 5 son los que más puntaje devuelven.</p>
+  <div class="plan" id="plan"></div>
+
+  <h2>Las fórmulas que no puedes olvidar</h2>
+  <div class="g2">
+    <div class="card v"><h4>Cuadrado de binomio</h4>
+      <div class="mat">(a ± b)² = a² ± 2ab + b²<br>(a + b)(a − b) = a² − b²</div></div>
+    <div class="card o"><h4>Fórmula general</h4>
+      <div class="mat">x = ( −b ± √(b² − 4ac) ) / 2a<br>Δ = b² − 4ac</div></div>
+    <div class="card a"><h4>Vértice de la parábola</h4>
+      <div class="mat">h = −b / 2a &nbsp; k = f(h)<br>f(x) = a(x − h)² + k</div></div>
+    <div class="card v"><h4>Suma y producto de raíces</h4>
+      <div class="mat">x₁ + x₂ = −b/a<br>x₁ · x₂ = c/a</div></div>
+  </div>
+
+  <h2>Los errores que más cuestan</h2>
+  <div class="err">
+    <div><span class="no">(a + b)² = a² + b²</span><span class="ar">→</span><span class="si">a² + 2ab + b²</span>
+      <p>El término del medio es el que casi siempre se olvida. Aparece en una de cada tres preguntas del eje 1.</p></div>
+    <div><span class="no">h = b / 2a</span><span class="ar">→</span><span class="si">h = −b / 2a</span>
+      <p>El signo menos. Si b es negativo, el vértice queda a la derecha del eje Y.</p></div>
+    <div><span class="no">2x² + 10x − 12 = (x−1)(x+6)</span><span class="ar">→</span><span class="si">2(x−1)(x+6)</span>
+      <p>Si a ≠ 1, saca primero el factor común. Las raíces no cambian, pero la función sí.</p></div>
+    <div><span class="no">(x + 3) / 3 = x</span><span class="ar">→</span><span class="si">no se simplifica</span>
+      <p>Solo se cancela lo que multiplica, nunca lo que suma. Factoriza antes de tachar.</p></div>
+    <div><span class="no">Δ &lt; 0 ⟹ no tiene solución</span><span class="ar">→</span><span class="si">no tiene soluciones reales</span>
+      <p>La PAES pregunta por soluciones en ℝ. Δ &lt; 0 significa que la parábola no toca el eje X.</p></div>
+    <div><span class="no">a &lt; 0 ⟹ el vértice es mínimo</span><span class="ar">→</span><span class="si">es un máximo</span>
+      <p>Si abre hacia abajo, el vértice es el punto más alto. Clave en problemas de proyectiles y de área.</p></div>
+    <div><span class="no">(x − 3)(x − 4) = 2 ⟹ x = 3 o x = 4</span><span class="ar">→</span><span class="si">iguala a cero primero</span>
+      <p>La propiedad del factor cero solo sirve cuando el producto es 0. Si no, desarrolla y ordena.</p></div>
+  </div>
+</section>
+
+<!-- ===== EJE 1 ===== -->
+<section class="panel" id="p1">
+  <h2>Expresiones algebraicas</h2>
+  <p class="lead">Todo se reduce a dos movimientos: desarrollar un producto o factorizar una suma. Si reconoces el patrón, el ejercicio dura veinte segundos.</p>
+  <div class="card v"><h4>Productos notables</h4>
+    <ul class="f">
+      <li>(a + b)² = a² + 2ab + b²</li>
+      <li>(a − b)² = a² − 2ab + b²</li>
+      <li>(a + b)(a − b) = a² − b²<em>Diferencia de cuadrados. La más frecuente.</em></li>
+      <li>(x + p)(x + q) = x² + (p + q)x + p·q<em>El puente entre factorizar y resolver ecuaciones.</em></li>
+    </ul></div>
+  <div class="card o"><h4>Despejes que la PAES repite</h4>
+    <ul class="f">
+      <li><span class="mko">a² + b² = (a + b)² − 2ab</span><em>Te dan la suma y el producto, y piden la suma de cuadrados.</em></li>
+      <li><span class="mko">(a − b)² = (a² + b²) − 2ab</span><em>El ejercicio 43 de tu pizarra: 29 − 20 = 9.</em></li>
+      <li>(a + b)² − (a − b)² = 4ab</li>
+      <li>Si x₁ y x₂ son raíces: x² − (x₁+x₂)x + x₁·x₂ = 0</li>
+    </ul></div>
+  <div class="card a"><h4>Fracciones algebraicas · el orden importa</h4>
+    <ul class="f">
+      <li>1 · Factoriza numerador y denominador<em>Nunca simplifiques antes de factorizar.</em></li>
+      <li>2 · Dividir es multiplicar por el recíproco de la segunda</li>
+      <li>3 · Cancela solo factores completos</li>
+      <li>4 · Anota la restricción: el denominador ≠ 0</li>
+    </ul></div>
+  <h3>Práctica · 11 preguntas</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ===== EJE 2 ===== -->
+<section class="panel" id="p2">
+  <h2>Ecuación cuadrática</h2>
+  <p class="lead">ax² + bx + c = 0, con a ≠ 0. Antes de aplicar la fórmula, mira si b o c valen cero: te ahorras la mitad del trabajo.</p>
+  <div class="card v"><h4>Los cuatro caminos, de más rápido a más lento</h4>
+    <ul class="f">
+      <li><b>b = 0</b> → x² = −c/a → x = ±√(−c/a)<em>x² − 4 = 0 → x = ±2</em></li>
+      <li><b>c = 0</b> → x(ax + b) = 0<em>x² + 3x = 0 → 0 y −3. Nunca dividas por x: pierdes la raíz 0.</em></li>
+      <li><b>Factorizar</b> → busca p·q = c y p + q = b<em>x² + 2x − 15 = (x+5)(x−3) → −5 y 3</em></li>
+      <li><b>Fórmula general</b> → cuando nada calza<em>x = (−b ± √(b²−4ac)) / 2a</em></li>
+    </ul></div>
+  <div class="card o"><h4>Discriminante Δ = b² − 4ac</h4>
+    <ul class="f">
+      <li><span class="mko">Δ &gt; 0</span> → dos soluciones reales distintas<em>La parábola corta el eje X en dos puntos.</em></li>
+      <li><span class="mko">Δ = 0</span> → una solución real (doble)<em>La parábola es tangente al eje X.</em></li>
+      <li><span class="mko">Δ &lt; 0</span> → ninguna solución real<em>La parábola no toca el eje X.</em></li>
+    </ul></div>
+  <div class="card a"><h4>Sin resolver la ecuación</h4>
+    <ul class="f">
+      <li>x₁ + x₂ = −b/a</li>
+      <li>x₁ · x₂ = c/a<em>Sirve para preguntas con parámetros, sin calcular raíces.</em></li>
+      <li>Reconstruir: x² − (suma)·x + (producto) = 0</li>
+    </ul></div>
+  <h3>Práctica · 13 preguntas</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ===== EJE 3 ===== -->
+<section class="panel" id="p3">
+  <h2>Función cuadrática</h2>
+  <p class="lead">La misma expresión, ahora dibujada. Mueve a, b y c y observa qué cambia: es la forma más rápida de fijar los conceptos.</p>
+  <div class="expl">
+    <div class="explbox">
+      <svg id="graf" viewBox="0 0 400 400" aria-label="Gráfico interactivo de la parábola"></svg>
+      <div class="sl">
+        <label for="sa">coeficiente a <span id="va">1</span></label>
+        <input type="range" id="sa" min="-3" max="3" step="0.1" value="1">
+        <label for="sb">coeficiente b <span id="vb">−2</span></label>
+        <input type="range" id="sb" min="-10" max="10" step="0.5" value="-2">
+        <label for="sc">coeficiente c <span id="vc">−3</span></label>
+        <input type="range" id="sc" min="-10" max="10" step="0.5" value="-3">
+        <div class="lect" id="lect"></div>
+      </div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card v"><h4>Qué controla cada letra</h4>
+      <ul class="f">
+        <li><b>a</b> → concavidad y ancho<em>a &gt; 0 abre hacia arriba (mínimo); a &lt; 0 hacia abajo (máximo). |a| grande = más angosta.</em></li>
+        <li><b>b</b> → desplaza el vértice de lado<em>Junto con a define el eje de simetría x = −b/2a.</em></li>
+        <li><b>c</b> → corte con el eje Y<em>Siempre en (0, c). Regalo de pregunta.</em></li>
+      </ul></div>
+    <div class="card o"><h4>Las tres formas de escribirla</h4>
+      <ul class="f">
+        <li>General: f(x) = ax² + bx + c<em>Lees c de inmediato.</em></li>
+        <li>Canónica: f(x) = a(x − h)² + k<em>Lees el vértice (h, k) de inmediato.</em></li>
+        <li>Factorizada: f(x) = a(x − x₁)(x − x₂)<em>Lees las raíces de inmediato.</em></li>
+      </ul></div>
+  </div>
+  <div class="card a"><h4>Traslaciones desde f(x) = x²</h4>
+    <ul class="f">
+      <li>f(x − h) → h unidades a la derecha<em>(x − 3)² se mueve a la derecha, aunque diga menos.</em></li>
+      <li>f(x + h) → h unidades a la izquierda</li>
+      <li>f(x) + k → k unidades hacia arriba</li>
+      <li>−f(x) → se refleja respecto al eje X</li>
+    </ul></div>
+  <h3>Práctica · 13 preguntas</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ===== DEMRE ===== -->
+<section class="panel" id="p4">
+  <h2>Banco DEMRE</h2>
+  <p class="lead">Los 28 ejercicios oficiales de tu guía, del 2005 a la PAES M2 2024, con desarrollo paso a paso. Enunciados reescritos; la matemática es idéntica.</p>
+  <div id="q4"></div>
+</section>
+
+<!-- ===== ENSAYO ===== -->
+<section class="panel" id="p5">
+  <h2>Ensayo final</h2>
+  <p class="lead">20 preguntas mezcladas de los tres ejes. No se muestran respuestas hasta que aprietes corregir: así se parece de verdad a la prueba.</p>
+  <div class="qhead">
+    <span class="mark" id="mensayo">Sin responder</span>
+    <span><button class="btn gh" id="revisar">Corregir</button> <button class="btn" id="nuevo">Ensayo nuevo</button></span>
+  </div>
+  <div id="q5"></div>
+</section>
+
+<footer>Ejercicios oficiales adaptados de las publicaciones del DEMRE (demre.cl/publicaciones). Material de estudio personal.</footer>
+</div>
+
+<button class="fab" id="fab">✦ Asistente</button>
+<div class="scrim" id="scrim"></div>
+<div class="bot" id="bot" role="dialog" aria-label="Asistente de cuadráticas">
+  <div class="grip"></div>
+  <div class="bothead">
+    <span class="dot"></span>
+    <span class="nm">Asistente<small>Resuelve, factoriza y explica paso a paso</small></span>
+    <button class="iconbtn" id="cerrar" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="botmsgs" id="msgs"></div>
+  <div class="chips" id="chips"></div>
+  <div class="botin">
+    <input id="inp" placeholder="Escribe 2x^2-5x+2=0" autocomplete="off" enterkeyhint="send">
+    <button id="env" aria-label="Enviar">↑</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   ALMACENAMIENTO SEGURO
+   ========================================================= */
+function LS(k,v){
+  try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; }
+}
+
+/* =========================================================
+   TEMA
+   ========================================================= */
+(function(){
+  var saved = LS('tema');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  var b = document.getElementById('tema');
+  function icono(){
+    var t = document.documentElement.getAttribute('data-theme');
+    b.textContent = t==='light' ? '☀' : (t==='dark' ? '☾' : '◐');
+    b.title = t==='light' ? 'Claro' : (t==='dark' ? 'Oscuro' : 'Automático');
+  }
+  icono();
+  b.addEventListener('click', function(){
+    var t = document.documentElement.getAttribute('data-theme');
+    var next = t==='auto' ? 'light' : (t==='light' ? 'dark' : 'auto');
+    document.documentElement.setAttribute('data-theme', next);
+    LS('tema', next); icono();
+    if(window.redibuja) window.redibuja();
+  });
+})();
+
+/* =========================================================
+   PESTAÑAS
+   ========================================================= */
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected','false')});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on')});
+    t.setAttribute('aria-selected','true');
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* =========================================================
+   CUENTA REGRESIVA CONFIGURABLE
+   ========================================================= */
+(function(){
+  var inp = document.getElementById('cfecha');
+  function proxMiercoles(){
+    var d = new Date(); d.setHours(8,0,0,0);
+    do{ d.setDate(d.getDate()+1); }while(d.getDay()!==3);
+    return d;
+  }
+  var guard = LS('fechaprueba');
+  var fecha = guard ? new Date(guard+'T08:00:00') : proxMiercoles();
+  inp.value = fecha.getFullYear()+'-'+String(fecha.getMonth()+1).padStart(2,'0')+'-'+String(fecha.getDate()).padStart(2,'0');
+  function pinta(){
+    var dif = fecha - new Date();
+    var n = document.getElementById('cnum'), l = document.getElementById('clab');
+    if(dif <= 0){ n.textContent='¡Hoy!'; l.textContent='Mucha suerte'; return; }
+    var dias = Math.floor(dif/86400000), hrs = Math.floor(dif/3600000)%24, min = Math.floor(dif/60000)%60;
+    n.textContent = dias>0 ? dias+'d '+hrs+'h' : hrs+'h '+String(min).padStart(2,'0')+'m';
+    var f = fecha.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long'});
+    l.textContent = 'para la prueba · '+f;
+  }
+  inp.addEventListener('change', function(){
+    if(!inp.value) return;
+    fecha = new Date(inp.value+'T08:00:00');
+    LS('fechaprueba', inp.value); pinta();
+  });
+  pinta(); setInterval(pinta, 30000);
+})();
+
+/* =========================================================
+   PLAN
+   ========================================================= */
+(function(){
+  var bloques = [
+    ['Bloque 1 · 15 min','Lee las fórmulas de los tres ejes y escríbelas de memoria en una hoja.'],
+    ['Bloque 2 · 20 min','Práctica del eje 1. Si fallas dos seguidas, vuelve a la tarjeta de despejes.'],
+    ['Bloque 3 · 30 min','Práctica del eje 2. Es el eje con más preguntas en la PAES.'],
+    ['Bloque 4 · 25 min','Práctica del eje 3 y juega con el explorador de la parábola.'],
+    ['Bloque 5 · 40 min','Banco DEMRE completo. Aquí están los problemas con enunciado largo.'],
+    ['Bloque 6 · 40 min','Ensayo final cronometrado, sin apuntes.'],
+    ['Antes de dormir','Relee solo los errores comunes. Nada más.']
+  ];
+  var cont = document.getElementById('plan');
+  var hechos = (LS('plan')||'').split(',');
+  cont.innerHTML = bloques.map(function(b,i){
+    var ck = hechos.indexOf(String(i))>-1 ? ' checked' : '';
+    return '<label><input type="checkbox" data-i="'+i+'"'+ck+'><span class="txt"><span class="t">'+b[0]+'</span>'+b[1]+'</span></label>';
+  }).join('');
+  cont.addEventListener('change', function(){
+    var m = [];
+    cont.querySelectorAll('input').forEach(function(x){ if(x.checked) m.push(x.dataset.i); });
+    LS('plan', m.join(','));
+  });
+})();
+
+/* =========================================================
+   BANCOS DE PREGUNTAS
+   ========================================================= */
+var E1 = [
+ {q:'¿Cuál es el desarrollo de (2x − 3)²?',o:['4x² + 9','4x² − 12x + 9','4x² − 6x + 9','2x² − 12x + 9'],a:1,
+  s:'Cuadrado de binomio: (a−b)² = a² − 2ab + b².<span class="paso">a = 2x → a² = 4x² ; b = 3 → b² = 9 ; 2ab = 2·2x·3 = 12x</span>El error clásico es olvidar el término del medio.'},
+ {q:'Al factorizar 9x² − 25 se obtiene:',o:['(3x − 5)²','(3x + 5)²','(3x − 5)(3x + 5)','(9x − 5)(x + 5)'],a:2,
+  s:'Es una diferencia de cuadrados: a² − b² = (a+b)(a−b).<span class="paso">9x² = (3x)² y 25 = 5²</span>'},
+ {q:'Si a·b = 10 y a² + b² = 29, ¿cuál es el valor de (a − b)²?',o:['9','49','19','39'],a:0,
+  s:'Desarrolla primero y después reemplaza.<span class="paso">(a−b)² = a² − 2ab + b² = (a² + b²) − 2ab</span><span class="paso">= 29 − 2·10 = 9</span>Es el ejercicio 43 de tu pizarra.'},
+ {q:'Si a + b = 7 y a·b = 12, ¿cuánto vale a² + b²?',o:['25','37','61','13'],a:0,
+  s:'<span class="paso">(a+b)² = a² + 2ab + b² ⟹ a² + b² = (a+b)² − 2ab</span><span class="paso">= 49 − 24 = 25</span>'},
+ {q:'Para x ≠ −3, la expresión (x² − 9)/(x² + 6x + 9) equivale a:',o:['(x − 3)/(x + 3)','(x + 3)/(x − 3)','x − 3','(x − 3)(x + 3)'],a:0,
+  s:'Factoriza arriba y abajo antes de simplificar.<span class="paso">(x−3)(x+3) / (x+3)² = (x − 3)/(x + 3)</span>'},
+ {q:'Simplifica (xy − x)/y : (ay − a)/y²',o:['xy/a','x/(ay)','xy²/a','a/(xy)'],a:0,
+  s:'Dividir es multiplicar por el recíproco de la segunda fracción.<span class="paso">(xy − x)/y · y²/(ay − a)</span><span class="paso">= x(y−1)/y · y²/[a(y−1)] = xy/a</span>Es el ejercicio 44 de tu pizarra.'},
+ {q:'El desarrollo de (x + 5)(x − 3) es:',o:['x² + 2x − 15','x² − 2x − 15','x² + 8x − 15','x² + 15x + 2'],a:0,
+  s:'<span class="paso">(x+p)(x+q) = x² + (p+q)x + p·q, con p = 5 y q = −3</span><span class="paso">p + q = 2 y p·q = −15</span>'},
+ {q:'¿Cuál es la factorización completa de 3x² − 12x?',o:['3x(x − 4)','3(x² − 4x)','x(3x − 12)','3x(x + 4)'],a:0,
+  s:'Saca el máximo factor común: el 3 y la x.<span class="paso">3x² − 12x = 3x(x − 4)</span>Las otras son ciertas pero incompletas: todavía queda factor común dentro del paréntesis.'},
+ {q:'Si x² + bx + 18 = (x + 3)(x + 6), ¿cuál es el valor de b?',o:['9','18','21','6'],a:0,
+  s:'<span class="paso">(x+p)(x+q) = x² + (p+q)x + pq</span><span class="paso">b = p + q = 3 + 6 = 9</span>De paso: pq = 18, que calza con el término libre.'},
+ {q:'La suma 1/a + 1/b es equivalente a:',o:['(a + b)/(ab)','1/(a + b)','(ab)/(a + b)','2/(ab)'],a:0,
+  s:'Común denominador ab.<span class="paso">b/(ab) + a/(ab) = (a + b)/(ab)</span>'},
+ {q:'¿A qué equivale (a + b)² − (a − b)²?',o:['4ab','2ab','2a² + 2b²','0'],a:0,
+  s:'<span class="paso">(a² + 2ab + b²) − (a² − 2ab + b²) = 4ab</span>Los cuadrados se cancelan y quedan los dos términos del medio.'}
+];
+
+var E2 = [
+ {q:'Las soluciones de x² − 4 = 0 son:',o:['x = 2','x = ±2','x = 4','x = ±4'],a:1,
+  s:'Como b = 0, despeja directo.<span class="paso">x² = 4 ⟹ x = ±√4 = ±2</span>También sale factorizando: (x−2)(x+2) = 0.'},
+ {q:'Las soluciones de x² + 3x = 0 son:',o:['0 y −3','0 y 3','solo −3','3 y −3'],a:0,
+  s:'Como c = 0, factoriza por x.<span class="paso">x(x + 3) = 0 ⟹ x₁ = 0 ; x₂ = −3</span>Si divides toda la ecuación por x, pierdes la raíz 0.'},
+ {q:'La solución de x² + 12x + 36 = 0 es:',o:['x = −6 (doble)','x = 6','x = ±6','x = −6 y x = −36'],a:0,
+  s:'Es un cuadrado de binomio perfecto.<span class="paso">(x + 6)² = 0 ⟹ x = −6</span>Δ = 144 − 144 = 0, por eso hay una sola raíz.'},
+ {q:'Las soluciones de x² + 2x − 15 = 0 son:',o:['−5 y 3','5 y −3','−5 y −3','15 y −1'],a:0,
+  s:'Busca dos números que multiplicados den −15 y sumados den 2.<span class="paso">5 y −3 ⟹ (x + 5)(x − 3) = 0</span>'},
+ {q:'Las soluciones de 2x² + 10x − 12 = 0 son:',o:['1 y −6','−1 y 6','2 y −3','1 y 6'],a:0,
+  s:'Saca el factor 2 primero.<span class="paso">2(x² + 5x − 6) = 0</span><span class="paso">2(x − 1)(x + 6) = 0 ⟹ x₁ = 1 ; x₂ = −6</span>'},
+ {q:'Usando la fórmula general, las soluciones de 2x² − 5x + 2 = 0 son:',o:['2 y 0,5','−2 y −0,5','2 y 1','1 y 0,5'],a:0,
+  s:'<span class="paso">x = (5 ± √(25 − 16)) / 4 = (5 ± 3)/4</span><span class="paso">x₁ = 8/4 = 2 ; x₂ = 2/4 = 0,5</span>'},
+ {q:'¿Cuál es el discriminante de 3x² − 5x + 2 = 0?',o:['1','49','−1','25'],a:0,
+  s:'<span class="paso">Δ = b² − 4ac = 25 − 24 = 1</span>Δ &gt; 0, así que hay dos soluciones reales distintas.'},
+ {q:'¿Cuál de estas ecuaciones NO tiene soluciones reales?',o:['x² − 1 = 0','x² + x + 1 = 0','x² + 2x + 1 = 0','x² − 5x = 0'],a:1,
+  s:'Calcula Δ en cada una.<span class="paso">x² + x + 1: Δ = 1 − 4 = −3 &lt; 0</span>Las demás tienen Δ ≥ 0.'},
+ {q:'¿Para qué valor de k la ecuación x² + kx + 9 = 0 tiene una única solución real?',o:['k = ±6','k = ±3','k = 9','k = ±9'],a:0,
+  s:'Una única solución real significa Δ = 0.<span class="paso">k² − 36 = 0 ⟹ k = ±6</span>'},
+ {q:'Si x₁ y x₂ son las soluciones de 2x² − 8x + 6 = 0, ¿cuánto vale x₁ + x₂?',o:['4','−4','3','−8'],a:0,
+  s:'No hace falta resolver.<span class="paso">x₁ + x₂ = −b/a = 8/2 = 4</span>'},
+ {q:'Para esa misma ecuación 2x² − 8x + 6 = 0, ¿cuánto vale x₁ · x₂?',o:['3','6','−3','4'],a:0,
+  s:'<span class="paso">x₁ · x₂ = c/a = 6/2 = 3</span>Comprobación: las raíces son 1 y 3.'},
+ {q:'¿Cuál ecuación tiene por soluciones 5 y −2?',o:['x² − 3x − 10 = 0','x² + 3x − 10 = 0','x² − 3x + 10 = 0','x² + 7x + 10 = 0'],a:0,
+  s:'Usa x² − (suma)x + (producto) = 0.<span class="paso">suma = 3 ; producto = −10</span><span class="paso">x² − 3x − 10 = 0</span>'},
+ {q:'En la ecuación x² − 6x + c = 0, una de las soluciones es 2. ¿Cuál es el valor de c?',o:['8','−8','4','12'],a:0,
+  s:'Reemplaza x = 2 en la ecuación.<span class="paso">4 − 12 + c = 0 ⟹ c = 8</span>La otra raíz es 4, porque x₁ + x₂ = 6.'}
+];
+
+var E3 = [
+ {q:'La gráfica de f(x) = −2x² + 3x − 1 es una parábola que:',o:['abre hacia arriba','abre hacia abajo','es una recta','depende del valor de c'],a:1,
+  s:'Solo importa el signo de a.<span class="paso">a = −2 &lt; 0 ⟹ abre hacia abajo</span>Su vértice es un máximo.'},
+ {q:'¿Cuál es el vértice de f(x) = x² − 6x + 5?',o:['(3, −4)','(−3, −4)','(3, 4)','(6, 5)'],a:0,
+  s:'<span class="paso">h = −b/2a = 6/2 = 3</span><span class="paso">k = f(3) = 9 − 18 + 5 = −4</span>'},
+ {q:'El eje de simetría de f(x) = 2x² + 8x − 1 es la recta:',o:['x = −2','x = 2','x = −4','x = 4'],a:0,
+  s:'<span class="paso">x = −b/2a = −8/4 = −2</span>El eje de simetría siempre pasa por el vértice.'},
+ {q:'¿En qué punto corta al eje Y la función f(x) = x² − 4x + 3?',o:['(0, 3)','(3, 0)','(0, −4)','(0, 1)'],a:0,
+  s:'Evalúa en x = 0.<span class="paso">f(0) = 3, que es justamente el coeficiente c</span>'},
+ {q:'¿Cuántas veces corta al eje X la parábola y = x² − 4x + 4?',o:['ninguna','una','dos','tres'],a:1,
+  s:'<span class="paso">Δ = 16 − 16 = 0 ⟹ una sola raíz (doble)</span>La parábola es tangente al eje X en x = 2.'},
+ {q:'¿Cuál es el valor mínimo de f(x) = x² + 4x + 7?',o:['3','−2','7','11'],a:0,
+  s:'El mínimo es la coordenada k del vértice.<span class="paso">h = −2 ; k = f(−2) = 4 − 8 + 7 = 3</span>Ojo: −2 es dónde ocurre, 3 es el valor.'},
+ {q:'¿Cuál es el valor máximo de f(x) = −x² + 6x?',o:['9','3','6','−9'],a:0,
+  s:'Como a &lt; 0, el vértice es un máximo.<span class="paso">h = −6/(−2) = 3 ; k = −9 + 18 = 9</span>'},
+ {q:'¿Cuál es el vértice de f(x) = (x − 2)² + 5?',o:['(2, 5)','(−2, 5)','(2, −5)','(5, 2)'],a:0,
+  s:'Está en forma canónica f(x) = a(x − h)² + k, se lee directo.<span class="paso">h = 2 ; k = 5</span>Cuidado con el signo: (x − 2) significa h = +2.'},
+ {q:'Una parábola tiene ceros en −1 y 3, y a = 1. Su expresión es:',o:['x² − 2x − 3','x² + 2x − 3','x² − 2x + 3','x² − 3x − 1'],a:0,
+  s:'Usa la forma factorizada.<span class="paso">f(x) = (x + 1)(x − 3) = x² − 2x − 3</span>'},
+ {q:'Respecto de f(x) = x², la función g(x) = (x + 3)² está trasladada:',o:['3 unidades a la izquierda','3 unidades a la derecha','3 unidades hacia arriba','3 unidades hacia abajo'],a:0,
+  s:'El vértice pasa de (0,0) a (−3,0).<span class="paso">g(x) = (x − (−3))² ⟹ h = −3</span>Un signo + adentro mueve hacia la izquierda.'},
+ {q:'La altura de un proyectil es h(t) = −5t² + 20t (en metros). ¿Cuál es su altura máxima?',o:['20 m','15 m','40 m','10 m'],a:0,
+  s:'<span class="paso">t = −20/(2·(−5)) = 2 segundos</span><span class="paso">h(2) = −20 + 40 = 20 m</span>'},
+ {q:'Una parábola tiene vértice (2, −1) y pasa por (0, 3). Su expresión es:',o:['x² − 4x + 3','x² + 4x + 3','−x² + 4x − 3','x² − 4x − 3'],a:0,
+  s:'Parte de la forma canónica y usa el punto conocido.<span class="paso">f(x) = a(x − 2)² − 1, con f(0) = 3</span><span class="paso">4a − 1 = 3 ⟹ a = 1</span><span class="paso">f(x) = (x−2)² − 1 = x² − 4x + 3</span>'},
+ {q:'Si a &gt; 0 y Δ &lt; 0, entonces la parábola:',o:['no corta el eje X y queda completamente sobre él','corta el eje X en dos puntos','queda completamente bajo el eje X','es tangente al eje X'],a:0,
+  s:'Δ &lt; 0 significa que no hay raíces reales, así que no toca el eje X.<span class="paso">Como abre hacia arriba, todo el gráfico queda por encima: f(x) &gt; 0 para todo x real</span>'}
+];
+
+var DEM = [
+ {t:'PSU 2005',q:'Las raíces de la ecuación x(x − 1) = 20 son:',o:['1 y 20','2 y 20','4 y 5','4 y −5','−4 y 5'],a:4,
+  s:'Primero iguala a cero; nunca resuelvas con el producto tal cual.<span class="paso">x² − x − 20 = 0</span><span class="paso">(x − 5)(x + 4) = 0 ⟹ x₁ = 5 ; x₂ = −4</span>'},
+ {t:'PSU 2007',q:'¿Cuál es el menor valor de la expresión x² + 2/x, si x cumple que x + 15/x = 16?',o:['4','3','1','0','−1'],a:1,
+  s:'Resuelve primero la condición.<span class="paso">x² + 15 = 16x ⟹ x² − 16x + 15 = 0</span><span class="paso">(x − 1)(x − 15) = 0 ⟹ x = 1 o x = 15</span><span class="paso">Con x = 1: 1 + 2 = 3. Con x = 15: más de 225.</span>El menor valor es 3.'},
+ {t:'PSU 2009',q:'Un patio rectangular tiene 24 m² de superficie y su frente mide 2 metros más que su fondo. Si x es el fondo, ¿qué ecuación permite calcular las dimensiones?',o:['x(x + 2) − 24 = 0','x(x − 2) − 24 = 0','x(x − 2) + 24 = 0','x² − 22 = 0','4x − 20 = 0'],a:0,
+  s:'Nombra los lados con la variable pedida.<span class="paso">fondo = x ; frente = x + 2</span><span class="paso">x(x + 2) = 24 ⟹ x(x + 2) − 24 = 0</span>'},
+ {t:'PSU 2010',q:'La suma de los cuadrados de tres números enteros consecutivos es 291. ¿Qué expresión representa el planteamiento?',o:['[x + (x+1) + (x+2)]² = 291','x² + (x²+1) + (x²+2) = 291','(x−1)² + x² + (x+1)² = 291','(x−1)²·x²·(x+1)² = 291','x²(x²+1)(x²+2) = 291'],a:2,
+  s:'Conviene centrar los consecutivos en x: x−1, x, x+1.<span class="paso">(x−1)² + x² + (x+1)² = 291</span>Se elevan al cuadrado los números, no la suma.'},
+ {t:'PSU 2010',q:'El conjunto solución de la ecuación x² + 1 = x + 1 es:',o:['{0}','{1}','{0, 1}','{0, −1}','ninguno de los anteriores'],a:2,
+  s:'<span class="paso">x² − x = 0 ⟹ x(x − 1) = 0</span><span class="paso">x = 0 o x = 1</span>El error frecuente es cancelar el 1 y dividir por x, perdiendo la solución 0.'},
+ {t:'PSU 2012',q:'De 11 cuadernos, unos son de tapa dura y el resto de tapa blanda. Si el producto entre ambas cantidades es 24 y x es la cantidad de tapa dura, ¿qué ecuación permite determinar x?',o:['10x − 24 = 0','x² − 11x + 24 = 0','x² + 11x + 24 = 0','x² + 13 = 0','12x + 24 = 0'],a:1,
+  s:'<span class="paso">tapa dura = x ; tapa blanda = 11 − x</span><span class="paso">x(11 − x) = 24 ⟹ x² − 11x + 24 = 0</span>Las soluciones son 8 y 3; como la dura es mayor, x = 8.'},
+ {t:'PSU 2015',q:'Las soluciones de la ecuación 3(x − 2)² = 7 están representadas por:',o:['2 ± (√7)/3','−2 ± √(7/3)','2 ± √(7/3)','(2 ± √13)/3','(2 ± √7)/3'],a:2,
+  s:'Despeja el cuadrado antes de sacar raíz.<span class="paso">(x − 2)² = 7/3</span><span class="paso">x = 2 ± √(7/3)</span>La raíz cubre toda la fracción, no solo el 7.'},
+ {t:'PSU 2015',q:'Un cartón rectangular debe tener 2.500 cm² de área, y su largo x debe exceder al ancho en 75 cm. ¿Qué ecuación permite determinar sus dimensiones?',o:['x² − 75x = 2.500','x² + 75x = 2.500','x² − 75 = 2.500','x² + 75 = 2.500','4x − 150 = 2.500'],a:0,
+  s:'Si el largo excede al ancho, el ancho es el largo menos 75.<span class="paso">x(x − 75) = 2.500 ⟹ x² − 75x = 2.500</span>'},
+ {t:'PSU 2017',q:'Con una cuerda de largo L cm se construyen los bordes de un rectángulo no cuadrado de área A cm². ¿Qué expresión representa el lado menor, en cm?',o:['(L − √(L² − 4A)) / 2','(L + √(L² − 4A)) / 2','(L − √(L² − 16A)) / 4','(L + √(L² − 16A)) / 4','(L − √(L² − 16A)) / 2'],a:2,
+  s:'Los lados son las raíces de una cuadrática cuya suma y producto conoces.<span class="paso">a + b = L/2 y a·b = A</span><span class="paso">t² − (L/2)t + A = 0</span><span class="paso">t = [L ± √(L² − 16A)] / 4</span>El lado menor toma el signo menos.'},
+ {t:'PSU 2018',q:'En un terreno de largo 4x y ancho (2x + 2) se construye una piscina de (3x + 2) por (2x − 2), y se embaldosa el resto. Si esa región mide 136 m², ¿qué ecuación permite hallar x?',o:['(8x² + 8x) − (6x² − 4) = 136','(8x² + 2) − (6x² − 4) = 136','(8x² + 8x) − (6x² − 2x − 4) = 136','(8x² + 2) − (6x² + 10x − 4) = 136','(8x² + 8x) − (6x² − 10x − 4) = 136'],a:2,
+  s:'Embaldosado = terreno − piscina. Desarrolla cada producto con cuidado.<span class="paso">terreno: 4x(2x + 2) = 8x² + 8x</span><span class="paso">piscina: (3x+2)(2x−2) = 6x² − 2x − 4</span>'},
+ {t:'PSU 2019',q:'El área de un rectángulo es 75 cm² y su ancho mide 10 cm menos que su largo. ¿Cuánto mide el largo?',o:['5 cm','55/4 cm','15 cm','√85 cm','no existe tal rectángulo'],a:2,
+  s:'<span class="paso">L(L − 10) = 75 ⟹ L² − 10L − 75 = 0</span><span class="paso">(L − 15)(L + 5) = 0 ⟹ L = 15</span>La raíz −5 se descarta: una medida no puede ser negativa.'},
+ {t:'PSU 2019',q:'Dada x² + 6x + 17 = 0, ¿qué número m debe sumarse a ambos lados para completar el cuadrado de binomio a la izquierda, y cuáles son sus soluciones reales?',o:['m = 9 y las soluciones son −3 ± √6','m = 19 y las soluciones son 6 ± √3','m = −8 y las soluciones son −3 ± √8','m = −1 y no tiene soluciones reales','m = −8 y no tiene soluciones reales'],a:4,
+  s:'Para que el lado izquierdo sea (x + 3)² = x² + 6x + 9, el término libre debe pasar de 17 a 9.<span class="paso">17 + m = 9 ⟹ m = −8</span><span class="paso">Δ = 36 − 68 = −32 &lt; 0 ⟹ sin soluciones reales</span>'},
+ {t:'PSU 2020',q:'Si la ecuación (5x − n)² = 0 tiene como solución x = 2, ¿cuál es el valor de n?',o:['10','−8','12','√96','√6'],a:0,
+  s:'Un cuadrado vale cero solo si la base vale cero.<span class="paso">5x − n = 0, con x = 2 ⟹ n = 10</span>'},
+ {t:'PSU 2020',q:'La expresión P − (Q/R)t² representa el volumen de agua de un pozo en el instante t. Con P, Q y R constantes positivas, ¿qué expresión da los segundos que tarda en quedarse sin agua?',o:['PR/Q','−√(PR/Q)','√(PR/Q)','√(−PR/Q)','PQ/R'],a:2,
+  s:'Sin agua significa volumen cero.<span class="paso">P − (Q/R)t² = 0 ⟹ t² = PR/Q</span><span class="paso">t = √(PR/Q)</span>Se descarta la raíz negativa porque el tiempo es positivo.'},
+ {t:'PSU 2021',q:'Una piscina rectangular mide 4 m por 10 m y se le agrega alrededor un borde de pasto de ancho x m. Si la superficie total es 112 m², ¿qué ecuación permite hallar x?',o:['x² + 40 = 112','x² + 14x = 72','2x² + 7x = 18','x² + 7x = 18','4x² + 40 = 112'],a:3,
+  s:'El borde se agrega por los dos lados, así que cada dimensión crece 2x.<span class="paso">(4 + 2x)(10 + 2x) = 112</span><span class="paso">4x² + 28x + 40 = 112</span><span class="paso">÷4: x² + 7x = 18</span>'},
+ {t:'PSU 2022',q:'Los lados de un rectángulo son números pares consecutivos y su superficie es 48 m². ¿Cuánto mide el lado menor?',o:['4 m','6 m','8 m','12 m','16 m'],a:1,
+  s:'Pares consecutivos se llevan 2 unidades.<span class="paso">x(x + 2) = 48 ⟹ x² + 2x − 48 = 0</span><span class="paso">(x + 8)(x − 6) = 0 ⟹ x = 6</span>Los lados son 6 y 8.'},
+ {t:'PDT Invierno',q:'El área de un triángulo ABC es 20 cm². Si la base AB mide 3 cm más que la altura CD, ¿cuánto mide AB?',o:['8 cm','11 cm','5 cm','(√37 + 3) cm','(3 + √89)/2 cm'],a:0,
+  s:'Llama h a la altura, así la base es h + 3.<span class="paso">(h + 3)·h / 2 = 20 ⟹ h² + 3h − 40 = 0</span><span class="paso">(h + 8)(h − 5) = 0 ⟹ h = 5</span><span class="paso">AB = 5 + 3 = 8 cm</span>La pregunta pide la base, no la altura.'},
+ {t:'PAES M1 2022',q:'¿Cuáles son las soluciones de x² − 12x + 35 = 0?',o:['−14 y −10','−7 y −5','7 y 5','14 y 10'],a:2,
+  s:'Busca dos números que multiplicados den 35 y sumados den 12.<span class="paso">(x − 7)(x − 5) = 0</span>Producto positivo y suma positiva ⟹ ambas raíces positivas.'},
+ {t:'PAES M2 2022',q:'Para la ecuación (x − 3)(x − 4) = 2, ¿cuál argumento es válido?',o:['Tiene dos soluciones, porque x = 3 y x = 4 satisfacen la igualdad','Las soluciones son 2 y 5, porque (2−3)(2−4) = 2 y (5−3)(5−4) = 2','Las soluciones son 2 y 5, porque ambos valores satisfacen x² − 7x + 10 = 0','Ambas soluciones son positivas, porque el discriminante es positivo'],a:2,
+  s:'El producto vale 2, no 0, así que la propiedad del factor cero no aplica directamente.<span class="paso">x² − 7x + 12 = 2 ⟹ x² − 7x + 10 = 0</span><span class="paso">(x − 2)(x − 5) = 0</span>La alternativa B llega al resultado correcto, pero verificar dos valores no prueba que sean los únicos.'},
+ {t:'PAES M2 2022',q:'Un triángulo tiene 39 cm² de área y su altura mide 7 cm más que la base b. ¿Qué ecuación permite determinar b?',o:['b² − 7b + 78 = 0','b² + 7b + 78 = 0','b² − 7b − 78 = 0','b² + 7b − 78 = 0'],a:3,
+  s:'<span class="paso">b(b + 7)/2 = 39 ⟹ b² + 7b = 78</span><span class="paso">b² + 7b − 78 = 0</span>'},
+ {t:'PAES 2022',q:'Un cuadrado ABCD está formado por cuatro cuadrados de lado x cm, y su perímetro en cm es numéricamente igual al área en cm² del cuadrado de lado x. ¿Cuál es el área de uno de los cuadrados pequeños?',o:['8','4','64','32','16'],a:2,
+  s:'El cuadrado grande tiene lado 2x.<span class="paso">perímetro = 8x ; área del pequeño = x²</span><span class="paso">8x = x² ⟹ x(x − 8) = 0 ⟹ x = 8</span><span class="paso">área = 64 cm²</span>'},
+ {t:'PAES 2022',q:'Un rectángulo tiene área M cm² y su largo mide 2 cm más que su ancho. ¿Qué expresión representa su perímetro en función de M?',o:['8 + 4√(1 + M)','2√M + 4','−4 + 4√(1 + M)','(M − 4)/4','4√(1 + M)'],a:4,
+  s:'<span class="paso">ancho a, largo a + 2 ⟹ a² + 2a − M = 0</span><span class="paso">a = −1 + √(1 + M)</span><span class="paso">perímetro = 4a + 4 = 4√(1 + M)</span>El −4 y el +4 se cancelan.'},
+ {t:'PAES M2 2023',q:'Si x₁ y x₂ son las raíces de 2x² + kx − k = 0, con k ≠ 0, ¿a qué equivale (x₁ + 1)(x₂ + 1)?',o:['1','1 − k','1 + k','1 − k/2','k/2'],a:1,
+  s:'Desarrolla y usa suma y producto de raíces.<span class="paso">(x₁+1)(x₂+1) = x₁x₂ + (x₁+x₂) + 1</span><span class="paso">x₁x₂ = −k/2 ; x₁+x₂ = −k/2</span><span class="paso">= −k/2 − k/2 + 1 = 1 − k</span>'},
+ {t:'PAES M2 2023',q:'En la ecuación qx² + (q − 2)x − 2q − 1 = 0, ¿para qué valor de q el producto de sus raíces es −4?',o:['−2/3','2/5','1/4','1/2'],a:3,
+  s:'<span class="paso">producto = c/a = (−2q − 1)/q = −4</span><span class="paso">−2q − 1 = −4q ⟹ 2q = 1 ⟹ q = 1/2</span>'},
+ {t:'PAES M1 2023',q:'Con tres segmentos de (2x + 15) cm, (2x + 10) cm y x cm se puede construir un triángulo rectángulo. ¿Qué ecuación permite calcular x?',o:['x² + 20x + 125 = 0','7x² + 100x + 325 = 0','9x² + 100x + 325 = 0','x² − 20x − 125 = 0'],a:3,
+  s:'La hipotenusa es el segmento más largo: 2x + 15.<span class="paso">(2x+15)² = (2x+10)² + x²</span><span class="paso">4x² + 60x + 225 = 5x² + 40x + 100</span><span class="paso">x² − 20x − 125 = 0</span>'},
+ {t:'PAES M2 2023',q:'Si m y n son las soluciones de 5x² + x − 5 = 0, ¿cuál es el valor de ((m + n)/(mn))⁻¹?',o:['5','1/5','−1/5','−1','−5'],a:0,
+  s:'El exponente −1 da vuelta la fracción.<span class="paso">m + n = −1/5 ; mn = −1</span><span class="paso">(mn)/(m+n) = (−1)/(−1/5) = 5</span>'},
+ {t:'PAES M2 2023',q:'En el triángulo ABC con AB = BC = 12 cm, la altura x trazada desde B excede en 3 cm a la medida de AC. ¿Qué ecuación permite calcular x?',o:['2x² − 6x = 135','5x² + 6x = 567','2x² + 6x = 135','5x² − 6x = 567','5x² − 6x = 135'],a:3,
+  s:'En un triángulo isósceles la altura desde B corta AC por la mitad. Con AC = x − 3, aplica Pitágoras.<span class="paso">((x−3)/2)² + x² = 144</span><span class="paso">(x² − 6x + 9) + 4x² = 576</span><span class="paso">5x² − 6x = 567</span>'},
+ {t:'PAES M2 2024',q:'Un cuadro rectangular tendrá una sección de dibujo de 15 cm por 9 cm y, por fuera, un margen de ancho uniforme que ocupa 81 cm². ¿Cuál es el ancho del margen?',o:['13,5 cm','7,5 cm','4,5 cm','1,5 cm'],a:3,
+  s:'El margen rodea el dibujo, así que cada dimensión crece 2w.<span class="paso">(15 + 2w)(9 + 2w) = 135 + 81 = 216</span><span class="paso">4w² + 48w − 81 = 0</span><span class="paso">w = (−48 + 60)/8 = 1,5 cm</span>'}
+];
+
+/* =========================================================
+   MOTOR DE QUIZ
+   ========================================================= */
+var LET = ['A','B','C','D','E'];
+function pinta(cont, banco, opts){
+  opts = opts || {};
+  var estado = banco.map(function(){return null});
+  var el = document.getElementById(cont);
+  var html = '';
+  if(opts.marcador){
+    html += '<div class="qhead"><span class="mark" id="m'+cont+'">Sin responder</span>'+
+            '<button class="btn gh" data-reset="1">Reiniciar</button></div>';
+  }
+  banco.forEach(function(p,i){
+    html += '<div class="q" data-i="'+i+'"><div class="qtop"><span class="qn">'+String(i+1).padStart(2,'0')+'</span>'+
+      (p.t ? '<span class="tag">'+p.t+'</span>' : '')+'</div><p class="qt">'+p.q+'</p><div class="ops">'+
+      p.o.map(function(o,j){return '<button class="op" data-o="'+j+'"><span class="let">'+LET[j]+'</span><span>'+o+'</span></button>';}).join('')+
+      '</div><div class="sol"></div></div>';
+  });
+  el.innerHTML = html;
+
+  function marca(){
+    var m = document.getElementById('m'+cont); if(!m) return;
+    var resp = estado.filter(function(x){return x!==null}).length;
+    var ok = estado.filter(function(x,i){return x===banco[i].a}).length;
+    m.innerHTML = resp===0 ? 'Sin responder' : '<b>'+ok+'</b> correctas de '+resp+' respondidas · '+banco.length+' en total';
+  }
+
+  el.onclick = function(ev){
+    if(ev.target.closest('[data-reset]')){ pinta(cont,banco,opts); return; }
+    var ask = ev.target.closest('[data-ask]');
+    if(ask){ abreBot(); setTimeout(function(){ responde(ask.dataset.ask, true); },260); return; }
+    var b = ev.target.closest('.op'); if(!b || b.disabled) return;
+    var caja = b.closest('.q'), i = +caja.dataset.i, j = +b.dataset.o, p = banco[i];
+    estado[i] = j;
+    caja.querySelectorAll('.op').forEach(function(x){x.disabled=true});
+    if(opts.diferido){ b.classList.add('pick'); }
+    else{
+      caja.querySelectorAll('.op').forEach(function(x){
+        var oj = +x.dataset.o;
+        if(oj===p.a) x.classList.add('bien'); else if(oj===j) x.classList.add('mal');
+      });
+      var s = caja.querySelector('.sol');
+      s.innerHTML = '<div class="vd '+(j===p.a?'bien':'mal')+'">'+(j===p.a?'Correcta':'Respuesta correcta: '+LET[p.a])+'</div>'+p.s+
+        '<br><button class="askbtn" data-ask="'+encodeURIComponent(p.q)+'">Pedirle otra explicación al asistente</button>';
+      s.classList.add('on');
+    }
+    marca();
+    if(opts.onChange) opts.onChange(estado);
+  };
+
+  return {
+    estado:function(){return estado},
+    banco:banco,
+    revelar:function(){
+      banco.forEach(function(p,i){
+        var caja = el.querySelector('.q[data-i="'+i+'"]');
+        caja.querySelectorAll('.op').forEach(function(x){
+          x.disabled = true; x.classList.remove('pick');
+          var oj = +x.dataset.o;
+          if(oj===p.a) x.classList.add('bien'); else if(oj===estado[i]) x.classList.add('mal');
+        });
+        var s = caja.querySelector('.sol');
+        s.innerHTML = '<div class="vd '+(estado[i]===p.a?'bien':'mal')+'">'+
+          (estado[i]===p.a ? 'Correcta' : (estado[i]==null?'Sin responder · ':'')+'Respuesta correcta: '+LET[p.a])+'</div>'+p.s;
+        s.classList.add('on');
+      });
+    }
+  };
+}
+pinta('q1',E1,{marcador:true});
+pinta('q2',E2,{marcador:true});
+pinta('q3',E3,{marcador:true});
+pinta('q4',DEM,{marcador:true});
+
+var ensayo=null;
+function armaEnsayo(){
+  var todo = E1.concat(E2,E3,DEM).slice();
+  for(var i=todo.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=todo[i];todo[i]=todo[j];todo[j]=t;}
+  ensayo = pinta('q5', todo.slice(0,20), {diferido:true, onChange:function(e){
+    var n = e.filter(function(x){return x!==null}).length;
+    document.getElementById('mensayo').innerHTML = '<b>'+n+'</b> de 20 respondidas';
+  }});
+  document.getElementById('mensayo').textContent='Sin responder';
+}
+armaEnsayo();
+document.getElementById('nuevo').onclick = armaEnsayo;
+document.getElementById('revisar').onclick = function(){
+  if(!ensayo) return;
+  ensayo.revelar();
+  var e = ensayo.estado(), ok = e.filter(function(x,i){return x===ensayo.banco[i].a}).length;
+  document.getElementById('mensayo').innerHTML = '<b>'+ok+'</b> correctas de 20 · '+Math.round(ok/20*100)+'%';
+};
+
+/* =========================================================
+   FORMATO NUMÉRICO (es-CL)
+   ========================================================= */
+function fmt(n){
+  if(!isFinite(n)) return '—';
+  var r = Math.round(n*10000)/10000;
+  if(Math.abs(r)<1e-10) r = 0;
+  return String(r).replace('.',',');
+}
+function frac(n){
+  if(Math.abs(n - Math.round(n)) < 1e-9) return String(Math.round(n));
+  for(var q=2;q<=40;q++){
+    var p = n*q;
+    if(Math.abs(p - Math.round(p)) < 1e-9) return Math.round(p)+'/'+q;
+  }
+  return fmt(n);
+}
+function sqrtSimp(n){
+  var out=1, inn=n;
+  for(var k=2;k*k<=inn;k++){ while(inn%(k*k)===0){ out*=k; inn/=(k*k); } }
+  return {o:out,i:inn};
+}
+
+/* =========================================================
+   PARSER DE EXPRESIONES → POLINOMIO
+   ========================================================= */
+function tokeniza(s){
+  s = s.toLowerCase().replace(/\s+/g,'').replace(/²/g,'^2').replace(/³/g,'^3')
+       .replace(/[−–—]/g,'-').replace(/·|×/g,'*').replace(/,/g,'.');
+  var t=[], i=0;
+  while(i<s.length){
+    var c=s[i];
+    if(/[0-9.]/.test(c)){ var j=i; while(j<s.length && /[0-9.]/.test(s[j])) j++; t.push({t:'n',v:parseFloat(s.slice(i,j))}); i=j; }
+    else if(/[a-zñ]/.test(c)){ t.push({t:'v',v:c}); i++; }
+    else if('+-*/^()'.indexOf(c)>-1){ t.push({t:c}); i++; }
+    else return null;
+  }
+  return t;
+}
+function pAdd(a,b){var r=[],n=Math.max(a.length,b.length);for(var i=0;i<n;i++)r[i]=(a[i]||0)+(b[i]||0);return r;}
+function pNeg(a){return a.map(function(x){return -x});}
+function pMul(a,b){
+  var r=[]; for(var i=0;i<a.length+b.length;i++) r[i]=0;
+  for(var i=0;i<a.length;i++) for(var j=0;j<b.length;j++) r[i+j]+=a[i]*b[j];
+  return r;
+}
+function pPow(a,k){ var r=[1]; for(var i=0;i<k;i++) r=pMul(r,a); return r; }
+function grado(p){ for(var i=p.length-1;i>=0;i--) if(Math.abs(p[i])>1e-12) return i; return 0; }
+
+function parsea(txt){
+  var T = tokeniza(txt); if(!T) return null;
+  var i=0, varName=null, err=false;
+  function peek(){ return T[i]; }
+  function expr(){
+    var r = term();
+    while(peek() && (peek().t==='+' || peek().t==='-')){
+      var op = T[i++].t, t2 = term();
+      r = op==='+' ? pAdd(r,t2) : pAdd(r,pNeg(t2));
+    }
+    return r;
+  }
+  function term(){
+    var r = factor();
+    while(peek()){
+      var p = peek();
+      if(p.t==='*'){ i++; r = pMul(r,factor()); }
+      else if(p.t==='/'){ i++; var d = factor();
+        if(grado(d)>0){ err=true; return r; }
+        var k = d[0]; if(!k){ err=true; return r; }
+        r = r.map(function(x){return x/k});
+      }
+      else if(p.t==='n' || p.t==='v' || p.t==='('){ r = pMul(r,factor()); }
+      else break;
+    }
+    return r;
+  }
+  function factor(){
+    var base, p = peek();
+    if(!p){ err=true; return [0]; }
+    if(p.t==='-'){ i++; return pNeg(factor()); }
+    if(p.t==='+'){ i++; return factor(); }
+    if(p.t==='n'){ i++; base=[p.v]; }
+    else if(p.t==='v'){
+      i++;
+      if(varName===null) varName = p.v;
+      if(p.v!==varName){ err=true; return [0]; }
+      base=[0,1];
+    }
+    else if(p.t==='('){ i++; base = expr(); if(peek() && peek().t===')') i++; else err=true; }
+    else { err=true; return [0]; }
+    if(peek() && peek().t==='^'){
+      i++; var e = peek();
+      if(!e || e.t!=='n' || e.v<0 || e.v!==Math.round(e.v)){ err=true; return base; }
+      i++; base = pPow(base, e.v);
+    }
+    return base;
+  }
+  var res = expr();
+  if(err || i<T.length) return null;
+  return {p:res, v:varName||'x'};
+}
+
+function polyTxt(p, v){
+  v = v||'x';
+  var s='', first=true;
+  for(var d=p.length-1;d>=0;d--){
+    var c = p[d]; if(Math.abs(c)<1e-12) continue;
+    var sg = c<0 ? (first?'−':' − ') : (first?'':' + ');
+    var m = Math.abs(c), num = (Math.abs(m-1)<1e-12 && d>0) ? '' : frac(m);
+    s += sg + num + (d===0?'':(d===1?v:v+'²'));
+    first=false;
+  }
+  return s===''?'0':s;
+}
+
+/* =========================================================
+   RESOLUTOR PASO A PASO
+   ========================================================= */
+function resuelve(txt){
+  var lados = txt.split('='), P;
+  if(lados.length===1){
+    var r = parsea(lados[0]); if(!r) return null;
+    return {tipo:'expr', p:r.p, v:r.v};
+  }
+  if(lados.length!==2) return null;
+  var a = parsea(lados[0]), b = parsea(lados[1]);
+  if(!a || !b) return null;
+  var v = a.v!=='x' ? a.v : b.v;
+  P = pAdd(a.p, pNeg(b.p));
+  return {tipo:'ec', p:P, v:v, izq:a.p, der:b.p};
+}
+
+function pasosCuadratica(p, v){
+  var A = p[2]||0, B = p[1]||0, C = p[0]||0;
+  var h = '';
+  h += '<span class="ttl">Forma normalizada</span>';
+  h += '<span class="paso">'+polyTxt(p,v)+' = 0</span>';
+  h += 'Coeficientes: <b>a = '+frac(A)+'</b>, <b>b = '+frac(B)+'</b>, <b>c = '+frac(C)+'</b>.';
+  h += '<hr><span class="ttl">Discriminante</span>';
+  var D = B*B - 4*A*C;
+  h += '<span class="paso">Δ = b² − 4ac = ('+frac(B)+')² − 4·('+frac(A)+')·('+frac(C)+') = '+frac(D)+'</span>';
+  if(D < 0){
+    h += 'Como Δ &lt; 0, <b>no tiene soluciones reales</b>: la parábola no corta el eje X.';
+    var hh = -B/(2*A), kk = C - B*B/(4*A);
+    h += '<hr><span class="ttl">De todos modos</span>';
+    h += '<span class="paso">Vértice ('+frac(hh)+' ; '+frac(kk)+')</span>';
+    h += 'Abre hacia '+(A>0?'arriba, así que f(x) &gt; 0 siempre':'abajo, así que f(x) &lt; 0 siempre')+'.';
+    return h;
+  }
+  var rd = Math.sqrt(D), exacto = Math.abs(rd-Math.round(rd))<1e-9;
+  h += D===0 ? 'Como Δ = 0, hay <b>una sola raíz real</b> (doble).' : 'Como Δ &gt; 0, hay <b>dos raíces reales distintas</b>.';
+  h += '<hr><span class="ttl">Fórmula general</span>';
+  h += '<span class="paso">x = ( −('+frac(B)+') ± √'+frac(D)+' ) / (2·'+frac(A)+')</span>';
+  var r1=(-B-rd)/(2*A), r2=(-B+rd)/(2*A);
+  if(exacto){
+    if(D===0) h += '<span class="paso">x₁ = x₂ = '+frac(r1)+'</span>';
+    else h += '<span class="paso">x₁ = '+frac(Math.min(r1,r2))+' &nbsp;;&nbsp; x₂ = '+frac(Math.max(r1,r2))+'</span>';
+  } else {
+    var sq = sqrtSimp(D);
+    var rad = (sq.o===1?'':sq.o)+'√'+sq.i;
+    h += '<span class="paso">x = ( '+frac(-B)+' ± '+rad+' ) / '+frac(2*A)+'</span>';
+    h += '<span class="paso">x₁ ≈ '+fmt(Math.min(r1,r2))+' &nbsp;;&nbsp; x₂ ≈ '+fmt(Math.max(r1,r2))+'</span>';
+  }
+  h += '<hr><span class="ttl">Verificación rápida</span>';
+  h += '<span class="paso">x₁ + x₂ = −b/a = '+frac(-B/A)+' &nbsp;·&nbsp; x₁ · x₂ = c/a = '+frac(C/A)+'</span>';
+  if(exacto){
+    var f1 = frac(Math.min(r1,r2)), f2 = frac(Math.max(r1,r2));
+    var sg1 = Math.min(r1,r2)<0?'+':'−', sg2 = Math.max(r1,r2)<0?'+':'−';
+    h += '<span class="paso">Factorizada: '+(Math.abs(A-1)<1e-9?'':frac(A))+'(x '+sg1+' '+f1.replace('-','')+')(x '+sg2+' '+f2.replace('-','')+')</span>';
+  }
+  var hv=-B/(2*A), kv=C-B*B/(4*A);
+  h += '<span class="paso">Vértice ('+frac(hv)+' ; '+frac(kv)+') · '+(A>0?'mínimo':'máximo')+'</span>';
+  return h;
+}
+
+/* =========================================================
+   BASE DE CONOCIMIENTO DEL ASISTENTE
+   ========================================================= */
+var KB = [
+ {k:['discriminante','delta','Δ','cuantas soluciones','cuántas soluciones'],
+  r:'<span class="ttl">Discriminante</span><span class="paso">Δ = b² − 4ac</span>'+
+    '<b>Δ &gt; 0</b> · dos raíces reales distintas; la parábola corta el eje X en dos puntos.<br>'+
+    '<b>Δ = 0</b> · una raíz doble; la parábola es tangente al eje X.<br>'+
+    '<b>Δ &lt; 0</b> · sin raíces reales; la parábola no toca el eje X.<hr>'+
+    'En la PAES casi siempre preguntan por soluciones <b>reales</b>. Si Δ &lt; 0 la respuesta no es "no tiene solución", es "no tiene soluciones reales".'},
+ {k:['vertice','vértice','maximo','máximo','minimo','mínimo','eje de simetria','eje de simetría'],
+  r:'<span class="ttl">Vértice</span><span class="paso">h = −b / 2a &nbsp;&nbsp; k = f(h)</span>'+
+    'El eje de simetría es la recta <b>x = h</b>.<hr>'+
+    'Si <b>a &gt; 0</b> la parábola abre hacia arriba y el vértice es un <b>mínimo</b>.<br>'+
+    'Si <b>a &lt; 0</b> abre hacia abajo y el vértice es un <b>máximo</b>.<hr>'+
+    'Ojo en los enunciados: <b>h</b> es dónde ocurre el máximo (el tiempo, la medida), <b>k</b> es el valor del máximo.'},
+ {k:['formula general','fórmula general','formula','fórmula','resolvente'],
+  r:'<span class="ttl">Fórmula general</span><span class="paso">x = ( −b ± √(b² − 4ac) ) / 2a</span>'+
+    'Antes de usarla, revisa si hay un atajo:<br>• <b>b = 0</b> → despeja x² directo.<br>• <b>c = 0</b> → factoriza por x.<br>• ¿Hay dos números que sumen b y multipliquen c? → factoriza.<hr>'+
+    'Errores típicos: olvidar el signo menos de −b, y olvidar que el 2a divide a <b>toda</b> la expresión, no solo a la raíz.'},
+ {k:['suma y producto','suma de raices','suma de raíces','producto de raices','producto de raíces','vieta'],
+  r:'<span class="ttl">Suma y producto de raíces</span><span class="paso">x₁ + x₂ = −b/a &nbsp;&nbsp; x₁ · x₂ = c/a</span>'+
+    'Sirven para responder sin resolver nada, que es justo lo que la PAES pide en las preguntas con parámetros (k, q, n).<hr>'+
+    'Para reconstruir la ecuación a partir de las raíces:<span class="paso">x² − (suma)·x + (producto) = 0</span>'},
+ {k:['factorizar','factorización','factorizacion','factoriza'],
+  r:'<span class="ttl">Factorizar</span>'+
+    '1 · Saca factor común si lo hay: 2x² + 10x − 12 = 2(x² + 5x − 6).<br>'+
+    '2 · ¿Es cuadrado de binomio? x² + 12x + 36 = (x + 6)².<br>'+
+    '3 · ¿Es diferencia de cuadrados? 9x² − 25 = (3x − 5)(3x + 5).<br>'+
+    '4 · Si no, busca p y q con <b>p·q = c</b> y <b>p+q = b</b>.<hr>'+
+    'Escríbeme cualquier expresión y te la factorizo, por ejemplo: <b>x^2+2x-15</b>'},
+ {k:['productos notables','binomio','cuadrado de binomio','desarrollar'],
+  r:'<span class="ttl">Productos notables</span>'+
+    '<span class="paso">(a ± b)² = a² ± 2ab + b²</span>'+
+    '<span class="paso">(a + b)(a − b) = a² − b²</span>'+
+    '<span class="paso">(x + p)(x + q) = x² + (p+q)x + pq</span>'+
+    'El error número uno de la prueba es escribir (a+b)² = a² + b². El término <b>2ab</b> siempre está.<hr>'+
+    'Escríbeme por ejemplo <b>(2x-3)^2</b> y te lo desarrollo.'},
+ {k:['fraccion algebraica','fracción algebraica','fracciones','simplificar'],
+  r:'<span class="ttl">Fracciones algebraicas</span>'+
+    '1 · Factoriza numerador y denominador.<br>2 · Si estás dividiendo, multiplica por el recíproco de la segunda.<br>'+
+    '3 · Cancela solo <b>factores completos</b>, nunca sumandos.<br>4 · Anota la restricción: el denominador ≠ 0.<hr>'+
+    '(x + 3)/3 <b>no</b> se simplifica a x, porque el 3 de abajo divide a toda la suma.'},
+ {k:['traslacion','traslación','desplaza','mover la parabola','mover la parábola','canonica','canónica'],
+  r:'<span class="ttl">Traslaciones desde f(x) = x²</span>'+
+    '<span class="paso">f(x) = a(x − h)² + k</span>'+
+    '<b>(x − 3)²</b> → 3 unidades a la <b>derecha</b> (sí, aunque diga menos).<br>'+
+    '<b>(x + 3)²</b> → 3 unidades a la izquierda.<br>'+
+    '<b>+ k</b> → sube k unidades; <b>− k</b> → baja.<br>'+
+    '<b>−f(x)</b> → se refleja respecto al eje X.'},
+ {k:['completar el cuadrado','completar cuadrado'],
+  r:'<span class="ttl">Completar el cuadrado</span>'+
+    'Para que x² + bx se convierta en un cuadrado perfecto, necesitas sumar <b>(b/2)²</b>.<span class="paso">x² + 6x + 9 = (x + 3)²</span>'+
+    'Si el enunciado pregunta qué número m sumar a <b>ambos lados</b>, compara el término libre que tienes con el que necesitas: m puede salir negativo.'},
+ {k:['problema','planteo','plantear','area','área','rectangulo','rectángulo','margen','borde'],
+  r:'<span class="ttl">Problemas con enunciado</span>'+
+    '1 · Define la variable con las palabras del enunciado ("x es el fondo", "b es la base").<br>'+
+    '2 · Escribe el otro lado <b>en función de x</b>: "2 más que" → x + 2; "10 menos que el largo" → L − 10.<br>'+
+    '3 · Monta la ecuación del área o del Pitágoras y recién ahí ordena a la forma = 0.<br>'+
+    '4 · Descarta las raíces negativas si son medidas.<hr>'+
+    '<b>Trampa clásica:</b> si hay un marco o borde alrededor, cada dimensión crece <b>2x</b>, no x.'},
+ {k:['que estudio','qué estudio','por donde parto','por dónde parto','ayuda','como uso','cómo uso','plan'],
+  r:'<span class="ttl">Cómo aprovechar este repaso</span>'+
+    'Si te queda <b>poco tiempo</b>: anda directo al <b>Banco DEMRE</b>, son las preguntas reales. Luego el ensayo.<br>'+
+    'Si te queda <b>una tarde</b>: los tres ejes en orden, y cierra con el ensayo cronometrado.<hr>'+
+    'Yo puedo resolverte cualquier ecuación paso a paso: escríbela tal cual, por ejemplo <b>x(x-1)=20</b> o <b>3(x-2)^2=7</b>.'}
+];
+
+/* =========================================================
+   UI DEL ASISTENTE
+   ========================================================= */
+var bot = document.getElementById('bot'), scrim = document.getElementById('scrim'), msgs = document.getElementById('msgs');
+function abreBot(){
+  bot.classList.add('on'); scrim.classList.add('on');
+  document.body.style.overflow='hidden';
+  setTimeout(function(){ msgs.scrollTop = msgs.scrollHeight; },50);
+}
+function cierraBot(){
+  bot.classList.remove('on'); scrim.classList.remove('on');
+  document.body.style.overflow='';
+}
+document.getElementById('fab').onclick = abreBot;
+document.getElementById('cerrar').onclick = cierraBot;
+scrim.onclick = cierraBot;
+
+function di(html, quien){
+  var d = document.createElement('div');
+  d.className = 'msg ' + (quien||'bot');
+  d.innerHTML = html;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+var SUG = ['x(x-1)=20','(2x-3)^2','2x^2-5x+2=0','¿Qué es el discriminante?','¿Cómo saco el vértice?','¿Por dónde parto?'];
+document.getElementById('chips').innerHTML = SUG.map(function(s){
+  return '<button class="chipb" data-s="'+encodeURIComponent(s)+'">'+s+'</button>';
+}).join('');
+document.getElementById('chips').onclick = function(ev){
+  var b = ev.target.closest('[data-s]'); if(!b) return;
+  var txt = decodeURIComponent(b.dataset.s);
+  document.getElementById('inp').value = txt;
+  responde(txt);
+};
+
+function normaliza(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function responde(txt, desdePregunta){
+  txt = (txt||'').trim(); if(!txt) return;
+  di(desdePregunta ? 'Explícame esta pregunta otra vez' : txt, 'me');
+  document.getElementById('inp').value='';
+
+  if(desdePregunta){
+    var enun = decodeURIComponent(txt);
+    var busca = enun.match(/-?\d*\.?\d*x\s*\^?2[^?]*|\([^)]*\)[^?]*/);
+    di('<span class="ttl">Pregunta</span>'+enun+'<hr>Pégame aquí la ecuación o expresión que aparece en el enunciado (por ejemplo <b>x^2+2x-15=0</b>) y te la desarrollo paso a paso, con discriminante, raíces y vértice.');
+    return;
+  }
+
+  /* 1 · ¿Es una expresión o ecuación? */
+  if(/[0-9x-zñ]/i.test(txt) && /[\^²+\-*/=()]/.test(txt) && !/\?/.test(txt)){
+    var R = resuelve(txt);
+    if(R){
+      var g = grado(R.p);
+      if(R.tipo==='ec'){
+        if(g===2){ di(pasosCuadratica(R.p, R.v)); return; }
+        if(g===1){
+          var m=R.p[1], n=R.p[0];
+          di('<span class="ttl">Ecuación de primer grado</span><span class="paso">'+polyTxt(R.p,R.v)+' = 0</span>'+
+             '<span class="paso">'+R.v+' = '+frac(-n/m)+'</span>No es cuadrática: el término en '+R.v+'² se canceló.');
+          return;
+        }
+        if(g===0){
+          di(Math.abs(R.p[0])<1e-12 ? 'Los dos lados son iguales: la igualdad se cumple para cualquier valor.' :
+             'No hay solución: al ordenar queda <b>'+frac(R.p[0])+' = 0</b>, que es falso.');
+          return;
+        }
+        di('Esa ecuación es de grado '+g+'; este asistente resuelve hasta grado 2. Si puedes factorizarla, pásame uno de los factores.');
+        return;
+      } else {
+        var h = '<span class="ttl">Desarrollo</span><span class="paso">'+polyTxt(R.p,R.v)+'</span>';
+        if(g===2){ h += '<hr>Si la igualas a cero:'; di(h); di(pasosCuadratica(R.p,R.v)); return; }
+        di(h); return;
+      }
+    }
+  }
+
+  /* 2 · Base de conocimiento */
+  var n = normaliza(txt);
+  var mejor=null, pts=0;
+  KB.forEach(function(e){
+    var p=0;
+    e.k.forEach(function(k){ if(n.indexOf(normaliza(k))>-1) p += k.length; });
+    if(p>pts){ pts=p; mejor=e; }
+  });
+  if(mejor){ di(mejor.r); return; }
+
+  /* 3 · Sin match */
+  di('No logré leer eso. Puedo hacer dos cosas:<hr>'+
+     '<b>Resolver</b> — escribe la ecuación tal cual: <b>x^2-12x+35=0</b>, <b>x(x-1)=20</b>, <b>3(x-2)^2=7</b>, o solo una expresión como <b>(2x-3)^2</b> para desarrollarla.<hr>'+
+     '<b>Explicar</b> — pregúntame por discriminante, vértice, fórmula general, factorizar, productos notables, fracciones algebraicas, traslaciones, completar el cuadrado o problemas con enunciado.');
+}
+
+document.getElementById('env').onclick = function(){ responde(document.getElementById('inp').value); };
+document.getElementById('inp').addEventListener('keydown', function(e){
+  if(e.key==='Enter'){ e.preventDefault(); responde(this.value); }
+});
+
+di('Hola. Soy tu asistente para esta prueba.<hr>'+
+   'Escríbeme una ecuación y te la resuelvo <b>paso a paso</b> (discriminante, raíces, factorización y vértice), o pregúntame cualquier concepto del temario. Prueba con los atajos de abajo.');
+
+/* =========================================================
+   EXPLORADOR DE PARÁBOLA
+   ========================================================= */
+(function(){
+  var svg = document.getElementById('graf'), R=10, S=400, U=S/(2*R);
+  function px(x){return (x+R)*U} function py(y){return (R-y)*U}
+  function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  function coef(n,v,first){
+    if(Math.abs(n)<1e-12) return '';
+    var sg = n<0 ? (first?'−':' − ') : (first?'':' + ');
+    var m = Math.abs(n), num = (Math.abs(m-1)<1e-12 && v) ? '' : fmt(m);
+    return sg+num+v;
+  }
+  function dibuja(){
+    var a = parseFloat(document.getElementById('sa').value);
+    var b = parseFloat(document.getElementById('sb').value);
+    var c = parseFloat(document.getElementById('sc').value);
+    if(Math.abs(a)<0.05) a = a<0 ? -0.1 : 0.1;
+    document.getElementById('va').textContent = fmt(a);
+    document.getElementById('vb').textContent = fmt(b);
+    document.getElementById('vc').textContent = fmt(c);
+
+    var cl = css('--grid'), ci = css('--ink'), cv = css('--violeta'), cvm = css('--verm'), ca = css('--azul'), cs = css('--surf');
+    var g='';
+    for(var k=-R;k<=R;k++){
+      g += '<line x1="'+px(k)+'" y1="0" x2="'+px(k)+'" y2="'+S+'" stroke="'+cl+'" stroke-width="1"/>';
+      g += '<line x1="0" y1="'+py(k)+'" x2="'+S+'" y2="'+py(k)+'" stroke="'+cl+'" stroke-width="1"/>';
+    }
+    g += '<line x1="0" y1="'+py(0)+'" x2="'+S+'" y2="'+py(0)+'" stroke="'+ci+'" stroke-width="1.4" opacity=".75"/>';
+    g += '<line x1="'+px(0)+'" y1="0" x2="'+px(0)+'" y2="'+S+'" stroke="'+ci+'" stroke-width="1.4" opacity=".75"/>';
+
+    var h=-b/(2*a), kk=a*h*h+b*h+c, D=b*b-4*a*c;
+    if(Math.abs(h)<=R) g += '<line x1="'+px(h)+'" y1="0" x2="'+px(h)+'" y2="'+S+'" stroke="'+ca+'" stroke-width="1.2" stroke-dasharray="5 5" opacity=".8"/>';
+
+    var segs=[], cur=[];
+    for(var x=-R;x<=R;x+=0.04){
+      var y=a*x*x+b*x+c;
+      if(Math.abs(y)<=R+1) cur.push(px(x).toFixed(1)+','+py(y).toFixed(1));
+      else if(cur.length){segs.push(cur);cur=[];}
+    }
+    if(cur.length) segs.push(cur);
+    segs.forEach(function(s){ if(s.length>1) g += '<polyline points="'+s.join(' ')+'" fill="none" stroke="'+cv+'" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>'; });
+
+    if(D>=0){
+      [(-b-Math.sqrt(D))/(2*a), (-b+Math.sqrt(D))/(2*a)].forEach(function(r){
+        if(Math.abs(r)<=R) g += '<circle cx="'+px(r)+'" cy="'+py(0)+'" r="6" fill="'+cvm+'"/>';
+      });
+    }
+    if(Math.abs(h)<=R && Math.abs(kk)<=R) g += '<circle cx="'+px(h)+'" cy="'+py(kk)+'" r="6.5" fill="'+cs+'" stroke="'+cv+'" stroke-width="3"/>';
+    if(Math.abs(c)<=R) g += '<circle cx="'+px(0)+'" cy="'+py(c)+'" r="4.5" fill="'+ca+'"/>';
+    svg.innerHTML = g;
+
+    var gen = 'f(x) = '+coef(a,'x²',true)+coef(b,'x',false)+coef(c,'',false);
+    var can = 'f(x) = '+(Math.abs(a-1)<1e-12?'':fmt(a))+'(x '+(h<0?'+ ':'− ')+fmt(Math.abs(h))+')²'+(Math.abs(kk)<1e-12?'':(kk<0?' − ':' + ')+fmt(Math.abs(kk)));
+    var fac;
+    if(D>0){
+      var s1=(-b-Math.sqrt(D))/(2*a), s2=(-b+Math.sqrt(D))/(2*a);
+      fac = (Math.abs(a-1)<1e-12?'':fmt(a))+'(x '+(s1<0?'+ ':'− ')+fmt(Math.abs(s1))+')(x '+(s2<0?'+ ':'− ')+fmt(Math.abs(s2))+')';
+    } else if(D===0){ fac = (Math.abs(a-1)<1e-12?'':fmt(a))+'(x '+(h<0?'+ ':'− ')+fmt(Math.abs(h))+')²'; }
+    else fac = 'no se factoriza en ℝ';
+    var col = D>0?css('--ok'):(D===0?css('--azul'):css('--verm'));
+    var sof = D>0?'var(--oksoft)':(D===0?'var(--vsoft)':'var(--osoft)');
+    var txt = D>0?'dos raíces reales':(D===0?'una raíz doble':'sin raíces reales');
+
+    document.getElementById('lect').innerHTML =
+      '<div><i>General</i><span class="val">'+gen+'</span></div>'+
+      '<div><i>Canónica</i><span class="val">'+can+'</span></div>'+
+      '<div><i>Factorizada</i><span class="val">'+fac+'</span></div>'+
+      '<div><i>Vértice</i><span class="val">('+fmt(h)+' ; '+fmt(kk)+')</span></div>'+
+      '<div><i>Eje simetría</i><span class="val">x = '+fmt(h)+'</span></div>'+
+      '<div><i>Corte eje Y</i><span class="val">(0 ; '+fmt(c)+')</span></div>'+
+      '<div><i>'+(a>0?'Mínimo':'Máximo')+'</i><span class="val">'+fmt(kk)+'</span></div>'+
+      '<div><i>Discriminante</i><span class="val"><span class="chip" style="background:'+sof+';color:'+col+'">Δ = '+fmt(D)+' · '+txt+'</span></span></div>';
+  }
+  ['sa','sb','sc'].forEach(function(id){ document.getElementById(id).addEventListener('input', dibuja); });
+  window.redibuja = dibuja;
+  dibuja();
+  if(window.matchMedia) try{ window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', dibuja); }catch(e){}
+})();
+</script>
+</body>
+</html>
